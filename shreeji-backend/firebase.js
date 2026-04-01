@@ -1,11 +1,11 @@
 const admin = require('firebase-admin');
 
 // 🔍 DEBUG LOG
-console.log("ENV CHECK:", {
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-  privateKeyExists: !!process.env.FIREBASE_PRIVATE_KEY,
-});
+// console.log("ENV CHECK:", {
+//   projectId: process.env.FIREBASE_PROJECT_ID,
+//   clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+//   privateKeyExists: !!process.env.FIREBASE_PRIVATE_KEY,
+// });
 
 admin.initializeApp({
   credential: admin.credential.cert({
