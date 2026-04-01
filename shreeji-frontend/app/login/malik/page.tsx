@@ -26,6 +26,7 @@ import{useState} from 'react';
 import { useRouter } from 'next/navigation'; // navigation tool to move bw pages
 import { useToast } from "@/app/context/ToastContext";
 import {getData} from "@/app/utils/api";
+import { saveSession } from '@/app/utils/session';
 type Malik = {
   _id: string;
   name: string;
@@ -80,7 +81,9 @@ export default function MalikLoginPage(){
     showMessage("success", "Login successful");
 
     localStorage.setItem("malik", JSON.stringify(malikData));
-    localStorage.setItem("malikPhone", phone);
+    // localStorage.setItem("malikPhone", phone);
+    saveSession(phone);
+    
 
     router.push("/dashboard/malik");
 

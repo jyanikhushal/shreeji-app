@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/context/ToastContext";
 import{getData} from "@/app/utils/api";
+import { isSessionValid,clearSession } from "@/app/utils/session";
 type Customer = {
     name: string;
     phone: string;
@@ -39,11 +40,24 @@ export default function MalikDashboardPage(){
    
     // 🔐 Protect page
     useEffect(()=>{
-        const malikPhone = localStorage.getItem("malikPhone");
-        if(!malikPhone){
-            router.push("/login/malik");
+        if(!isSessionValid()){
+          clearSession();
+          router.push("/login/malik");
         }
     },[]);
+
+    //Periodic check for session expiry in every 1 minute
+    useEffect(() => {
+  const interval = setInterval(() => {
+    if (!isSessionValid()) {
+      clearSession();
+      showMessage("error", "Session expired. Please login again.");
+      router.push("/login/malik");
+    }
+  }, 60 * 1000); // check every 1 minute
+
+  return () => clearInterval(interval);
+}, []);
 
     // 📦 Customer list
     const [customers, setCustomers] = useState<Customer[]>([]);

@@ -8,7 +8,7 @@ import {useState, useRef, useEffect, Suspense} from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/context/ToastContext";
 import {getData} from '@/app/utils/api';
-
+import { isSessionValid,clearSession } from "@/app/utils/session";
 type Customer = {
     name: string;
     phone: string;
@@ -33,13 +33,25 @@ function RunningKhataInner(){
     const sp = new URLSearchParams(window.location.search);
     setCustomerPhone(sp.get('phone'));
   },[]);
-
+ // page protection
   useEffect(()=>{
-    const malik = localStorage.getItem("malikPhone");
-    if(!malik){
+    if (!isSessionValid()) {
+    clearSession();
+    router.push("/login/malik");
+  }
+  },[]);
+  //Periodic session check
+  useEffect(() => {
+  const interval = setInterval(() => {
+    if (!isSessionValid()) {
+      clearSession();
+      showMessage("error", "Session expired. Please login again.");
       router.push("/login/malik");
     }
-  },[]);
+  }, 60 * 1000); // check every 1 minute
+
+  return () => clearInterval(interval);
+}, []);
 
   const [entries, setEntries] = useState<Entry[]>([{
     entryNo:1,
