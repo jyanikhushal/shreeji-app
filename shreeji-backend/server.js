@@ -33,6 +33,10 @@ app.use((req,res,next)=>{
 
 // the below are the http get , put , push and delete functions . It means these functions calls the backend 
 
+// API for sending server is on to uptimeRobot 
+app.get('/health',(req,res)=>{
+    res.status(200).json({status:'ok'});
+});
 
 // API : get ledger
 app.get("/khata/:phone",validatePhone,async(req,res)=>{
