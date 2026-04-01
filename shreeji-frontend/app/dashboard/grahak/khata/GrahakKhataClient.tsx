@@ -18,79 +18,67 @@ import {getData} from "@/app/utils/api";
 
 
 
-export default function GrahakKhataPage(){
-   
+export default function GrahakKhataPage() {
+  const router = useRouter();
+  const { showMessage } = useToast();
 
-    const router=useRouter();
-    // const searchParams=useSearchParams();
-    const {showMessage}=useToast();
-    // const phone=searchParams.get("phone");
+  const [loading, setLoading] = useState(true);
+  const [phone, setPhone] = useState<string | null>(null);
+  const [malikPhone, setMalikPhone] = useState<string | null>(null);
+  const [entries, setEntires] = useState<Entry[]>([]);
 
-    const [loading,setLoading]=useState(true);
-   const [phone, setPhone] = useState<string | null>(null);
+  // ✅ get params safely from browser
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    setPhone(sp.get("phone"));
+    setMalikPhone(sp.get("malikPhone"));
+  }, []);
 
-useEffect(() => {
-  const sp = new URLSearchParams(window.location.search);
-  setPhone(sp.get("phone"));
-}, []);
+  // ✅ page protection
+  useEffect(() => {
+    const grahak = localStorage.getItem("grahakPhone");
+    if (!grahak) {
+      router.push("/login/grahak");
+    }
+  }, [router]);
 
-    const [entries,setEntires]=useState<Entry[]>([]);
+  // ✅ load khata
+  useEffect(() => {
+    const loadKhata = async () => {
+      if (!phone || !malikPhone) return;
 
-    // page protection 
-    useEffect(()=>{
-        const grahak=localStorage.getItem("grahakPhone");
+      const isValidPhone = (phone: string): boolean => {
+        const cleaned = phone.trim();
+        const phoneRegex = /^[6-9]\d{9}$/;
+        return phoneRegex.test(cleaned);
+      };
 
-        if(!grahak){
-            router.push("/login/grahak");
+      if (!isValidPhone(phone)) {
+        showMessage("error", "Invalid customer phone");
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/khata/${phone}?malikPhone=${malikPhone}`
+        );
+
+        const data = await getData<Entry[]>(res, { expectArray: true });
+        setEntires(data);
+
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          showMessage("error", err.message);
+        } else {
+          showMessage("error", "Something went wrong");
         }
-    },[]);
-const [malikPhone, setMalikPhone] = useState<string | null>(null);
-
-useEffect(() => {
-  const sp = new URLSearchParams(window.location.search);
-  setMalikPhone(sp.get("malikPhone"));
-}, []);
-    // load khata if logged in
-   useEffect(() => {
-//   const malikPhone = searchParams.get("malikPhone");
-
-  const loadKhata = async () => {
-    if (!phone || !malikPhone) return;
-
-    const isValidPhone = (phone: string): boolean => {
-      const cleaned = phone.trim();
-      const phoneRegex = /^[6-9]\d{9}$/;
-      return phoneRegex.test(cleaned);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    if (!isValidPhone(phone)) {
-      showMessage("error", "Invalid customer phone");
-      return;
-    }
-
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/khata/${phone}?malikPhone=${malikPhone}`
-      );
-
-      // ✅ ALWAYS EXPECT ARRAY
-      const data = await getData<Entry[]>(res, { expectArray: true });
-
-      setEntires(data);
-
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        showMessage("error", err.message);
-      } else {
-        showMessage("error", "Something went wrong");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  loadKhata();
-}, [phone]); // ✅ removed searchParams
+    loadKhata();
+  }, [phone, malikPhone, showMessage]); // ✅ removed searchParams
 const lastTotal = entries.length > 0 ? entries[entries.length-1].total : 0;
 if(loading)return <div>Loading...</div>
     return (
