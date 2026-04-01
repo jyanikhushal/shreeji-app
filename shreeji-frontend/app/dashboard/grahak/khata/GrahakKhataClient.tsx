@@ -22,11 +22,17 @@ export default function GrahakKhataPage(){
    
 
     const router=useRouter();
-    const searchParams=useSearchParams();
+    // const searchParams=useSearchParams();
     const {showMessage}=useToast();
-    const phone=searchParams.get("phone");
+    // const phone=searchParams.get("phone");
+
     const [loading,setLoading]=useState(true);
-   
+   const [phone, setPhone] = useState<string | null>(null);
+
+useEffect(() => {
+  const sp = new URLSearchParams(window.location.search);
+  setPhone(sp.get("phone"));
+}, []);
 
     const [entries,setEntires]=useState<Entry[]>([]);
 
@@ -38,10 +44,15 @@ export default function GrahakKhataPage(){
             router.push("/login/grahak");
         }
     },[]);
+const [malikPhone, setMalikPhone] = useState<string | null>(null);
 
+useEffect(() => {
+  const sp = new URLSearchParams(window.location.search);
+  setMalikPhone(sp.get("malikPhone"));
+}, []);
     // load khata if logged in
    useEffect(() => {
-  const malikPhone = searchParams.get("malikPhone");
+//   const malikPhone = searchParams.get("malikPhone");
 
   const loadKhata = async () => {
     if (!phone || !malikPhone) return;
@@ -79,7 +90,7 @@ export default function GrahakKhataPage(){
   };
 
   loadKhata();
-}, [phone,searchParams]); // ✅ removed searchParams
+}, [phone]); // ✅ removed searchParams
 const lastTotal = entries.length > 0 ? entries[entries.length-1].total : 0;
 if(loading)return <div>Loading...</div>
     return (
