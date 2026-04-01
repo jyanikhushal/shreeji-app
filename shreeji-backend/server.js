@@ -357,7 +357,13 @@ app.get("/grahak/shops/:phone",validatePhone,async(req,res)=>{
 });
 
 
-// start server
-app.listen(5000,()=>{
-    console.log("Backend running on port 5000");
+// // start server
+// app.listen(5000,()=>{
+//     console.log("Backend running on port 5000");
+// });
+
+// previously i used port 5000 as default but now as render assign ramdn free port ishould change code
+const PORT=process.env.PORT || 5000;
+app.listen(PORT,()=>{
+    console.log(`Backend running on port${PORT}`);
 });
