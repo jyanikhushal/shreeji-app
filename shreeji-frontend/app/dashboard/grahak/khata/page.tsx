@@ -1,5 +1,6 @@
 // will reuse the existing khata UI but in read only mode
 'use client';
+import {Suspense} from 'react';
 export const dynamic = "force-dynamic";
 // all the detail usage of all 4 react hooks are written on top of malik login page
 
@@ -7,6 +8,7 @@ import {useEffect,useState} from  'react';
 import { useRouter,useSearchParams } from 'next/navigation';
 import { useToast } from '@/app/context/ToastContext';
 import {getData} from "@/app/utils/api";
+
  type Entry={
         entryNo: number;
         date: string;
@@ -15,7 +17,15 @@ import {getData} from "@/app/utils/api";
         total: number;
     };
 
-export default function GrahakKhataPage(){
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GrahakKhataPage />
+    </Suspense>
+  );
+}
+
+ function GrahakKhataPage(){
    
 
     const router=useRouter();
