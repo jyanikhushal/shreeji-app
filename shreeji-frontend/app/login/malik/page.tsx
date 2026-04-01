@@ -21,7 +21,7 @@ lets make a list of which of the react hooks are used by which of the pages of m
 
 'use client';  // make sure that the page runs on browser not on server like its necessary as inputs , clicks , navigation all things happen on browser not on server
 
-
+export const dynamic = "force-dynamic";
 import{useState} from 'react';
 import { useRouter } from 'next/navigation'; // navigation tool to move bw pages
 import { useToast } from "@/app/context/ToastContext";

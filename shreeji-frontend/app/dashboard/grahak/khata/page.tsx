@@ -1,6 +1,6 @@
 // will reuse the existing khata UI but in read only mode
 'use client';
-
+export const dynamic = "force-dynamic";
 // all the detail usage of all 4 react hooks are written on top of malik login page
 
 import {useEffect,useState} from  'react';
@@ -76,7 +76,7 @@ export default function GrahakKhataPage(){
   };
 
   loadKhata();
-}, [phone]); // ✅ removed searchParams
+}, [phone,searchParams]); // ✅ removed searchParams
 const lastTotal = entries.length > 0 ? entries[entries.length-1].total : 0;
 if(loading)return <div>Loading...</div>
     return (

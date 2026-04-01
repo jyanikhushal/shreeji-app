@@ -12,7 +12,7 @@ BACKEND WILL HANDLE -->
 
 'use client';
 
-
+export const dynamic = "force-dynamic";
 
 import {useState,useRef,useEffect } from "react";
 // useeffect is needed to load data from backend when page opens

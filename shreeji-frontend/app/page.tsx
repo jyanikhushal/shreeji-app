@@ -1,5 +1,5 @@
 'use client';  // tells next.js that this page runs on browser not server
-
+export const dynamic = "force-dynamic";
 import { useRouter } from 'next/navigation'; //navigation tool to move bw pages
 import {useEffect} from 'react';
 
