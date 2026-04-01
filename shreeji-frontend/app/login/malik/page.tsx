@@ -38,7 +38,7 @@ export default function MalikLoginPage(){
     const [password,setPassword]=useState('');
     const {showMessage}=useToast();
     const router=useRouter(); // getting access to browser's navigation system
-
+    const [startLoading,setStartLoading]=useState(false); // to add loading spinner
     // from here login function starts 
     const handleLogin=async()=>{
       
@@ -59,6 +59,7 @@ export default function MalikLoginPage(){
           showMessage("error","Enter valid phone number");
           return ;
         }
+        setStartLoading(true);
         try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/malik`, {
       method: "POST",
@@ -72,6 +73,7 @@ export default function MalikLoginPage(){
 
     if (!malikData) {
       showMessage("error", "Invalid server response");
+      setStartLoading(false);
       return;
     }
 
@@ -340,6 +342,7 @@ export default function MalikLoginPage(){
           {/* Login button */}
           <button
             onClick={handleLogin}
+            disabled={startLoading}
             style={{
               width:'100%', padding:'15px',
               background:'#2563eb', color:'white',
@@ -349,13 +352,28 @@ export default function MalikLoginPage(){
               display:'flex', alignItems:'center', justifyContent:'center', gap:'10px',
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-              <polyline points="10 17 15 12 10 7"/>
-              <line x1="15" y1="12" x2="3" y2="12"/>
-            </svg>
-            Login
-          </button>
+            
+          
+             {startLoading ? (
+    <>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83">
+          <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.8s" repeatCount="indefinite"/>
+        </path>
+      </svg>
+      Logging in...
+    </>
+  ) : (
+    <>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <polyline points="10 17 15 12 10 7"/>
+        <line x1="15" y1="12" x2="3" y2="12"/>
+      </svg>
+      Login
+    </>
+  )}
+</button>
 
           {/* Back link */}
           <button
