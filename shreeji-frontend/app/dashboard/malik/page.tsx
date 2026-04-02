@@ -234,51 +234,51 @@ return (
       </div>
 
       {/* Right side buttons */}
-      <div style={{ display:'flex', alignItems:'center', gap:'10px', flexShrink:0 }}>
-        <button
-          onClick={() => {
-              resetForm();
-              setShowAddCustomer(true);
-          }}
-          style={{
-            padding:'9px 18px',
-            background:'#2563eb', color:'white',
-            border:'none', borderRadius:'10px',
-            fontSize:'14px', fontWeight:600,
-            cursor:'pointer',
-            display:'flex', alignItems:'center', gap:'7px',
-          }}
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"/>
-            <line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-          New Customer
-        </button>
+      <div style={{ display:'flex', flexDirection:'column', alignItems:'stretch', gap:'8px', flexShrink:0 }}>
+  <button
+    onClick={()=>{
+      localStorage.removeItem("malikPhone");
+      localStorage.removeItem("malik");
+      router.push('/');
+    }}
+    style={{
+      padding:'8px 16px',
+      background:'white', color:'#dc2626',
+      border:'1.5px solid #fca5a5', borderRadius:'10px',
+      fontSize:'13px', fontWeight:500,
+      cursor:'pointer',
+      display:'flex', alignItems:'center', justifyContent:'center', gap:'7px',
+    }}
+  >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+      <polyline points="16 17 21 12 16 7"/>
+      <line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+    Logout
+  </button>
 
-        <button
-          onClick={()=>{
-            localStorage.removeItem("malikPhone");
-            localStorage.removeItem("malik");
-            router.push('/');
-          }}
-          style={{
-            padding:'9px 18px',
-            background:'white', color:'#dc2626',
-            border:'1.5px solid #fca5a5', borderRadius:'10px',
-            fontSize:'14px', fontWeight:500,
-            cursor:'pointer',
-            display:'flex', alignItems:'center', gap:'7px',
-          }}
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          Logout
-        </button>
-      </div>
+  <button
+    onClick={() => {
+      resetForm();
+      setShowAddCustomer(true);
+    }}
+    style={{
+      padding:'8px 16px',
+      background:'#2563eb', color:'white',
+      border:'none', borderRadius:'10px',
+      fontSize:'13px', fontWeight:600,
+      cursor:'pointer',
+      display:'flex', alignItems:'center', justifyContent:'center', gap:'7px',
+    }}
+  >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+    New Customer
+  </button>
+</div>
     </div>
 
     {/* ── CUSTOMER LIST ── */}
