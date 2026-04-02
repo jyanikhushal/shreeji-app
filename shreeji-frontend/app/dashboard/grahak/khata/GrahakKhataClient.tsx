@@ -59,16 +59,24 @@ function GrahakKhataInner() {
 
   const entriesRef = collection(db, 'maliks', malikPhone, 'customers', phone, 'entries');
   const unsubscribe = onSnapshot(entriesRef, (snapshot) => {
-  const data = snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  })) as unknown as Entry[];
+  const data = snapshot.docs.map(doc => {
+  const d = doc.data();
+  console.log("SNAPSHOT DATA:", snapshot.docs.map(d => d.data()));
+  return {
+    entryNo: d.entryNo || 0,
+    date: d.date || '',
+    description: d.description || '',
+    amount: d.amount || 0,
+    total: d.total || 0,
+  };
+});
 
   // Sort by entryNo in JS
-  const sorted = data.sort((a, b) => a.entryNo - b.entryNo);
+  const sorted = data.sort((a, b) => (a.entryNo || 0)- (b.entryNo||0));
   setEntries(sorted);
   setLoading(false);
 }, (err) => {
+  console.error("Firestore error:", err);
   showMessage("error", err.message);
   setLoading(false);
 });
@@ -176,13 +184,13 @@ function GrahakKhataInner() {
           <div style={{ background:'rgba(255,255,255,0.88)', backdropFilter:'blur(16px)', border:'0.5px solid rgba(200,210,240,0.7)', borderRadius:16, padding:'1rem', textAlign:'center' }}>
             <p style={{ margin:0, fontSize:11, color:'#9ca3af', fontWeight:500, marginBottom:4 }}>PURCHASED</p>
             <p style={{ margin:0, fontSize:22, fontWeight:700, color:'#dc2626' }}>
-              ₹{entries.filter(e => !e.description.startsWith('Deposit')).reduce((sum,e) => sum + Math.abs(e.amount), 0)}
+              ₹{entries.filter(e => !(e.description || '').startsWith('Deposit')).reduce((sum,e) => sum + Math.abs(e.amount), 0)}
             </p>
           </div>
           <div style={{ background:'rgba(255,255,255,0.88)', backdropFilter:'blur(16px)', border:'0.5px solid rgba(200,210,240,0.7)', borderRadius:16, padding:'1rem', textAlign:'center' }}>
             <p style={{ margin:0, fontSize:11, color:'#9ca3af', fontWeight:500, marginBottom:4 }}>DEPOSITED</p>
             <p style={{ margin:0, fontSize:22, fontWeight:700, color:'#16a34a' }}>
-              ₹{entries.filter(e => e.description.startsWith('Deposit')).reduce((sum,e) => sum + Math.abs(e.amount), 0)}
+              ₹{entries.filter(e => (e.description || '').startsWith('Deposit')).reduce((sum,e) => sum + Math.abs(e.amount), 0)}
             </p>
           </div>
         </div>
@@ -207,7 +215,7 @@ function GrahakKhataInner() {
             </thead>
             <tbody>
               {entries.map((e, index) => {
-                const isDeposit = e.description.startsWith('Deposit');
+                const isDeposit = (e.description || '').startsWith('Deposit');
                 const isLast = index === entries.length - 1;
                 return (
                   <tr key={e.entryNo} style={{
@@ -216,7 +224,7 @@ function GrahakKhataInner() {
                   }}>
                     <td style={{ padding:'10px 10px', textAlign:'center', fontSize:13, fontWeight:600, color: isDeposit ? '#16a34a' : '#2563eb' }}>{e.entryNo}</td>
                     <td style={{ padding:'10px 10px', textAlign:'center', fontSize:12, color:'#9ca3af', whiteSpace:'nowrap' }}>{e.date}</td>
-                    <td style={{ padding:'10px 10px', fontSize:14, color: isDeposit ? '#16a34a' : '#111827', fontWeight: isDeposit ? 600 : 400 }}>{e.description}</td>
+                    <td style={{ padding:'10px 10px', fontSize:14, color: isDeposit ? '#16a34a' : '#111827', fontWeight: isDeposit ? 600 : 400 }}>{(e.description || '')}</td>
                     <td style={{ padding:'10px 14px', textAlign:'right', fontSize:14, fontWeight:500, color: isDeposit ? '#16a34a' : '#dc2626' }}>
                       {isDeposit ? '-' : '+'}₹{Math.abs(e.amount)}
                     </td>
