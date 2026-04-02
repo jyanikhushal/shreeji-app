@@ -58,19 +58,20 @@ function GrahakKhataInner() {
   }
 
   const entriesRef = collection(db, 'maliks', malikPhone, 'customers', phone, 'entries');
-  const q = query(entriesRef, orderBy('entryNo', 'asc'));
+  const unsubscribe = onSnapshot(entriesRef, (snapshot) => {
+  const data = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  })) as unknown as Entry[];
 
-  const unsubscribe = onSnapshot(q, (snapshot) => {
-    const data = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    })) as unknown as Entry[];
-    setEntries(data);
-    setLoading(false);
-  }, (err) => { // callback parameter to catch error from onsnapshot 
-    showMessage("error", err.message);
-    setLoading(false);
-  });
+  // Sort by entryNo in JS
+  const sorted = data.sort((a, b) => a.entryNo - b.entryNo);
+  setEntries(sorted);
+  setLoading(false);
+}, (err) => {
+  showMessage("error", err.message);
+  setLoading(false);
+});
 
   return () => unsubscribe();
 

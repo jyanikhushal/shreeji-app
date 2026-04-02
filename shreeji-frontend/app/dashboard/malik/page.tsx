@@ -69,13 +69,15 @@ export default function MalikDashboardPage(){
   if (!malikPhone) return;
 
   const customersRef = collection(db, 'maliks', malikPhone, 'customers');
-  const q = query(customersRef, orderBy('name', 'asc'));
-
-  const unsubscribe = onSnapshot(q, (snapshot) => {
+  // No orderBy here — sort manually below
+  const unsubscribe = onSnapshot(customersRef, (snapshot) => {
     const data = snapshot.docs.map(doc => ({
       ...doc.data()
     })) as unknown as Customer[];
-    setCustomers(data);
+
+    // Sort alphabetically in JS
+    const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+    setCustomers(sorted);
   }, (err) => {
     showMessage("error", err.message);
   });
