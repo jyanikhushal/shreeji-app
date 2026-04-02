@@ -257,7 +257,7 @@ function RunningKhataInner(){
   };
 
   const handleEditAmount = async(index:number, newAmount:string) => {
-    if(isSubmitting) return;
+    if(isSubmitting) return; // for avoiding duplicate entry by blocking double click 
     console.log("edit triggered", index, newAmount);
     const row = entries[index];
     const amountNum = Number(newAmount);

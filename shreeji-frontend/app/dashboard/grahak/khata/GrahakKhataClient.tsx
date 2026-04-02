@@ -6,8 +6,8 @@ import {db} from '@/app/firebase';
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/app/context/ToastContext';
-import { getData } from "@/app/utils/api";
-import {onSnapshot,collection,query,orderBy,doc} from 'firebase/firestore'; // as we are using firebase it has onsnapshotlisteners that fires instantly whenver data changes same like trigger
+
+import {onSnapshot,collection} from 'firebase/firestore'; // as we are using firebase it has onsnapshotlisteners that fires instantly whenver data changes same like trigger
 
 type Entry = {
   entryNo: number;

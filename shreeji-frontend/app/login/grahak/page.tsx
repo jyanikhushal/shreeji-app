@@ -1,4 +1,6 @@
+
 'use client';
+
 export const dynamic = "force-dynamic";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -12,8 +14,9 @@ export default function GrahakLoginPage(){
   const [phone,setPhone]=useState('');
   const router=useRouter();
  const {showMessage}=useToast();
+ const [loading,setLoading]=useState(false);
   const handleLogin=async ()=>{
-
+  if(loading)return; // prevent double click
     if(!phone){
         showMessage('error','please enter phone number');
         return ;
@@ -30,6 +33,7 @@ export default function GrahakLoginPage(){
         }
 
     try{
+      setLoading(true); // start loading
       // first we check authentication if correct then save phone no in local storage and redirect to khata page
         const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/grahak`,{
           method:"POST",
@@ -56,6 +60,7 @@ export default function GrahakLoginPage(){
     catch(err){
        console.error(err);
        showMessage("error","Check your internet connection");
+       setLoading(false); // stop loading on an error
     }
     
   };
@@ -274,24 +279,46 @@ export default function GrahakLoginPage(){
 
           {/* View Khata button */}
           <button
-            onClick={handleLogin}
-            style={{
-              width:'100%', padding:'15px',
-              background:'#16a34a', color:'white',
-              border:'none', borderRadius:'12px',
-              fontSize:'17px', fontWeight:600,
-              cursor:'pointer', marginTop:'4px',
-              display:'flex', alignItems:'center', justifyContent:'center', gap:'10px',
-            }}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-              <polyline points="10 9 9 9 8 9"/>
-            </svg>
-            View Khata
+  onClick={handleLogin}
+  disabled={loading}
+  style={{
+    width: '100%',
+    padding: '15px',
+    background: loading ? '#86efac' : '#16a34a',
+    color: 'white',
+    border: 'none',
+    borderRadius: '12px',
+    fontSize: '17px',
+    fontWeight: 600,
+    cursor: loading ? 'not-allowed' : 'pointer',
+    marginTop: '4px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px',
+  }}
+>
+            {loading ? (
+  <>
+    <div style={{
+      width: 16,
+      height: 16,
+      border: '2px solid white',
+      borderTop: '2px solid transparent',
+      borderRadius: '50%',
+      animation: 'spin 0.6s linear infinite'
+    }} />
+    Loading...
+  </>
+) : (
+  <>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+    </svg>
+    View Khata
+  </>
+)}
           </button>
 
           {/* Back button */}
