@@ -61,13 +61,13 @@ function GrahakKhataInner() {
   const unsubscribe = onSnapshot(entriesRef, (snapshot) => {
   const data = snapshot.docs.map(doc => {
   const d = doc.data();
-  console.log("SNAPSHOT DATA:", snapshot.docs.map(d => d.data()));
+
   return {
     entryNo: d.entryNo || 0,
-    date: d.date || '',
     description: d.description || '',
     amount: d.amount || 0,
     total: d.total || 0,
+    date: d.date?.toDate().toLocaleDateString() || '',
   };
 });
 
