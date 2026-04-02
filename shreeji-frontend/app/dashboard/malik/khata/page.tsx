@@ -6,9 +6,10 @@ export const dynamic = "force-dynamic";
 
 import {useState, useRef, useEffect, Suspense} from "react";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/app/context/ToastContext";
-import {getData} from '@/app/utils/api';
+import { useToast } from "@/app/context/ToastContext"; // for Toast notification system which sense 3 type of notifications "error" , "success" ,"info"
+import {getData} from '@/app/utils/api'; // this function takes data from the backend response and sends formatted data as it is expected by the frontend if frontend expects array type then it sends array else object type
 import { isSessionValid,clearSession } from "@/app/utils/session";
+
 type Customer = {
     name: string;
     phone: string;
@@ -82,7 +83,7 @@ function RunningKhataInner(){
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/grahak?malikPhone=${malikPhone}`
         );
-        const data = await getData<Customer[]>(res, { expectArray: true });
+        const data = await getData<Customer[]>(res, { expectArray: true }); // here when frontend sends getdata request it also specifies the type of data it requires 
         const customer = data.find((c) => c.phone === customerPhone);
         if(customer){
           setCustomerName(customer.name);

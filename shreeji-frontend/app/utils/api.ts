@@ -1,3 +1,7 @@
+
+// this function takes data from the backend response and sends formatted data as it is expected by the frontend if frontend expects array type then it sends array else object type
+
+
 export const getData = async <T>(
   res: Response,
   options?: { expectArray?: boolean }

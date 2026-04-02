@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/app/context/ToastContext";
 import{getData} from "@/app/utils/api";
 import { isSessionValid,clearSession } from "@/app/utils/session";
+import {db} from '@/app/firebase';
+import { onSnapshot,collection,query,orderBy } from "firebase/firestore";
 type Customer = {
     name: string;
     phone: string;
@@ -62,36 +64,24 @@ export default function MalikDashboardPage(){
     // 📦 Customer list
     const [customers, setCustomers] = useState<Customer[]>([]);
 
-     useEffect(()=>{
-        const fetchCustomers=async ()=>{
-             const malikPhone = localStorage.getItem("malikPhone");
+     useEffect(() => { // ** replaced fetch customer useeffect with onsnapshot type eliminating try/catch block to ensure auto update of customer when new customer added
+  const malikPhone = localStorage.getItem("malikPhone");
+  if (!malikPhone) return;
 
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/grahak?malikPhone=${malikPhone}`
-    );
+  const customersRef = collection(db, 'maliks', malikPhone, 'customers');
+  const q = query(customersRef, orderBy('name', 'asc'));
 
-    // ✅ expect ARRAY
-    const data = await getData<Customer[]>(res, { expectArray: true });
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const data = snapshot.docs.map(doc => ({
+      ...doc.data()
+    })) as unknown as Customer[];
+    setCustomers(data);
+  }, (err) => {
+    showMessage("error", err.message);
+  });
 
-    const sorted = data.sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-
-    setCustomers(sorted);
-
-  } catch (err: unknown) {
-    console.error("Failed to load customers", err);
-
-    if (err instanceof Error) {
-      showMessage("error", err.message);
-    }
-  }
-        };
-
-        fetchCustomers();
-     },[]);
-
+  return () => unsubscribe();
+}, []);
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -147,18 +137,20 @@ export default function MalikDashboardPage(){
   resetForm();
   setShowAddCustomer(false);
 
-  // 🔄 refresh list
-  const updated = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/grahak?malikPhone=${malikPhone}`
-  );
+  // as onsnapshot handles the auto update the list we can remove the manual code to refresh the list
 
-  const updatedData = await getData<Customer[]>(updated, { expectArray: true });
+  // // 🔄 refresh list
+  // const updated = await fetch(
+  //   `${process.env.NEXT_PUBLIC_API_URL}/grahak?malikPhone=${malikPhone}`
+  // );
 
-  const sorted = updatedData.sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  // const updatedData = await getData<Customer[]>(updated, { expectArray: true });
 
-  setCustomers(sorted);
+  // const sorted = updatedData.sort((a, b) =>
+  //   a.name.localeCompare(b.name)
+  // );
+
+  // setCustomers(sorted);
 
   router.push(`/dashboard/malik/khata?phone=${phone}`);
 

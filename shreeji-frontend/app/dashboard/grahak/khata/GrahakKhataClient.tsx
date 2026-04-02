@@ -2,10 +2,12 @@
 'use client';
 export const dynamic = "force-dynamic";
 
+import {db} from '@/app/firebase';
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/app/context/ToastContext';
 import { getData } from "@/app/utils/api";
+import {onSnapshot,collection,query,orderBy,doc} from 'firebase/firestore'; // as we are using firebase it has onsnapshotlisteners that fires instantly whenver data changes same like trigger
 
 type Entry = {
   entryNo: number;
@@ -41,40 +43,38 @@ function GrahakKhataInner() {
   }, [router]);
 
   // load khata
-  useEffect(() => {
-    const loadKhata = async () => {
-      if (!phone || !malikPhone) return;
+  useEffect(() => { // ***changed the loadkhata function    Look carefully the try and catch is replaced by onsnapshot as try/catch is a one time async call but onsnashot fires multiple times aos catch cant catch error from onsnapshot rather we have added callback parameter after onsnapshot to catch error
+  if (!phone || !malikPhone) return;
 
-      const isValidPhone = (p: string): boolean => {
-        const cleaned = p.trim();
-        const phoneRegex = /^[6-9]\d{9}$/;
-        return phoneRegex.test(cleaned);
-      };
+  const isValidPhone = (p: string): boolean => {
+    const cleaned = p.trim();
+    const phoneRegex = /^[6-9]\d{9}$/;
+    return phoneRegex.test(cleaned);
+  };
 
-      if (!isValidPhone(phone)) {
-        showMessage("error", "Invalid customer phone");
-        return;
-      }
+  if (!isValidPhone(phone)) {
+    showMessage("error", "Invalid customer phone");
+    return;
+  }
 
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/khata/${phone}?malikPhone=${malikPhone}`
-        );
-        const data = await getData<Entry[]>(res, { expectArray: true });
-        setEntries(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          showMessage("error", err.message);
-        } else {
-          showMessage("error", "Something went wrong");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+  const entriesRef = collection(db, 'maliks', malikPhone, 'customers', phone, 'entries');
+  const q = query(entriesRef, orderBy('entryNo', 'asc'));
 
-    loadKhata();
-  }, [phone, malikPhone, showMessage]);
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const data = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as unknown as Entry[];
+    setEntries(data);
+    setLoading(false);
+  }, (err) => { // callback parameter to catch error from onsnapshot 
+    showMessage("error", err.message);
+    setLoading(false);
+  });
+
+  return () => unsubscribe();
+
+}, [phone, malikPhone, showMessage]);
 
   const lastTotal = entries.length > 0 ? entries[entries.length - 1].total : 0;
 
