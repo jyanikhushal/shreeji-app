@@ -9,10 +9,22 @@ export function saveSession(phone:string,role:"malik"|"grahak"){
 
 }
 
-export function isSessionValid(role:"malik" |"grahak"):boolean{
-    const expiry=localStorage.getItem(`${role}SessionExpiry`);
-    if(!expiry)return false;
-    return Date.now()<Number(expiry); // if current date is less that expiresAt then session is valid else not
+export function isSessionValid(role: "malik" | "grahak"): boolean {
+  const expiry = localStorage.getItem(`${role}SessionExpiry`);
+  const phone = localStorage.getItem(`${role}Phone`);
+  
+  // ✅ BOTH must exist and expiry must be valid
+  if (!expiry || !phone) return false;
+  
+  const valid = Date.now() < Number(expiry);
+  
+  // ✅ Auto-clean if expiry exists but is stale or phone is missing
+  if (!valid) {
+    localStorage.removeItem(`${role}SessionExpiry`);
+    localStorage.removeItem(`${role}Phone`);
+  }
+  
+  return valid;
 }
 
 export function clearSession(role: "malik" | "grahak") {

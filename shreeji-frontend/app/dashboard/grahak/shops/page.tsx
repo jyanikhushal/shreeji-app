@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/context/ToastContext";
 import { getData } from "@/app/utils/api";
-import { isSessionValid } from "@/app/utils/session";
+import { isSessionValid,clearSession } from "@/app/utils/session";
 type Shop = {
   malikPhone: string;
   shopName: string;
@@ -212,8 +212,8 @@ return (
 
       <button
         onClick={() => {
-          localStorage.removeItem("grahakPhone");
-          router.push('/');
+          clearSession("grahak");
+router.replace("/login/grahak");
         }}
         style={{
           padding: '9px 16px',
