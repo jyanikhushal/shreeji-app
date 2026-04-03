@@ -147,8 +147,9 @@ if(shops.length===0){
         </p>
         <button
           onClick={() => {
-            localStorage.removeItem("grahakPhone");
-            router.push('/');
+           clearSession("grahak");
+           router.replace("/login/grahak");
+
           }}
           style={{
             width: '100%', padding: '12px',
