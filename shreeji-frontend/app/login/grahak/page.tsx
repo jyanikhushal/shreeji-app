@@ -26,13 +26,19 @@ export default function GrahakLoginPage(){
  const {showMessage}=useToast();
  const [loading,setLoading]=useState(false);
    const cleanedPhone=phone.trim();
+   const [mounted, setMounted] = useState(false);
+
+   useEffect(()=>{
+    setMounted(true);
+   },[]);
  
  useEffect(()=>{
+  if(!mounted)return; 
   if(isSessionValid("grahak")){
     // saveSession(cleanedPhone);
         router.push("/dashboard/grahak/shops");
       }
- },[router]);
+ },[mounted,router]);
 
   const handleLogin=async ()=>{ 
     // this runs when login button is pressed so session check should bew outside it
