@@ -83,7 +83,9 @@ export default function GrahakLoginPage(){
     showMessage("success", "Login successful");
 
     // localStorage.setItem("grahakPhone", phone);
+    console.log("Before saving session:", cleanedPhone);
      saveSession(cleanedPhone); // session saving always after full api success
+     console.log("After saving session");
      setLoading(false);
     router.push("/dashboard/grahak/shops");
     }
