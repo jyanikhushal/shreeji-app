@@ -26,7 +26,7 @@ export default function GrahakLoginPage(){
  const {showMessage}=useToast();
  const [loading,setLoading]=useState(false);
    const cleanedPhone=phone.trim();
-   const [mounted, setMounted] = useState(false);
+  //  const [mounted, setMounted] = useState(false);
 
   //  useEffect(()=>{
   //   setMounted(true);
@@ -36,7 +36,7 @@ export default function GrahakLoginPage(){
   // if(!mounted)return; 
   if(isSessionValid("grahak")){
     // saveSession(cleanedPhone);
-        router.push("/dashboard/grahak/shops");
+        router.replace("/dashboard/grahak/shops");
       }
  },[router]);
 

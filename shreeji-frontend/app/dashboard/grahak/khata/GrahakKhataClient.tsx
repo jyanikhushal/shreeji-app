@@ -46,7 +46,7 @@ useEffect(() => {
   }
 
   setAuthChecked(true);
-}, [router]);
+}, []);
 
   // load khata
   useEffect(() => { // ***changed the loadkhata function    Look carefully the try and catch is replaced by onsnapshot as try/catch is a one time async call but onsnashot fires multiple times so catch cant catch error from onsnapshot rather we have added callback parameter after onsnapshot to catch error

@@ -46,7 +46,7 @@ useEffect(() => {
   setGrahakPhone(phone);
   setAuthChecked(true);
 
-}, [router]);
+}, []);
 // const grahakPhone = localStorage.getItem("grahakPhone");
 
 
