@@ -2,37 +2,52 @@
 'use client';
 
 export const dynamic = "force-dynamic";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/context/ToastContext";
 import{getData} from "@/app/utils/api";
+import { saveSession,isSessionValid } from "@/app/utils/session";
+
 type Grahak = {
   phone: string;
   name?: string;
 };
-export default function GrahakLoginPage(){
-  const [phone,setPhone]=useState('');
-  const router=useRouter();
- const {showMessage}=useToast();
- const [loading,setLoading]=useState(false);
-  const handleLogin=async ()=>{
-  if(loading)return; // prevent double click
-    if(!phone){
-        showMessage('error','please enter phone number');
-        return ;
-    }
-    // phone no validation
+
+  // phone no validation
         const isValidPhone=(phone:string):boolean=>{
           const cleaned=phone.trim();
           const phoneRegex=/^[6-9]\d{9}$/;
           return phoneRegex.test(cleaned);
         };
+
+export default function GrahakLoginPage(){
+  const [phone,setPhone]=useState('');
+  const router=useRouter();
+ const {showMessage}=useToast();
+ const [loading,setLoading]=useState(false);
+ 
+ useEffect(()=>{
+  if(isSessionValid()){
+        router.replace("/dashboard/grahak/shops");
+      }
+ },[router]);
+
+  const handleLogin=async ()=>{ 
+    // this runs when login button is pressed so session check should bew outside it
+  if(loading)return; // prevent double click
+    if(!phone.trim()){
+        showMessage('error','please enter phone number');
+        return ;
+    }
+  
         if(!isValidPhone(phone)){
           showMessage("error","Enter valid phone number");
           return ;
         }
+        const cleanedPhone=phone.trim();
 
     try{
+      
       setLoading(true); // start loading
       // first we check authentication if correct then save phone no in local storage and redirect to khata page
         const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/grahak`,{
@@ -40,26 +55,43 @@ export default function GrahakLoginPage(){
           headers:{
             "Content-Type":"application/json"
           },
-          body:JSON.stringify({phone})
-        });
+          body:JSON.stringify({phone:cleanedPhone}),
+          
+        }); 
 
-        // 🔥 USE HELPER (no res.json)
-    const grahakData = await getData<Grahak>(res);
+        // 🔥 USE HELPER (no res.json)  also add Try/Catch around getdata so if API fails it goes to catch
+        let grahakData:Grahak|undefined ;
+        try{
+           grahakData = await getData<Grahak>(res);
+        }catch(err:unknown){
+          if(err instanceof Error){
+            showMessage("error",err.message);
+          }else{
+            showMessage("error","Server Issue");
+          } setLoading(false);   return;
+        }
+    // const grahakData = await getData<Grahak>(res);
 
     if (!grahakData) {
       showMessage("error", "Invalid server response");
+      setLoading(false);
       return;
     }
 
     showMessage("success", "Login successful");
 
-    localStorage.setItem("grahakPhone", phone);
-
+    // localStorage.setItem("grahakPhone", phone);
+     saveSession(cleanedPhone); // session saving always after full api success
+     setLoading(false);
     router.push("/dashboard/grahak/shops");
     }
-    catch(err){
+    catch(err:unknown){
        console.error(err);
-       showMessage("error","Check your internet connection");
+       if(err instanceof Error){
+        showMessage("error",err.message);
+       }else{
+        showMessage("error","Something went wrong");
+       }
        setLoading(false); // stop loading on an error
     }
     
