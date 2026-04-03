@@ -75,6 +75,7 @@ export default function MalikLoginPage(){
     if (!malikData) {
       showMessage("error", "Invalid server response");
       // router.replace("/login/malik");
+      setPassword("");
       setStartLoading(false);
       return;
     }
@@ -96,13 +97,14 @@ export default function MalikLoginPage(){
     } else {
       showMessage("error", "Something went wrong");
     }
+    
+    setPassword('');
+  }
+  finally{
+    setStartLoading(false); // always runs no matter what
   }
     
-        // // if both filled then update the console and then just change the url to /dashboard/malik without reloading the page
-        // console.log('malik login');
-        // console.log(phone,password);
-
-        // router.push('/dashboard/malik');
+   
     };
 
 // here login func ends and now frontend page building starts 
