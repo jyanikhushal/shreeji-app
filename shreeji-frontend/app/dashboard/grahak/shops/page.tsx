@@ -26,10 +26,11 @@ export default function GrahakShopsPage() {
   // 🔐 Protect page
  useEffect(() => {
   if (!isSessionValid("grahak")) {
-    router.replace("/login/grahak");
+    router.push("/login/grahak");
   } else {
     const phone = localStorage.getItem("grahakPhone");
     setGrahakPhone(phone);
+    console.log("grahak phone:",phone);
   }
 }, [router]);
 // const grahakPhone = localStorage.getItem("grahakPhone");
