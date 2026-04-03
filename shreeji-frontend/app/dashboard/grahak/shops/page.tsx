@@ -17,6 +17,8 @@ export default function GrahakShopsPage() {
   const [shops, setShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(true);
   const {showMessage}=useToast();
+
+
   const [grahakPhone, setGrahakPhone] = useState<string | null>(null);
   useEffect(() => {
   if (!loading && shops.length === 0) {
@@ -24,22 +26,34 @@ export default function GrahakShopsPage() {
   }
 }, [shops.length, loading]);
   // 🔐 Protect page
-  let phone;
- useEffect(() => {
-  if (!isSessionValid("grahak")) {
-    router.push("/login/grahak");
-  } else {
-     phone = localStorage.getItem("grahakPhone");
-    setGrahakPhone(phone);
-    router.push("/dashboard/grahak/shops");
-    console.log("grahak phone:",phone);
-    
+ const [authChecked, setAuthChecked] = useState(false);
+
+useEffect(() => {
+  const valid = isSessionValid("grahak");
+
+  if (!valid) {
+    router.replace("/login/grahak");
+    return;
   }
+
+  const phone = localStorage.getItem("grahakPhone");
+
+  if (!phone) {
+    router.replace("/login/grahak");
+    return;
+  }
+
+  setGrahakPhone(phone);
+  setAuthChecked(true);
+
 }, [router]);
 // const grahakPhone = localStorage.getItem("grahakPhone");
-  // 📦 Fetch shops
+
+
+
+  //📦Fetch shops
   useEffect(() => {
-    if(!phone)return;
+    if(!grahakPhone || !authChecked)return;
     const fetchShops = async () => {
       
 

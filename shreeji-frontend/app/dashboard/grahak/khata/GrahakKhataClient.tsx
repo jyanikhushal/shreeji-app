@@ -35,15 +35,22 @@ function GrahakKhataInner() {
   }, []);
 
   // page protection
-  useEffect(() => {
-    if (!isSessionValid("grahak")) {
-  router.replace("/login/grahak");
-}
-  }, [router]);
+  const [authChecked, setAuthChecked] = useState(false);
+
+useEffect(() => {
+  const valid = isSessionValid("grahak");
+
+  if (!valid) {
+    router.replace("/login/grahak");
+    return;
+  }
+
+  setAuthChecked(true);
+}, [router]);
 
   // load khata
   useEffect(() => { // ***changed the loadkhata function    Look carefully the try and catch is replaced by onsnapshot as try/catch is a one time async call but onsnashot fires multiple times so catch cant catch error from onsnapshot rather we have added callback parameter after onsnapshot to catch error
-  if (!phone || !malikPhone) return;
+  if (!phone || !malikPhone || !authChecked) return;
 
   const isValidPhone = (p: string): boolean => {
     const cleaned = p.trim();
