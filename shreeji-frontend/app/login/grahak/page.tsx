@@ -25,9 +25,11 @@ export default function GrahakLoginPage(){
   const router=useRouter();
  const {showMessage}=useToast();
  const [loading,setLoading]=useState(false);
+   const cleanedPhone=phone.trim();
  
  useEffect(()=>{
   if(isSessionValid()){
+    saveSession(cleanedPhone);
         router.replace("/dashboard/grahak/shops");
       }
  },[router]);
@@ -44,7 +46,7 @@ export default function GrahakLoginPage(){
           showMessage("error","Enter valid phone number");
           return ;
         }
-        const cleanedPhone=phone.trim();
+      
 
     try{
       
