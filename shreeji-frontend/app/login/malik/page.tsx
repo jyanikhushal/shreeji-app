@@ -74,6 +74,7 @@ export default function MalikLoginPage(){
 
     if (!malikData) {
       showMessage("error", "Invalid server response");
+      router.replace("/login/malik");
       setStartLoading(false);
       return;
     }
