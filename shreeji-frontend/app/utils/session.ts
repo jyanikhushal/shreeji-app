@@ -15,8 +15,7 @@ export function isSessionValid(role:"malik" |"grahak"):boolean{
     return Date.now()<Number(expiry); // if current date is less that expiresAt then session is valid else not
 }
 
-export function clearSession(){
-    localStorage.removeItem("malikPhone");
-    localStorage.removeItem("malik");
-    localStorage.removeItem("malikSessionExpiry");
+export function clearSession(role: "malik" | "grahak") {
+  localStorage.removeItem(`${role}Phone`);
+  localStorage.removeItem(`${role}SessionExpiry`);
 }

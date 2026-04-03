@@ -37,7 +37,7 @@ function RunningKhataInner(){
  // page protection
   useEffect(()=>{
     if (!isSessionValid("malik")) {
-    clearSession();
+    clearSession("malik");
     router.push("/login/malik");
   }
   },[]);
@@ -45,7 +45,7 @@ function RunningKhataInner(){
   useEffect(() => {
   const interval = setInterval(() => {
     if (!isSessionValid("malik")) {
-      clearSession();
+      clearSession("malik");
       showMessage("error", "Session expired. Please login again.");
       router.push("/login/malik");
     }

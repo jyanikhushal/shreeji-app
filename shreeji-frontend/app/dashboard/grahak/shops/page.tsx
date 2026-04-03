@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/context/ToastContext";
 import { getData } from "@/app/utils/api";
+import { isSessionValid } from "@/app/utils/session";
 type Shop = {
   malikPhone: string;
   shopName: string;
@@ -23,13 +24,12 @@ export default function GrahakShopsPage() {
   }
 }, [shops.length, loading]);
   // 🔐 Protect page
-  useEffect(() => {
-  const storedPhone = localStorage.getItem("grahakPhone");
-
-  if (!storedPhone) {
-    router.push("/login/grahak");
+ useEffect(() => {
+  if (!isSessionValid("grahak")) {
+    router.replace("/login/grahak");
   } else {
-    setGrahakPhone(storedPhone);
+    const phone = localStorage.getItem("grahakPhone");
+    setGrahakPhone(phone);
   }
 }, [router]);
 // const grahakPhone = localStorage.getItem("grahakPhone");

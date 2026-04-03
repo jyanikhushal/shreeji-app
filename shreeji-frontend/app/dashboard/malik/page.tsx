@@ -43,7 +43,7 @@ export default function MalikDashboardPage(){
     // 🔐 Protect page
     useEffect(()=>{
         if(!isSessionValid("malik")){
-          clearSession();
+          clearSession("malik");
           router.push("/login/malik");
         }
     },[]);
@@ -52,7 +52,7 @@ export default function MalikDashboardPage(){
     useEffect(() => {
   const interval = setInterval(() => {
     if (!isSessionValid("malik")) {
-      clearSession();
+      clearSession("malik");
       showMessage("error", "Session expired. Please login again.");
       router.push("/login/malik");
     }

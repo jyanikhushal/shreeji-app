@@ -6,7 +6,7 @@ import {db} from '@/app/firebase';
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/app/context/ToastContext';
-
+import { isSessionValid,clearSession } from '@/app/utils/session';
 import {onSnapshot,collection} from 'firebase/firestore'; // as we are using firebase it has onsnapshotlisteners that fires instantly whenver data changes same like trigger
 
 type Entry = {
@@ -36,10 +36,9 @@ function GrahakKhataInner() {
 
   // page protection
   useEffect(() => {
-    const grahak = localStorage.getItem("grahakPhone");
-    if (!grahak) {
-      router.push("/login/grahak");
-    }
+    if (!isSessionValid("grahak")) {
+  router.replace("/login/grahak");
+}
   }, [router]);
 
   // load khata
@@ -153,8 +152,8 @@ function GrahakKhataInner() {
           )}
           <button
             onClick={() => {
-              localStorage.removeItem("grahakPhone");
-              router.push('/');
+              clearSession("grahak");
+                  router.replace("/login/grahak");
             }}
             style={{
               padding:'9px 16px',
