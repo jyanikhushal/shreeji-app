@@ -8,6 +8,7 @@ import{getData} from "@/app/utils/api";
 import { isSessionValid,clearSession } from "@/app/utils/session";
 import {db} from '@/app/firebase';
 import { onSnapshot,collection,query,orderBy } from "firebase/firestore";
+
 type Customer = {
     name: string;
     phone: string;
@@ -231,8 +232,7 @@ return (
       <div style={{ display:'flex', flexDirection:'column', alignItems:'stretch', gap:'8px', flexShrink:0 }}>
   <button
     onClick={()=>{
-      localStorage.removeItem("malikPhone");
-      localStorage.removeItem("malik");
+      clearSession("malik");
       router.push('/');
     }}
     style={{
