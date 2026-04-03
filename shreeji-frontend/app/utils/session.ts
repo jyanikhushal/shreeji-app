@@ -30,4 +30,8 @@ export function isSessionValid(role: "malik" | "grahak"): boolean {
 export function clearSession(role: "malik" | "grahak") {
   localStorage.removeItem(`${role}Phone`);
   localStorage.removeItem(`${role}SessionExpiry`);
+
+  if(role==="malik"){
+    localStorage.removeItem("malik");
+  }
 }
