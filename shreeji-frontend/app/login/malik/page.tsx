@@ -82,7 +82,7 @@ export default function MalikLoginPage(){
 
     localStorage.setItem("malik", JSON.stringify(malikData));
     // localStorage.setItem("malikPhone", phone);
-    saveSession(phone);
+    saveSession(phone,"malik");
     
 
     router.push("/dashboard/malik");

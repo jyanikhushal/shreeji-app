@@ -27,12 +27,12 @@ export default function GrahakLoginPage(){
  const [loading,setLoading]=useState(false);
    const cleanedPhone=phone.trim();
  
-//  useEffect(()=>{
-//   if(isSessionValid()){
-//     // saveSession(cleanedPhone);
-//         router.push("/dashboard/grahak/shops");
-//       }
-//  },[router]);
+ useEffect(()=>{
+  if(isSessionValid("grahak")){
+    // saveSession(cleanedPhone);
+        router.push("/dashboard/grahak/shops");
+      }
+ },[router]);
 
   const handleLogin=async ()=>{ 
     // this runs when login button is pressed so session check should bew outside it
@@ -84,7 +84,7 @@ export default function GrahakLoginPage(){
 
     // localStorage.setItem("grahakPhone", phone);
     console.log("Before saving session:", cleanedPhone);
-     saveSession(cleanedPhone); // session saving always after full api success
+     saveSession(cleanedPhone,"grahak"); // session saving always after full api success
      console.log("After saving session");
      setLoading(false);
     router.push("/dashboard/grahak/shops");
