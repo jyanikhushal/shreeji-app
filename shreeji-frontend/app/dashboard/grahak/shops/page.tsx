@@ -12,72 +12,66 @@ type Shop = {
 };
 
 export default function GrahakShopsPage() {
-  const router = useRouter();
+ const router = useRouter();
+  const { showMessage } = useToast();
 
   const [shops, setShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(true);
-  const {showMessage}=useToast();
-
-
   const [grahakPhone, setGrahakPhone] = useState<string | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  // ✅ FIX 1: Single auth effect — check session AND read phone together
+  // so they are always in sync, no split reads
   useEffect(() => {
-  if (!loading && shops.length === 0) {
-    showMessage("info", "No shops found");
-  }
-}, [shops.length, loading]);
-  // 🔐 Protect page
- const [authChecked, setAuthChecked] = useState(false);
+    if (!isSessionValid("grahak")) {
+      router.replace("/login/grahak");
+      return;
+    }
 
-useEffect(() => {
-  const valid = isSessionValid("grahak");
+    const phone = localStorage.getItem("grahakPhone");
+    if (!phone) {
+      // Session expiry exists but phone missing — clear and redirect
+      router.replace("/login/grahak");
+      return;
+    }
 
-  if (!valid) {
-    router.replace("/login/grahak");
-    return;
-  }
+    setGrahakPhone(phone);
+    setAuthChecked(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const phone = localStorage.getItem("grahakPhone");
-
-  if (!phone) {
-    router.replace("/login/grahak");
-    return;
-  }
-
-  setGrahakPhone(phone);
-  setAuthChecked(true);
-
-}, []);
-// const grahakPhone = localStorage.getItem("grahakPhone");
-
-
-
-  //📦Fetch shops
+  // ✅ FIX 2: Show "no shops" only after auth+load is fully done
   useEffect(() => {
-    if(!grahakPhone || !authChecked)return;
+    if (authChecked && !loading && shops.length === 0) {
+      showMessage("info", "No shops found");
+    }
+  }, [shops.length, loading, authChecked]);
+
+  // ✅ FIX 3: Correct dependency array — include authChecked
+  useEffect(() => {
+    if (!grahakPhone || !authChecked) return;
+
     const fetchShops = async () => {
-      
-
       try {
-        const res = await fetch( // fetch req
+        const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/grahak/shops/${grahakPhone}`
         );
         const data = await getData<Shop[]>(res, { expectArray: true });
-
-           setShops(data);
+        setShops(data);
       } catch (err) {
         console.error("Error fetching shops:", err);
         if (err instanceof Error) {
-        showMessage("error", err.message);
-      } else {
-        showMessage("error", "Error in fetching shops");
-      }
+          showMessage("error", err.message);
+        } else {
+          showMessage("error", "Error in fetching shops");
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchShops();
-  }, [grahakPhone]);
+  }, [grahakPhone, authChecked]); // ✅ authChecked added
 
   // ⏳ Loading UI
 if (loading) {

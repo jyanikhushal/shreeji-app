@@ -19,77 +19,77 @@ type Entry = {
 
 // ── INNER COMPONENT (does all the real work) ──
 function GrahakKhataInner() {
-  const router = useRouter();
+   const router = useRouter();
   const { showMessage } = useToast();
 
   const [loading, setLoading] = useState(true);
   const [phone, setPhone] = useState<string | null>(null);
   const [malikPhone, setMalikPhone] = useState<string | null>(null);
   const [entries, setEntries] = useState<Entry[]>([]);
+  const [authChecked, setAuthChecked] = useState(false);
 
-  // get params safely from browser
+  // ✅ FIX 1: Get URL params from window
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search);
     setPhone(sp.get("phone"));
     setMalikPhone(sp.get("malikPhone"));
   }, []);
 
-  // page protection
-  const [authChecked, setAuthChecked] = useState(false);
-
-useEffect(() => {
-  const valid = isSessionValid("grahak");
-
-  if (!valid) {
-    router.replace("/login/grahak");
-    return;
-  }
-
-  setAuthChecked(true);
-}, []);
-
-  // load khata
-  useEffect(() => { // ***changed the loadkhata function    Look carefully the try and catch is replaced by onsnapshot as try/catch is a one time async call but onsnashot fires multiple times so catch cant catch error from onsnapshot rather we have added callback parameter after onsnapshot to catch error
-  if (!phone || !malikPhone || !authChecked) return;
+  // ✅ FIX 2: Auth check — separate, runs once on mount
+  useEffect(() => {
+    if (!isSessionValid("grahak")) {
+      router.replace("/login/grahak");
+      return;
+    }
+    setAuthChecked(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const isValidPhone = (p: string): boolean => {
-    const cleaned = p.trim();
     const phoneRegex = /^[6-9]\d{9}$/;
-    return phoneRegex.test(cleaned);
+    return phoneRegex.test(p.trim());
   };
 
-  if (!isValidPhone(phone)) {
-    showMessage("error", "Invalid customer phone");
-    return;
-  }
+  // ✅ FIX 3: Firestore listener — only runs when ALL 3 are ready
+  useEffect(() => {
+    if (!phone || !malikPhone || !authChecked) return;
 
-  const entriesRef = collection(db, 'maliks', malikPhone, 'customers', phone, 'entries');
-  const unsubscribe = onSnapshot(entriesRef, (snapshot) => {
-  const data = snapshot.docs.map(doc => {
-  const d = doc.data();
+    if (!isValidPhone(phone)) {
+      showMessage("error", "Invalid customer phone");
+      return;
+    }
 
-  return {
-    entryNo: d.entryNo || 0,
-    description: d.description || '',
-    amount: d.amount || 0,
-    total: d.total || 0,
-    date: d.date?.toDate().toLocaleDateString() || '',
-  };
-});
+    const entriesRef = collection(
+      db, 'maliks', malikPhone, 'customers', phone, 'entries'
+    );
 
-  // Sort by entryNo in JS
-  const sorted = data.sort((a, b) => (a.entryNo || 0)- (b.entryNo||0));
-  setEntries(sorted);
-  setLoading(false);
-}, (err) => {
-  console.error("Firestore error:", err);
-  showMessage("error", err.message);
-  setLoading(false);
-});
+    const unsubscribe = onSnapshot(
+      entriesRef,
+      (snapshot) => {
+        const data = snapshot.docs.map(doc => {
+          const d = doc.data();
+          return {
+            entryNo: d.entryNo || 0,
+            description: d.description || '',
+            amount: d.amount || 0,
+            total: d.total || 0,
+            date: d.date?.toDate().toLocaleDateString() || '',
+          };
+        });
 
-  return () => unsubscribe();
+        const sorted = data.sort((a, b) => (a.entryNo || 0) - (b.entryNo || 0));
+        setEntries(sorted);
+        setLoading(false);
+      },
+      (err) => {
+        console.error("Firestore error:", err);
+        showMessage("error", err.message);
+        setLoading(false);
+      }
+    );
 
-}, [phone, malikPhone, showMessage]);
+    return () => unsubscribe();
+  }, [phone, malikPhone, authChecked]); // ✅ all 3 dependencies correct
 
   const lastTotal = entries.length > 0 ? entries[entries.length - 1].total : 0;
 

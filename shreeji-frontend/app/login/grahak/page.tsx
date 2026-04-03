@@ -2,7 +2,7 @@
 'use client';
 
 export const dynamic = "force-dynamic";
-import { useState,useEffect } from "react";
+import { useState,useEffect ,useRef} from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/context/ToastContext";
 import{getData} from "@/app/utils/api";
@@ -25,30 +25,32 @@ export default function GrahakLoginPage(){
   const router=useRouter();
  const {showMessage}=useToast();
  const [loading,setLoading]=useState(false);
-   const cleanedPhone=phone.trim();
-  //  const [mounted, setMounted] = useState(false);
+   
+ // ✅ FIX 1: Use a ref to track if redirect already happened,
+  // preventing double-execution of the effect in strict mode or re-renders
+  const redirected = useRef(false);
 
-  //  useEffect(()=>{
-  //   setMounted(true);
-  //  },[]);
- 
- useEffect(()=>{
-  // if(!mounted)return; 
-  if(isSessionValid("grahak")){
-    // saveSession(cleanedPhone);
-        router.replace("/dashboard/grahak/shops");
-      }
- },[router]);
-
+  useEffect(() => {
+    // ✅ FIX 2: Only redirect once, and only after confirming session is valid
+    if (redirected.current) return;
+    if (isSessionValid("grahak")) {
+      redirected.current = true;
+      router.replace("/dashboard/grahak/shops");
+    }
+    // ✅ FIX 3: No dependencies — run once on mount only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handleLogin=async ()=>{ 
     // this runs when login button is pressed so session check should bew outside it
   if(loading)return; // prevent double click
-    if(!phone.trim()){
+      const cleanedPhone = phone.trim();
+
+    if(!cleanedPhone){
         showMessage('error','please enter phone number');
         return ;
     }
   
-        if(!isValidPhone(phone)){
+        if(!isValidPhone(cleanedPhone)){
           showMessage("error","Enter valid phone number");
           return ;
         }
