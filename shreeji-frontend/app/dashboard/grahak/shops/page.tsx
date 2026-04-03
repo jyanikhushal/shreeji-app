@@ -27,10 +27,20 @@ export default function GrahakShopsPage() {
  useEffect(() => {
   if (!isSessionValid("grahak")) {
     router.replace("/login/grahak");
-  } else {
-    const phone = localStorage.getItem("grahakPhone");
-    setGrahakPhone(phone);
+    return;
   }
+
+  const phone = localStorage.getItem("grahakPhone");
+
+  if (!phone) {
+    console.log("❌ Phone missing in localStorage");
+    router.replace("/login/grahak");
+    return;
+  }
+
+  console.log("✅ Phone loaded:", phone);
+  setGrahakPhone(phone);
+
 }, [router]);
 // const grahakPhone = localStorage.getItem("grahakPhone");
   // 📦 Fetch shops
