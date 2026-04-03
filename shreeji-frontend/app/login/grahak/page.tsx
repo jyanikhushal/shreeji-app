@@ -29,8 +29,8 @@ export default function GrahakLoginPage(){
  
  useEffect(()=>{
   if(isSessionValid()){
-    saveSession(cleanedPhone);
-        router.replace("/dashboard/grahak/shops");
+    // saveSession(cleanedPhone);
+        router.push("/dashboard/grahak/shops");
       }
  },[router]);
 
