@@ -40,6 +40,7 @@ export default function MalikLoginPage(){
     const {showMessage}=useToast();
     const router=useRouter(); // getting access to browser's navigation system
     const [startLoading,setStartLoading]=useState(false); // to add loading spinner
+    const [showPassword,setShowPassword]=useState(false); // for eye toggle view inside the password cell
     // from here login function starts 
     const handleLogin=async()=>{
       
@@ -319,31 +320,66 @@ export default function MalikLoginPage(){
 
           {/* Password */}
           <div style={{ display:'flex', flexDirection:'column', gap:'6px' }}>
-            <label style={{ fontSize:'13px', fontWeight:500, color:'#374151' }}>
-              Password
-            </label>
-            <div style={{
-              display:'flex', alignItems:'center', gap:'10px',
-              border:'1.5px solid #bfdbfe', borderRadius:'10px',
-              padding:'0 14px', background:'white',
-            }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-              <input
-                type="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{
-                  flex:1, border:'none', outline:'none',
-                  fontSize:'15px', padding:'13px 0',
-                  background:'transparent', color:'#111827',
-                }}
-              />
-            </div>
-          </div>
+  <label style={{ fontSize:'13px', fontWeight:500, color:'#374151' }}>
+    Password
+  </label>
+  <div style={{
+    display:'flex', alignItems:'center', gap:'10px',
+    border:'1.5px solid #bfdbfe', borderRadius:'10px',
+    padding:'0 14px', background:'white',
+  }}>
+    {/* Lock icon */}
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+
+    {/* Input */}
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Enter password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      style={{
+        flex:1, border:'none', outline:'none',
+        fontSize:'15px', padding:'13px 0',
+        background:'transparent', color:'#111827',
+        WebkitAppearance:'none',
+      }}
+    />
+
+    {/* Eye toggle button */}
+    <button
+      type="button"
+      onClick={() => setShowPassword(prev => !prev)}
+      style={{
+        background:'none', border:'none', cursor:'pointer',
+        padding:'4px', display:'flex',
+        alignItems:'center', justifyContent:'center',
+        flexShrink:0,
+        minWidth:'24px', minHeight:'24px',
+        WebkitTapHighlightColor:'transparent',
+      }}
+    >
+      {showPassword ? (
+        // Eye-off
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+          <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        </svg>
+      ) : (
+        // Eye
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+          stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      )}
+    </button>
+  </div>
+</div>
 
           {/* Login button */}
           <button
