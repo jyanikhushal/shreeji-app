@@ -168,6 +168,7 @@ function RunningKhataInner(){
     fetchData();
   }, [customerPhone]);
 
+
   const [showDeposit, setShowDeposit] = useState(false);
   const [depositAmount, setDepositAmount] = useState('');
   const [selectedRow, setSelectedRow] = useState<number|null>(null);
@@ -175,7 +176,15 @@ function RunningKhataInner(){
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const itemInputRefs = useRef<(HTMLInputElement|null)[]>([]);
   const amountInputRefs = useRef<(HTMLInputElement|null)[]>([]);
+  const lastRowRef=useRef<HTMLTableRowElement | null>(null); // for auto scroll
   const [editingRow, setEditingRow] = useState<number|null>(null);
+
+  // useeffect to implement the auto scroll
+useEffect(()=>{
+  if(entries.length>0){
+    lastRowRef.current?.scrollIntoView({behavior:'smooth',block:'end'});
+  }
+},[entries]);
 
   const handleChange = (index:number, field:'item'|'amount', value:string) => {
     const updated = [...entries];
@@ -456,6 +465,7 @@ function RunningKhataInner(){
               return (
                 <tr
                   key={row.entryNo}
+                  ref={isLastRow?lastRowRef :null}
                   style={{
                     background: isEditing ? '#fef9c3' : isDeposit ? '#f0fdf4' : isLastRow ? '#f8faff' : 'white',
                     opacity: isDimmed ? 0.4 : 1,
