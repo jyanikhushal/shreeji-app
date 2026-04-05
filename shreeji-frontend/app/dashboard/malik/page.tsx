@@ -7,7 +7,7 @@ import { useToast } from "@/app/context/ToastContext";
 import{getData} from "@/app/utils/api";
 import { isSessionValid,clearSession } from "@/app/utils/session";
 import {db} from '@/app/firebase';
-import { onSnapshot,collection,query,orderBy } from "firebase/firestore";
+import { onSnapshot,collection } from "firebase/firestore";
 
 type Customer = {
     name: string;
@@ -89,6 +89,16 @@ export default function MalikDashboardPage(){
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [searchText, setSearchText] = useState('');
+
+    // usestate declarations for edit customer option 
+    const [showRowMenu,setShowRowMenu]=useState(false);
+    // const [showEditCustomer,setShowEditCustomer]=useState(false);
+    const [selectedCustomer,setSelectedCustomer]=useState<Customer |null>(null);
+    const [showEditName,setShowEditName]=useState(false);
+    const [showEditPhone,setShowEditPhone]=useState(false);
+    const [editPhone,setEditPhone]=useState('');
+    const [editName,setEditName]=useState('');
+
     const resetForm=()=>{
       setName("");
       setPhone("");
@@ -172,7 +182,75 @@ export default function MalikDashboardPage(){
         
     };
 
-   
+
+
+    // EDIT Customer Name only
+    const editCustomerName=async()=>{ // this is only declaration of the editName function its usage will be in the ui code 
+      if(!editName){
+        showMessage("error","Please enter a name");
+        return ;
+      }
+
+      if(!selectedCustomer)return;
+ 
+      try{
+        const malikPhone=localStorage.getItem("malikPhone");
+        const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/editName`,{
+          method:"PUT",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({malikPhone,phone:selectedCustomer.phone,newName:editName}),
+          
+        });
+        await getData(res);
+        setCustomers(prev =>{
+          const updated=prev.map(c=>
+            c.phone===selectedCustomer.phone?{...c,name:editName}:c
+          );
+
+          return updated.sort((a,b)=>a.name.localeCompare(b.name));
+        });
+        showMessage("success","Name updated");
+        setShowEditName(false);
+        setSelectedCustomer(null);
+        setEditName('');
+      }
+      catch(err){
+        console.error(err);
+        showMessage("error","Failed to update name");
+      }
+
+    };
+
+
+// edit customer phone(full migration -->first creating new customer doc then copying the data of existing cus doc into new one and then deleting the existing doc)
+   const editCustomerPhone=async()=>{
+    const isValidPhone = (p: string) => /^[6-9]\d{9}$/.test(p.trim());
+  if (!isValidPhone(editPhone)) { showMessage("error", "Enter valid phone number"); return; }
+  if (!selectedCustomer) return;
+
+  try{
+    const malikPhone=localStorage.getItem("malikPhone");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/editPhone`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ malikPhone, oldPhone: selectedCustomer.phone, newPhone: editPhone }),
+    });
+    await getData(res);
+    setCustomers(prev => {
+      const updated = prev.map(c =>
+        c.phone === selectedCustomer.phone ? { ...c, phone: editPhone } : c
+      );
+      return updated.sort((a, b) => a.name.localeCompare(b.name));
+    });
+    showMessage("success", "Phone number updated");
+    setShowEditPhone(false);
+    setSelectedCustomer(null);
+    setEditPhone('');
+  }catch(err){
+     console.error(err);
+    showMessage("error", "Failed to update phone number");
+  }
+   }
 
     // 🔍 Filter customers
     const filteredCustomers = customers.filter(
@@ -371,9 +449,29 @@ return (
                 <p style={{ margin:'2px 0 0', fontSize:'12px', color:'#9ca3af' }}>{c.phone}</p>
               </div>
             </div>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
+            <button
+  onClick={(e) => {
+    e.stopPropagation();
+    setSelectedCustomer(c);
+    setEditName(c.name);
+    setEditPhone(c.phone);
+    setShowRowMenu(true);
+  }}
+  style={{
+    background: 'none', border: 'none',
+    cursor: 'pointer', padding: '7px',
+    borderRadius: 8,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    transition: 'background 0.15s',
+  }}
+  onMouseEnter={e => (e.currentTarget.style.background = '#eff6ff')}
+  onMouseLeave={e => (e.currentTarget.style.background = 'none')}
+>
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 20h9"/>
+    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+  </svg>
+</button>
           </div>
         ))}
       </div>
@@ -502,6 +600,132 @@ return (
         </div>
       </div>
     )}
+
+
+    
+
+ {/* ── ROW MENU POPUP ── */}
+    {showRowMenu && (
+  <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+    <div style={{ background:'white', borderRadius:16, padding:24, width:280, boxShadow:'0 16px 48px rgba(0,0,0,0.2)' }}>
+      <h2 style={{ fontWeight:700, marginBottom:4, textAlign:'center', color:'#111', fontSize:16 }}>Customer Options</h2>
+      <p style={{ textAlign:'center', color:'#9ca3af', fontSize:12, marginBottom:16 }}>{selectedCustomer?.name}</p>
+
+      <button
+        onClick={() => { setShowRowMenu(false); setShowEditName(true); }}
+        style={{ width:'100%', marginBottom:8, padding:'11px 0', border:'1.5px solid #bfdbfe', borderRadius:10, background:'#eff6ff', color:'#1e40af', cursor:'pointer', fontSize:15, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        Edit Name
+      </button>
+
+      <button
+        onClick={() => { setShowRowMenu(false); setShowEditPhone(true); }}
+        style={{ width:'100%', marginBottom:8, padding:'11px 0', border:'1.5px solid #bbf7d0', borderRadius:10, background:'#f0fdf4', color:'#15803d', cursor:'pointer', fontSize:15, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        Edit Phone Number
+      </button>
+
+      <button
+        onClick={() => { setShowRowMenu(false); setSelectedCustomer(null); }}
+        style={{ width:'100%', padding:'11px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:14, fontWeight:500 }}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
+    {/* ── EDIT CUSTOMER POPUP ── */}
+    {/* ── EDIT NAME POPUP ── */}
+{showEditName && (
+  <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+    <div style={{ background:'white', borderRadius:20, padding:28, width:340, boxShadow:'0 16px 48px rgba(0,0,0,0.2)' }}>
+      <div style={{ display:'flex', justifyContent:'center', marginBottom:12 }}>
+        <div style={{ width:48, height:48, borderRadius:14, background:'#dbeafe', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </div>
+      </div>
+      <h2 style={{ fontWeight:700, marginBottom:4, textAlign:'center', color:'#111', fontSize:17 }}>Edit Name</h2>
+      <p style={{ textAlign:'center', color:'#9ca3af', fontSize:13, marginBottom:20 }}>Change name for {selectedCustomer?.phone}</p>
+      <div style={{ marginBottom:20 }}>
+        <label style={{ fontSize:'12px', fontWeight:500, color:'#6b7280', display:'block', marginBottom:5 }}>Customer Name</label>
+        <div style={{ display:'flex', alignItems:'center', gap:10, border:'1.5px solid #bfdbfe', borderRadius:10, padding:'0 14px', background:'white' }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <input
+            type="text"
+            value={editName}
+            onChange={(e) => setEditName(e.target.value)}
+            style={{ flex:1, border:'none', outline:'none', fontSize:'15px', padding:'11px 0', background:'transparent', color:'#111827' }}
+          />
+        </div>
+      </div>
+      <div style={{ display:'flex', gap:10 }}>
+        <button
+          onClick={() => { setShowEditName(false); setSelectedCustomer(null); }}
+          style={{ flex:1, padding:'12px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500 }}
+        >Cancel</button>
+        <button
+          onClick={editCustomerName}
+          style={{ flex:1, padding:'12px 0', background:'#2563eb', color:'white', border:'none', borderRadius:10, cursor:'pointer', fontSize:15, fontWeight:700 }}
+        >Change</button>
+      </div>
+    </div>
+  </div>
+)}
+
+{/* ── EDIT PHONE POPUP ── */}
+{showEditPhone && (
+  <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+    <div style={{ background:'white', borderRadius:20, padding:28, width:340, boxShadow:'0 16px 48px rgba(0,0,0,0.2)' }}>
+      <div style={{ display:'flex', justifyContent:'center', marginBottom:12 }}>
+        <div style={{ width:48, height:48, borderRadius:14, background:'#f0fdf4', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+      </div>
+      <h2 style={{ fontWeight:700, marginBottom:4, textAlign:'center', color:'#111', fontSize:17 }}>Edit Phone Number</h2>
+      <p style={{ textAlign:'center', color:'#9ca3af', fontSize:13, marginBottom:20 }}>All khata data will be migrated to new number</p>
+      <div style={{ marginBottom:20 }}>
+        <label style={{ fontSize:'12px', fontWeight:500, color:'#6b7280', display:'block', marginBottom:5 }}>New Phone Number</label>
+        <div style={{ display:'flex', alignItems:'center', gap:10, border:'1.5px solid #bbf7d0', borderRadius:10, padding:'0 14px', background:'white' }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <input
+            type="text"
+            value={editPhone}
+            onChange={(e) => setEditPhone(e.target.value.replace(/\D/g, ""))}
+            maxLength={10}
+            style={{ flex:1, border:'none', outline:'none', fontSize:'15px', padding:'11px 0', background:'transparent', color:'#111827' }}
+          />
+        </div>
+      </div>
+      <div style={{ display:'flex', gap:10 }}>
+        <button
+          onClick={() => { setShowEditPhone(false); setSelectedCustomer(null); }}
+          style={{ flex:1, padding:'12px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500 }}
+        >Cancel</button>
+        <button
+          onClick={editCustomerPhone}
+          style={{ flex:1, padding:'12px 0', background:'#16a34a', color:'white', border:'none', borderRadius:10, cursor:'pointer', fontSize:15, fontWeight:700 }}
+        >Change</button>
+      </div>
+    </div>
+  </div>
+)}
 
   </div>
 );
