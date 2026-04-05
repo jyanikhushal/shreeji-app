@@ -257,7 +257,7 @@ app.put("/grahak/editName",validatePhone,async(req,res)=>{
         return res.status(200).json({success:true,message:"Customer Name changed success"});
     }
     catch(err){
-        console.error("Customer Phone change error",err);
+        console.error("Customer Name change error",err);
         return res.status(500).json({success:false,message:"Internal Server error"});
     }
 });
