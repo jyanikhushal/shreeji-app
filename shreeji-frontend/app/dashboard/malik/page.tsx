@@ -98,7 +98,7 @@ export default function MalikDashboardPage(){
     const [showEditPhone,setShowEditPhone]=useState(false);
     const [editPhone,setEditPhone]=useState('');
     const [editName,setEditName]=useState('');
-
+    const [isEditing,setIsEditing]=useState(false);
     const resetForm=()=>{
       setName("");
       setPhone("");
@@ -192,7 +192,7 @@ export default function MalikDashboardPage(){
       }
 
       if(!selectedCustomer)return;
- 
+      setIsEditing(true);
       try{
         const malikPhone=localStorage.getItem("malikPhone");
         const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/editName`,{
@@ -213,10 +213,12 @@ export default function MalikDashboardPage(){
         setShowEditName(false);
         setSelectedCustomer(null);
         setEditName('');
+        setIsEditing(false);
       }
       catch(err){
         console.error(err);
         showMessage("error","Failed to update name");
+        setIsEditing(false);
       }
 
     };
@@ -227,7 +229,7 @@ export default function MalikDashboardPage(){
     const isValidPhone = (p: string) => /^[6-9]\d{9}$/.test(p.trim());
   if (!isValidPhone(editPhone)) { showMessage("error", "Enter valid phone number"); return; }
   if (!selectedCustomer) return;
-
+ setIsEditing(true);
   try{
     const malikPhone=localStorage.getItem("malikPhone");
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/editPhone`, {
@@ -246,9 +248,11 @@ export default function MalikDashboardPage(){
     setShowEditPhone(false);
     setSelectedCustomer(null);
     setEditPhone('');
+    setIsEditing(false);
   }catch(err){
      console.error(err);
     showMessage("error", "Failed to update phone number");
+    setIsEditing(false);
   }
    }
 
@@ -677,9 +681,19 @@ return (
           style={{ flex:1, padding:'12px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500 }}
         >Cancel</button>
         <button
-          onClick={editCustomerName}
-          style={{ flex:1, padding:'12px 0', background:'#2563eb', color:'white', border:'none', borderRadius:10, cursor:'pointer', fontSize:15, fontWeight:700 }}
-        >Change</button>
+  onClick={editCustomerName}
+  disabled={isEditing}
+  style={{ flex:1, padding:'12px 0', background: isEditing ? '#93c5fd' : '#2563eb', color:'white', border:'none', borderRadius:10, cursor: isEditing ? 'not-allowed' : 'pointer', fontSize:15, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}
+>
+  {isEditing ? (
+    <>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation:'spin 1s linear infinite' }}>
+        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+      </svg>
+      Saving...
+    </>
+  ) : 'Change'}
+</button>
       </div>
     </div>
   </div>
@@ -719,9 +733,19 @@ return (
           style={{ flex:1, padding:'12px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500 }}
         >Cancel</button>
         <button
-          onClick={editCustomerPhone}
-          style={{ flex:1, padding:'12px 0', background:'#16a34a', color:'white', border:'none', borderRadius:10, cursor:'pointer', fontSize:15, fontWeight:700 }}
-        >Change</button>
+  onClick={editCustomerPhone}
+  disabled={isEditing}
+  style={{ flex:1, padding:'12px 0', background: isEditing ? '#86efac' : '#16a34a', color:'white', border:'none', borderRadius:10, cursor: isEditing ? 'not-allowed' : 'pointer', fontSize:15, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}
+>
+  {isEditing ? (
+    <>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation:'spin 1s linear infinite' }}>
+        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+      </svg>
+      Saving...
+    </>
+  ) : 'Change'}
+</button>
       </div>
     </div>
   </div>
