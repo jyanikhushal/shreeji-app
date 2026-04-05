@@ -14,11 +14,12 @@ const { addPurchaseEntry } = require("./addPurchaseEntry");
 const { addDepositEntry } = require("./addDepositEntry");
 const { editKhataEntry } = require("./editKhataEntry");
 const {deleteKhataEntry}=require("./deleteKhataEntry");
-const {loginMalik} =require("./authMalik");
+const {loginMalik} =require("./authMalik"); // authGrahak is the file name in the backend folder and login grahak is the function name inside that file
 const {addGrahak} = require("./addGrahak");
 const {getGrahakList}=require("./getGrahakList");
 const {loginGrahak}=require("./authGrahak");
 const {signupMalik}=require("./signupMalik");
+const {editGrahakName,editGrahakPhone}=require("./editGrahak");
 const testImport=require("./signupMalik");
 const { messaging } = require("firebase-admin");
 console.log("IMPORT CHECK:",testImport);
@@ -241,6 +242,43 @@ app.post("/grahak/add",validatePhone,async(req,res)=>{
            return res.status(500).json({success:false,message:"Internal server error"});
     }
 });
+
+//API:editCustomerName
+app.put("/grahak/editName",validatePhone,async(req,res)=>{
+    try{
+        const {malikPhone,phone,newName}=req.body;
+        console.log("EDIT NAME ROUTE HIT:",req.body);
+        if(!malikPhone||!phone){
+            return res.status(400).json({success:false,message:"Missing malikphone or grahakphone"});
+        }
+
+        await editGrahakName(malikPhone,phone,newName);
+
+        return res.status(200).json({success:true,message:"Customer Name changed success"});
+    }
+    catch(err){
+        console.error("Customer Phone change error",err);
+        return res.status(500).json({success:false,message:"Internal Server error"});
+    }
+});
+
+// API: edit customer phone (full khata migration)
+app.put("/grahak/editPhone", validatePhone, async (req, res) => {
+    try {
+        const {malikPhone, oldPhone, newPhone} = req.body;
+        console.log("EDIT PHONE ROUTE HIT", req.body);
+        if (!malikPhone || !oldPhone || !newPhone) {
+            return res.status(400).json({success: false, message: "Missing malikPhone, oldPhone or newPhone"});
+        }
+        await editGrahakPhone(malikPhone, oldPhone, newPhone);
+        return res.status(200).json({success: true, message: "Customer phone updated"});
+    } catch (err) {
+        console.error("Edit phone error", err);
+        return res.status(500).json({success: false, message: err.message || "Internal server error"});
+    }
+});
+
+
 
 // API: authGrahak
 app.post("/auth/grahak",validatePhone,async(req,res)=>{
