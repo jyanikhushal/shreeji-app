@@ -281,38 +281,46 @@ return (
       backdropFilter: 'blur(16px)',
       border: '0.5px solid rgba(200,210,240,0.7)',
       borderRadius: '20px',
-      padding: '1.25rem 1.5rem',
+      padding: '0',
       display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      alignItems: 'stretch',
       marginBottom: '1.5rem',
+      overflow: 'hidden',
+      height: '90px',
     }}>
-      <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
-        <div style={{
-          width: 52, height: 52, borderRadius: '14px',
-          background: '#dbeafe',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          flexShrink: 0,
-          overflow: 'hidden',
-        }}>
-          <img
-            src="/swaminarayan img.jpg"
-            alt="Swaminarayan"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
-          />
-        </div>
-        <div>
-          <p style={{ fontSize:'18px', fontWeight:600, color:'#1e3a8a', margin:0, lineHeight:1.2 }}>
-            {malik?.shopName || 'My Shop'}
-          </p>
-          <p style={{ fontSize:'13px', color:'#6b7280', margin:'3px 0 0' }}>
-            {malik?.name} &nbsp;·&nbsp; {malik?.phone}
-          </p>
-        </div>
+
+      {/* LEFT - Big Square Image */}
+      <div style={{
+        width: '90px',
+        flexShrink: 0,
+      }}>
+        <img
+          src="/swaminarayan img.jpg"
+          alt="Swaminarayan"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+        />
+      </div>
+
+      {/* CENTER - Shop Info */}
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '4px',
+      }}>
+        <p style={{ fontSize:'18px', fontWeight:700, color:'#1e3a8a', margin:0, lineHeight:1.2 }}>
+          {malik?.shopName || 'My Shop'}
+        </p>
+        <p style={{ fontSize:'13px', color:'#6b7280', margin:0 }}>
+          {malik?.name} &nbsp;·&nbsp; {malik?.phone}
+        </p>
       </div>
 
       {/* Right side buttons */}
