@@ -333,6 +333,28 @@ return (
           </div>
         </div>
 
+        {/* ── ADD THIS IN MIDDLE ── */}
+<div style={{
+  flex: 1,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}}>
+  <p style={{
+    fontFamily: "'Noto Serif Gujarati', serif",
+    fontSize: '22px',
+    fontWeight: 700,
+    color: '#7c3aed',
+    margin: 0,
+    letterSpacing: '0.5px',
+    textShadow: '0 1px 6px rgba(124,58,237,0.18)',
+    lineHeight: 1.3,
+    textAlign: 'center',
+  }}>
+    જય શ્રી સ્વામિનારાયણ
+  </p>
+</div>
+
         {/* Right side buttons */}
         <div style={{ display:'flex', flexDirection:'column', alignItems:'stretch', gap:'8px', flexShrink:0 }}>
           <button
