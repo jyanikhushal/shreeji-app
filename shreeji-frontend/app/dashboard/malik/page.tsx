@@ -280,7 +280,7 @@ return (
       position: 'fixed',
       inset: 0,
       zIndex: 0,
-      backgroundImage: "url('/swaminarayan.jpg')",
+      backgroundImage: "url('/swaminarayan img.jpg')",
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
