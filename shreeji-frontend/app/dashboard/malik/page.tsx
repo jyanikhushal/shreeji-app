@@ -296,7 +296,7 @@ return (
           overflow: 'hidden',
         }}>
           <img
-            src="/swaminarayan.jpg"
+            src="/swaminarayan img.jpg"
             alt="Swaminarayan"
             style={{
               width: '100%',
