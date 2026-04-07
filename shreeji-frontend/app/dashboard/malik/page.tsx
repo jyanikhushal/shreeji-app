@@ -293,12 +293,17 @@ return (
           background: '#dbeafe',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0,
+          overflow: 'hidden',
         }}>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-          </svg>
+          <img
+            src="/swaminarayan.jpg"
+            alt="Swaminarayan"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
         </div>
         <div>
           <p style={{ fontSize:'18px', fontWeight:600, color:'#1e3a8a', margin:0, lineHeight:1.2 }}>

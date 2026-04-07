@@ -192,6 +192,7 @@ useEffect(()=>{
     setEntries(updated);
   };
 
+  // addPurchase entry logic
   const handleEnter = async(index:number) => {
     if(isSubmitting) return;
     const current = entries[index];
