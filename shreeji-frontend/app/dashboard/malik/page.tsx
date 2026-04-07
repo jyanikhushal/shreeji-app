@@ -382,8 +382,8 @@ return (
         border: '1px solid rgba(255,255,255,0.6)',
         borderRadius: '24px',
         padding: '1.5rem',
-        maxWidth: '520px',
-        margin: '0 auto',
+        maxWidth: '380px',
+        margin: '0',
         boxShadow: '0 8px 32px rgba(31,38,135,0.10)',
       }}>
         <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'1.2rem' }}>
