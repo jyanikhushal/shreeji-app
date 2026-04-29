@@ -440,7 +440,7 @@ export default function MalikLoginPage(){
 
         </div>
       </div>
-      <NavTransition show={transitioning} showError={showError} animType={animType} />
+      {/* <NavTransition show={transitioning} showError={showError} animType={animType} /> */}
     </div>
   );
 }
