@@ -294,6 +294,24 @@ return (
       background: 'rgba(255,255,255,0.18)',
     }} />
 
+    {/* ── GAP COVER ── */}          {/* ✅ ADD HERE */}
+<div style={{
+  position: 'fixed',
+  top: 0, left: 0, right: 0,
+  height: '1.5rem',
+  zIndex: 50,
+  backgroundImage: "url('/swaminarayan img.jpg')",
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+}} />
+<div style={{
+  position: 'fixed',
+  top: 0, left: 0, right: 0,
+  height: '1.5rem',
+  zIndex: 51,
+  background: 'rgba(255,255,255,0.18)',
+}} />
+
     {/* ── ALL CONTENT ABOVE BACKGROUND ── */}
     <div style={{ position: 'relative', zIndex: 2 }}>
 
