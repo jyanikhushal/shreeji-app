@@ -312,7 +312,7 @@ return (
         // keep the navbar intact at position
         position:'sticky',
         top:'1.5rem',
-        zIndex:10,
+        zIndex:100,
       }}>
         <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
           <div style={{
