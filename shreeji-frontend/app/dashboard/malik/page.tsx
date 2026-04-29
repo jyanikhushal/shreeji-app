@@ -309,6 +309,10 @@ return (
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: '1.5rem',
+        // keep the navbar intact at position
+        position:'sticky',
+        top:'1.5rem',
+        zIndex:10,
       }}>
         <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
           <div style={{
