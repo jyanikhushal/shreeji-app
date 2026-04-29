@@ -27,6 +27,8 @@ import { useRouter } from 'next/navigation'; // navigation tool to move bw pages
 import { useToast } from "@/app/context/ToastContext";
 import {getData} from "@/app/utils/api";
 import { saveSession } from '@/app/utils/session';
+import {useNavTransition} from '@/hooks/useNavTransition';
+import NavTransition from '@/components/NavTransition';
 type Malik = {
   _id: string;
   name: string;
@@ -38,7 +40,8 @@ export default function MalikLoginPage(){
     const[phone,setPhone]=useState('');
     const [password,setPassword]=useState('');
     const {showMessage}=useToast();
-    const router=useRouter(); // getting access to browser's navigation system
+    //const router=useRouter(); // getting access to browser's navigation system
+    const { navigateTo, transitioning, showError, animType } = useNavTransition();
     const [startLoading,setStartLoading]=useState(false); // to add loading spinner
     const [showPassword,setShowPassword]=useState(false); // for eye toggle view inside the password cell
     // from here login function starts 
@@ -88,7 +91,7 @@ export default function MalikLoginPage(){
     saveSession(phone,"malik");
     
 
-    router.push("/dashboard/malik");
+    navigateTo("/dashboard/malik");
 
   } catch (err: unknown) {
     console.error(err);
@@ -419,7 +422,7 @@ export default function MalikLoginPage(){
 
           {/* Back link */}
           <button
-            onClick={() => router.push('/')}
+            onClick={() => navigateTo('/')}
             style={{
               width:'100%', padding:'12px',
               background:'transparent', color:'#6b7280',
@@ -437,6 +440,7 @@ export default function MalikLoginPage(){
 
         </div>
       </div>
+      <NavTransition show={transitioning} showError={showError} animType={animType} />
     </div>
   );
 }
