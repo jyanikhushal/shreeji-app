@@ -1,13 +1,13 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react'; // ← add useEffect
 import { useRouter } from 'next/navigation';
 
 const ANIMATIONS = ['dog', 'flag', 'namaste'];
 
 export function useNavTransition() {
   const router = useRouter();
-  const [transitioning, setTransitioning]   = useState(false);
-  const [showError,     setShowError]       = useState(false);
-  const [animType,      setAnimType]        = useState('dog');
+  const [transitioning, setTransitioning] = useState(false);
+  const [showError,     setShowError]     = useState(false);
+  const [animType,      setAnimType]      = useState('dog');
   const timersRef = useRef([]);
 
   const clearAll = () => {
@@ -15,23 +15,22 @@ export function useNavTransition() {
     timersRef.current = [];
   };
 
+  // ✅ ADD THIS — clears all timers when page unmounts (navigation succeeded)
+  useEffect(() => {
+    return () => clearAll();
+  }, []);
+
   const navigateTo = useCallback((path) => {
     clearAll();
-
-    // pick a random funky animation
     setAnimType(ANIMATIONS[Math.floor(Math.random() * ANIMATIONS.length)]);
     setTransitioning(true);
     setShowError(false);
 
-    // ── wait minimum 2s, THEN actually navigate ──
     const t1 = setTimeout(() => {
       router.push(path);
 
-      // if still on this page after 3 more seconds (5s total) → error
       const t2 = setTimeout(() => {
         setShowError(true);
-
-        // show error 2s then go back
         const t3 = setTimeout(() => {
           setTransitioning(false);
           setShowError(false);
@@ -40,8 +39,7 @@ export function useNavTransition() {
         timersRef.current.push(t3);
       }, 3000);
       timersRef.current.push(t2);
-
-    }, 2000); // ← minimum 2s overlay
+    }, 2000);
     timersRef.current.push(t1);
 
   }, [router]);
