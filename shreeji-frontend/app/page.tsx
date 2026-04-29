@@ -285,7 +285,7 @@ export default function HomePage(){ // react function that returns UI
 
       </div>
     </div>
-    <NavTransition show={transitioning} showError={showError} animType={animType} />
+    
   </div>
 );
 }
