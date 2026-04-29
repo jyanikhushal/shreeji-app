@@ -349,6 +349,14 @@ useEffect(()=>{
       padding: '1.25rem',
     }}>
 
+       {/* ── GAP COVER ── */}   {/* ✅ ADD HERE */}
+  <div style={{
+    position: 'fixed',
+    top: 0, left: 0, right: 0,
+    height: '1.25rem',        
+    zIndex: 50,
+    background: 'linear-gradient(135deg, #dbeafe 0%, #eff6ff 40%, #e0e7ff 100%)',
+  }} />
       {loading && (
         <div style={{
           background: '#dbeafe', color: '#1e40af',
@@ -381,6 +389,10 @@ useEffect(()=>{
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: '1.25rem',
+        // keep the navbar intact at position
+        position:'sticky',
+        top:'1.5rem',
+        zIndex:100,
       }}>
         <div style={{ display:'flex', alignItems:'center', gap: 12 }}>
           <div style={{
