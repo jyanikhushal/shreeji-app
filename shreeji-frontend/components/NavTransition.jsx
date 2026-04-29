@@ -1,338 +1,389 @@
 'use client';
 
-// ─────────────────────────────────────────
-//  ANIMATION 1 — RUNNING DOG ON TRACK
-// ─────────────────────────────────────────
 const RunningDog = () => (
-  <div style={{ textAlign: 'center' }}>
+  <div style={{ position: 'relative', display: 'inline-block' }}>
     <style>{`
-      @keyframes dogBounce  { 0%,100%{transform:translateY(0)}    50%{transform:translateY(-14px)} }
-      @keyframes legFwdA    { 0%,100%{transform:rotate(-38deg)}   50%{transform:rotate(38deg)}  }
-      @keyframes legFwdB    { 0%,100%{transform:rotate(38deg)}    50%{transform:rotate(-38deg)} }
-      @keyframes dogTail    { 0%,100%{transform:rotate(-35deg)}   50%{transform:rotate(35deg)}  }
-      @keyframes tongueBob  { 0%,100%{transform:scaleY(1)}        50%{transform:scaleY(1.5)}    }
-      @keyframes trackSlide { 0%{transform:translateX(0)} 100%{transform:translateX(-56px)}     }
-      @keyframes earFlap    { 0%,100%{transform:rotate(0deg)}     50%{transform:rotate(20deg)}  }
+      @keyframes bodyRun    { 0%,100%{transform:translateY(0) rotate(0deg)}   25%{transform:translateY(-9px) rotate(-1.5deg)}  75%{transform:translateY(-5px) rotate(1.5deg)} }
+      @keyframes headBob    { 0%,100%{transform:translateY(0) rotate(2deg)}   50%{transform:translateY(-6px) rotate(-2deg)} }
+      @keyframes earFlop    { 0%,100%{transform:rotate(8deg) skewY(4deg)}     50%{transform:rotate(-6deg) skewY(-3deg)} }
+      @keyframes earFlop2   { 0%,100%{transform:rotate(-5deg)}                50%{transform:rotate(12deg)} }
+      @keyframes tailSwing  { 0%,100%{transform:rotate(-30deg)}               50%{transform:rotate(35deg)} }
+      @keyframes legAup     { 0%,100%{transform:rotate(-42deg)}               50%{transform:rotate(22deg)} }
+      @keyframes legAlow    { 0%,100%{transform:rotate(8deg)}                 50%{transform:rotate(-32deg)} }
+      @keyframes legBup     { 0%,100%{transform:rotate(22deg)}                50%{transform:rotate(-42deg)} }
+      @keyframes legBlow    { 0%,100%{transform:rotate(-32deg)}               50%{transform:rotate(8deg)} }
+      @keyframes tongueBob  { 0%,100%{transform:rotate(0deg) scaleY(1)}       50%{transform:rotate(10deg) scaleY(1.35)} }
+      @keyframes shadowPulse{ 0%,100%{transform:scaleX(1);opacity:0.45}       50%{transform:scaleX(0.78);opacity:0.22} }
+      @keyframes dustA      { 0%{transform:scale(0) translate(0,0);opacity:0.7}  100%{transform:scale(2.2) translate(-18px,-20px);opacity:0} }
+      @keyframes dustB      { 0%{transform:scale(0) translate(0,0);opacity:0.6}  100%{transform:scale(1.8) translate(-12px,-24px);opacity:0} }
+      @keyframes speedSlide { 0%{transform:translateX(0);opacity:0.55}           100%{transform:translateX(-90px);opacity:0} }
+      @keyframes twinkle    { 0%,100%{opacity:0.2;r:1.2}   50%{opacity:1;r:2} }
+      @keyframes dotBounce  { 0%,80%,100%{transform:translateY(0);opacity:0.4}   40%{transform:translateY(-6px);opacity:1} }
+      @keyframes groundGlow { 0%,100%{opacity:0.3} 50%{opacity:0.55} }
+      @keyframes noseShine  { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+      @keyframes eyeShine   { 0%,100%{opacity:0.7} 50%{opacity:1} }
     `}</style>
 
-    {/* Dog */}
-    <div style={{ display:'inline-block', animation:'dogBounce 0.38s ease-in-out infinite' }}>
-      <svg width="180" height="110" viewBox="0 0 180 110">
-        {/* Tail */}
-        <path d="M30 55 Q10 30 18 12" stroke="#d97706" strokeWidth="11"
-          fill="none" strokeLinecap="round"
-          style={{ transformOrigin:'30px 55px', animation:'dogTail 0.32s ease-in-out infinite' }} />
+    <svg width="520" height="290" viewBox="0 0 520 290" style={{ display:'block' }}>
+      <defs>
+        {/* Sky gradient */}
+        <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stopColor="#04081a" />
+          <stop offset="100%" stopColor="#0d1535" />
+        </linearGradient>
 
-        {/* Body */}
-        <ellipse cx="88" cy="60" rx="50" ry="28" fill="#f59e0b" />
+        {/* Ground gradient */}
+        <linearGradient id="gnd" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stopColor="#141e3a" />
+          <stop offset="100%" stopColor="#080c1a" />
+        </linearGradient>
 
-        {/* Neck */}
-        <ellipse cx="128" cy="50" rx="18" ry="22" fill="#f59e0b" />
+        {/* Body shading — radial gives 3D roundness */}
+        <radialGradient id="bodyG" cx="44%" cy="28%" r="62%">
+          <stop offset="0%"   stopColor="#fde68a" />
+          <stop offset="48%"  stopColor="#f59e0b" />
+          <stop offset="100%" stopColor="#7c2d12" />
+        </radialGradient>
 
-        {/* Head */}
-        <circle cx="138" cy="36" r="24" fill="#f59e0b" />
-
-        {/* Ear */}
-        <ellipse cx="148" cy="17" rx="9" ry="15" fill="#d97706"
-          style={{ transformOrigin:'148px 17px', animation:'earFlap 0.38s ease-in-out infinite' }} />
-
-        {/* Eye */}
-        <circle cx="150" cy="32" r="5" fill="#111" />
-        <circle cx="151.5" cy="30.5" r="1.8" fill="white" />
+        {/* Head shading */}
+        <radialGradient id="headG" cx="38%" cy="30%" r="58%">
+          <stop offset="0%"   stopColor="#fef3c7" />
+          <stop offset="52%"  stopColor="#fbbf24" />
+          <stop offset="100%" stopColor="#92400e" />
+        </radialGradient>
 
         {/* Snout */}
-        <ellipse cx="158" cy="44" rx="13" ry="10" fill="#fcd34d" />
-        <ellipse cx="158" cy="38" rx="5.5" ry="4" fill="#111" />
+        <radialGradient id="snoutG" cx="40%" cy="38%" r="60%">
+          <stop offset="0%"   stopColor="#fef9c3" />
+          <stop offset="100%" stopColor="#fcd34d" />
+        </radialGradient>
 
-        {/* Tongue */}
-        <rect x="153" y="51" width="10" rx="5" fill="#f87171"
-          style={{ height:10, transformOrigin:'158px 51px', animation:'tongueBob 0.38s ease-in-out infinite' }} />
+        {/* Nose */}
+        <radialGradient id="noseG" cx="32%" cy="30%" r="52%">
+          <stop offset="0%"   stopColor="#374151" />
+          <stop offset="100%" stopColor="#030712" />
+        </radialGradient>
 
-        {/* Front legs */}
-        <rect x="108" y="82" width="14" height="30" rx="7" fill="#f59e0b"
-          style={{ transformOrigin:'115px 82px', animation:'legFwdA 0.38s ease-in-out infinite' }} />
-        <rect x="126" y="82" width="14" height="30" rx="7" fill="#d97706"
-          style={{ transformOrigin:'133px 82px', animation:'legFwdB 0.38s ease-in-out infinite' }} />
+        {/* Iris */}
+        <radialGradient id="irisG" cx="35%" cy="32%" r="56%">
+          <stop offset="0%"   stopColor="#d97706" />
+          <stop offset="60%"  stopColor="#78350f" />
+          <stop offset="100%" stopColor="#1c0a00" />
+        </radialGradient>
 
-        {/* Back legs */}
-        <rect x="58"  y="82" width="14" height="30" rx="7" fill="#f59e0b"
-          style={{ transformOrigin:'65px 82px',  animation:'legFwdB 0.38s ease-in-out infinite' }} />
-        <rect x="40"  y="82" width="14" height="30" rx="7" fill="#d97706"
-          style={{ transformOrigin:'47px 82px',  animation:'legFwdA 0.38s ease-in-out infinite' }} />
+        {/* Leg gradient — slight shading */}
+        <linearGradient id="legFL" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stopColor="#b45309" />
+          <stop offset="55%"  stopColor="#f59e0b" />
+          <stop offset="100%" stopColor="#d97706" />
+        </linearGradient>
+        <linearGradient id="legBK" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stopColor="#92400e" />
+          <stop offset="55%"  stopColor="#d97706" />
+          <stop offset="100%" stopColor="#b45309" />
+        </linearGradient>
 
-        {/* Collar */}
-        <rect x="120" y="62" width="22" height="8" rx="4" fill="#dc2626" />
-        <circle cx="131" cy="70" r="4" fill="#fbbf24" />
-      </svg>
-    </div>
+        {/* Fur detail clip */}
+        <radialGradient id="furSheen" cx="50%" cy="20%" r="50%">
+          <stop offset="0%"  stopColor="rgba(254,243,199,0.28)" />
+          <stop offset="100%" stopColor="rgba(254,243,199,0)" />
+        </radialGradient>
 
-    {/* Track */}
-    <div style={{ overflow:'hidden', width:180, margin:'6px auto 0', display:'flex', gap:14 }}>
-      {[...Array(8)].map((_,i) => (
-        <div key={i} style={{
-          width:22, height:5, background:'rgba(255,255,255,0.22)',
-          borderRadius:3, flexShrink:0,
-          animation:'trackSlide 0.65s linear infinite',
-          animationDelay:`${i * 0.08}s`,
-        }} />
+        {/* Speed line gradient */}
+        <linearGradient id="speedG" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="0%"   stopColor="rgba(148,163,255,0.0)" />
+          <stop offset="100%" stopColor="rgba(148,163,255,0.18)" />
+        </linearGradient>
+
+        {/* Glow for ground edge */}
+        <linearGradient id="glowEdge" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stopColor="rgba(99,102,241,0.35)" />
+          <stop offset="100%" stopColor="rgba(99,102,241,0)" />
+        </linearGradient>
+
+        {/* Tail fur */}
+        <linearGradient id="tailG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stopColor="#fcd34d" />
+          <stop offset="100%" stopColor="#b45309" />
+        </linearGradient>
+      </defs>
+
+      {/* ── SKY BACKGROUND ── */}
+      <rect width="520" height="290" fill="url(#sky)" />
+
+      {/* Nebula ambient glow */}
+      <ellipse cx="260" cy="100" rx="240" ry="100" fill="none"
+        stroke="rgba(99,58,200,0.07)" strokeWidth="80" />
+      <ellipse cx="180" cy="140" rx="140" ry="80" fill="none"
+        stroke="rgba(37,99,235,0.06)" strokeWidth="60" />
+
+      {/* Stars */}
+      {[
+        [30,18],[80,12],[145,25],[210,10],[295,20],[370,14],[440,28],[495,18],
+        [60,42],[165,38],[310,35],[460,40],[500,52],[25,55],[120,52],[380,48],
+      ].map(([x,y],i) => (
+        <circle key={i} cx={x} cy={y} r="1.4" fill="white"
+          style={{ animation:`twinkle ${1.4+i*0.25}s ease-in-out infinite`, animationDelay:`${i*0.18}s` }} />
       ))}
-    </div>
 
-    <p style={{ color:'white', fontWeight:700, fontSize:15, marginTop:14, letterSpacing:0.5 }}>
-      Fetching your page... 🐕
-    </p>
-  </div>
-);
+      {/* ── GROUND ── */}
+      <rect x="0" y="238" width="520" height="52" fill="url(#gnd)" />
+      {/* Glowing ground edge */}
+      <rect x="0" y="236" width="520" height="8" fill="url(#glowEdge)"
+        style={{ animation:'groundGlow 2s ease-in-out infinite' }} />
 
-// ─────────────────────────────────────────
-//  ANIMATION 2 — FLAG WAVING CHARACTER
-// ─────────────────────────────────────────
-const FlagBearer = () => (
-  <div style={{ textAlign:'center' }}>
-    <style>{`
-      @keyframes personHop   { 0%,100%{transform:translateY(0)}    50%{transform:translateY(-12px)} }
-      @keyframes armUp       { 0%,100%{transform:rotate(-18deg)}   50%{transform:rotate(22deg)}   }
-      @keyframes flagFlap    { 0%,100%{transform:skewY(-10deg) scaleX(1)}  50%{transform:skewY(10deg) scaleX(0.88)} }
-      @keyframes freeArm     { 0%,100%{transform:rotate(25deg)}    50%{transform:rotate(-15deg)}  }
-      @keyframes legMarch    { 0%,100%{transform:rotate(-18deg)}   50%{transform:rotate(18deg)}   }
-      @keyframes headWiggle  { 0%,100%{transform:rotate(-6deg)}    50%{transform:rotate(6deg)}    }
-    `}</style>
+      {/* Ground track lines (perspective) */}
+      <line x1="0" y1="248" x2="520" y2="248" stroke="rgba(99,102,241,0.12)" strokeWidth="1" />
+      <line x1="0" y1="260" x2="520" y2="260" stroke="rgba(99,102,241,0.07)" strokeWidth="1" />
 
-    <div style={{ display:'inline-block', animation:'personHop 0.5s ease-in-out infinite' }}>
-      <svg width="140" height="190" viewBox="0 0 140 190">
+      {/* ── SPEED LINES ── */}
+      {[148,158,166,174,182,154,162,170,178].map((y,i) => (
+        <line key={i} x1={10+i*4} y1={y} x2={165-i*3} y2={y}
+          stroke="url(#speedG)" strokeWidth={i===0||i===4?2.5:1.5}
+          style={{ animation:`speedSlide ${0.45+i*0.04}s linear infinite`, animationDelay:`${i*0.05}s` }} />
+      ))}
 
-        {/* ── Flag pole + flag ── */}
-        <line x1="82" y1="8" x2="82" y2="95" stroke="#e5e7eb" strokeWidth="4"
-          strokeLinecap="round"
-          style={{ transformOrigin:'82px 95px', animation:'armUp 0.5s ease-in-out infinite' }} />
-        {/* Saffron */}
-        <rect x="82" y="8"  width="44" height="11" rx="2" fill="#f97316"
-          style={{ transformOrigin:'82px 14px', animation:'flagFlap 0.45s ease-in-out infinite' }} />
-        {/* White */}
-        <rect x="82" y="19" width="44" height="11" rx="2" fill="#f9fafb"
-          style={{ transformOrigin:'82px 25px', animation:'flagFlap 0.45s ease-in-out infinite' }} />
-        {/* Green */}
-        <rect x="82" y="30" width="44" height="11" rx="2" fill="#16a34a"
-          style={{ transformOrigin:'82px 36px', animation:'flagFlap 0.45s ease-in-out infinite' }} />
-        {/* Chakra */}
-        <circle cx="104" cy="25" r="4" fill="none" stroke="#1d4ed8" strokeWidth="1.5"
-          style={{ transformOrigin:'104px 25px', animation:'flagFlap 0.45s ease-in-out infinite' }} />
+      {/* ── GROUND SHADOW ── */}
+      <ellipse cx="252" cy="239" rx="72" ry="7" fill="rgba(0,0,0,0.55)"
+        style={{ animation:'shadowPulse 0.4s ease-in-out infinite' }} />
 
-        {/* Hair */}
-        <path d="M42 60 Q62 38 82 60" fill="#1f2937" />
+      {/* ════════════════════════════════════
+              DOG — whole group bounces
+      ════════════════════════════════════ */}
+      <g style={{ animation:'bodyRun 0.4s ease-in-out infinite', transformOrigin:'252px 195px' }}>
 
-        {/* Head */}
-        <circle cx="62" cy="62" r="22" fill="#fbbf24"
-          style={{ transformOrigin:'62px 62px', animation:'headWiggle 0.5s ease-in-out infinite' }} />
+        {/* ── BACK LEGS (drawn behind body) ── */}
 
-        {/* Eyes */}
-        <circle cx="55" cy="59" r="3.5" fill="#111" />
-        <circle cx="69" cy="59" r="3.5" fill="#111" />
-        <circle cx="56" cy="58" r="1.2" fill="white" />
-        <circle cx="70" cy="58" r="1.2" fill="white" />
-
-        {/* Big smile */}
-        <path d="M52 69 Q62 80 72 69" stroke="#111" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-
-        {/* Kurta body */}
-        <rect x="40" y="84" width="44" height="52" rx="10" fill="#f97316" />
-        {/* Kurta collar */}
-        <path d="M62 84 L55 100 L62 96 L69 100 Z" fill="#ea580c" />
-
-        {/* Right arm (flag arm) */}
-        <rect x="82" y="84" width="13" height="38" rx="6.5" fill="#fbbf24"
-          style={{ transformOrigin:'88px 84px', animation:'armUp 0.5s ease-in-out infinite' }} />
-
-        {/* Left arm (free swinging) */}
-        <rect x="29" y="84" width="13" height="35" rx="6.5" fill="#fbbf24"
-          style={{ transformOrigin:'35px 84px', animation:'freeArm 0.5s ease-in-out infinite' }} />
-
-        {/* Dhoti */}
-        <path d="M40 134 Q50 155 62 148 Q74 155 84 134 Z" fill="#fff7ed" />
-
-        {/* Legs */}
-        <rect x="44" y="135" width="15" height="42" rx="7" fill="#fef3c7"
-          style={{ transformOrigin:'51px 135px', animation:'legMarch 0.5s ease-in-out infinite' }} />
-        <rect x="63" y="135" width="15" height="42" rx="7" fill="#fef3c7"
-          style={{ transformOrigin:'70px 135px', animation:'legMarch 0.5s ease-in-out infinite reverse' }} />
-
-        {/* Feet */}
-        <ellipse cx="51"  cy="177" rx="12" ry="5" fill="#92400e" />
-        <ellipse cx="70"  cy="177" rx="12" ry="5" fill="#92400e" />
-      </svg>
-    </div>
-
-    <p style={{ color:'#fcd34d', fontWeight:700, fontSize:15, marginTop:6 }}>
-      Moving to next page! 🚩
-    </p>
-  </div>
-);
-
-// ─────────────────────────────────────────
-//  ANIMATION 3 — NAMASTE UNCLE
-// ─────────────────────────────────────────
-const NamasteUncle = () => (
-  <div style={{ textAlign:'center' }}>
-    <style>{`
-      @keyframes fullBow     { 0%,100%{transform:rotate(0deg)}    45%,55%{transform:rotate(-20deg)} }
-      @keyframes handsLift   { 0%,100%{transform:translateY(0)}   45%,55%{transform:translateY(-12px)} }
-      @keyync headBow       { 0%,100%{transform:rotate(0deg)}    45%,55%{transform:rotate(15deg)}  }
-      @keyframes eyeSmile    { 0%,100%{transform:scaleY(1)}       45%,55%{transform:scaleY(0.3)}   }
-      @keyframes haloGlow    { 0%,100%{opacity:0.5; r:28px}       50%{opacity:1; r:32px}           }
-      @keyframes namasteText { 0%,100%{opacity:0; transform:translateY(8px)} 30%,70%{opacity:1; transform:translateY(0)} }
-    `}</style>
-
-    <div style={{ display:'inline-block', animation:'fullBow 1.4s ease-in-out infinite', transformOrigin:'65px 190px' }}>
-      <svg width="130" height="200" viewBox="0 0 130 200">
-
-        {/* Halo / aura */}
-        <circle cx="65" cy="38" r="30" fill="none" stroke="#fcd34d" strokeWidth="2.5"
-          strokeDasharray="6 4" opacity="0.6"
-          style={{ animation:'haloGlow 1.4s ease-in-out infinite' }} />
-
-        {/* Turban */}
-        <ellipse cx="65" cy="28" rx="26" ry="16" fill="#f97316" />
-        <ellipse cx="65" cy="22" rx="22" ry="11" fill="#ea580c" />
-        <ellipse cx="65" cy="18" rx="16" ry="7"  fill="#f97316" />
-        {/* Turban jewel */}
-        <circle cx="65" cy="13" r="5.5" fill="#fcd34d" />
-        <circle cx="65" cy="13" r="3"   fill="#f97316" />
-
-        {/* Head */}
-        <circle cx="65" cy="52" r="23" fill="#fbbf24"
-          style={{ transformOrigin:'65px 52px', animation:'headBow 1.4s ease-in-out infinite' }} />
-
-        {/* Tilak */}
-        <rect x="62.5" y="36" width="5" height="10" rx="2.5" fill="#dc2626" />
-
-        {/* Eyes (squint when bowing) */}
-        <ellipse cx="56" cy="51" rx="4" ry="4" fill="#111"
-          style={{ transformOrigin:'56px 51px', animation:'eyeSmile 1.4s ease-in-out infinite' }} />
-        <ellipse cx="74" cy="51" rx="4" ry="4" fill="#111"
-          style={{ transformOrigin:'74px 51px', animation:'eyeSmile 1.4s ease-in-out infinite' }} />
-        <circle cx="57" cy="50" r="1.5" fill="white" />
-        <circle cx="75" cy="50" r="1.5" fill="white" />
-
-        {/* Mustache */}
-        <path d="M54 60 Q65 67 76 60" stroke="#1f2937" strokeWidth="3"
-          fill="none" strokeLinecap="round" />
-
-        {/* Warm smile */}
-        <path d="M56 64 Q65 73 74 64" stroke="#92400e" strokeWidth="2"
-          fill="none" strokeLinecap="round" />
-
-        {/* Kurta body */}
-        <rect x="38" y="75" width="54" height="60" rx="12" fill="white"
-          stroke="#e5e7eb" strokeWidth="1" />
-        {/* Kurta center line */}
-        <line x1="65" y1="78" x2="65" y2="128" stroke="#d1d5db"
-          strokeWidth="1.5" strokeDasharray="5 4" />
-        {/* Kurta collar */}
-        <path d="M65 75 L57 92 L65 88 L73 92 Z" fill="#f3f4f6" stroke="#e5e7eb" strokeWidth="1" />
-
-        {/* ── Namaste hands ── */}
-        <g style={{ transformOrigin:'65px 108px', animation:'handsLift 1.4s ease-in-out infinite' }}>
-          {/* Left hand coming from left */}
-          <rect x="34" y="90" width="13" height="32" rx="6.5" fill="#fbbf24"
-            transform="rotate(18, 40, 106)" />
-          {/* Right hand coming from right */}
-          <rect x="83" y="90" width="13" height="32" rx="6.5" fill="#fbbf24"
-            transform="rotate(-18, 89, 106)" />
-          {/* Joined palms */}
-          <ellipse cx="65" cy="112" rx="16" ry="11" fill="#fcd34d" />
-          {/* Finger lines */}
-          <line x1="57" y1="104" x2="73" y2="104" stroke="#d97706" strokeWidth="1.5" />
-          <line x1="55" y1="109" x2="75" y2="109" stroke="#d97706" strokeWidth="1.5" />
-          <line x1="57" y1="114" x2="73" y2="114" stroke="#d97706" strokeWidth="1.5" />
-          <line x1="59" y1="119" x2="71" y2="119" stroke="#d97706" strokeWidth="1.5" />
+        {/* Back-right (B phase) */}
+        <g style={{ transformOrigin:'228px 208px', animation:'legBup 0.4s ease-in-out infinite' }}>
+          <rect x="220" y="208" width="17" height="33" rx="8.5" fill="url(#legBK)" opacity="0.78" />
+          <g style={{ transformOrigin:'228px 241px', animation:'legBlow 0.4s ease-in-out infinite' }}>
+            <rect x="221" y="241" width="15" height="27" rx="7.5" fill="#92400e" opacity="0.82" />
+            {/* Paw */}
+            <ellipse cx="228" cy="268" rx="11" ry="5.5" fill="#7c2d12" opacity="0.88" />
+            <ellipse cx="224" cy="267" rx="4"  ry="2.5" fill="#6b2214" opacity="0.7" />
+            <ellipse cx="232" cy="267" rx="4"  ry="2.5" fill="#6b2214" opacity="0.7" />
+          </g>
         </g>
 
-        {/* Dhoti */}
-        <path d="M38 133 Q52 158 65 150 Q78 158 92 133 Z" fill="#f1f5f9" />
+        {/* Back-left (A phase) */}
+        <g style={{ transformOrigin:'212px 208px', animation:'legAup 0.4s ease-in-out infinite' }}>
+          <rect x="204" y="208" width="17" height="33" rx="8.5" fill="url(#legBK)" opacity="0.65" />
+          <g style={{ transformOrigin:'212px 241px', animation:'legAlow 0.4s ease-in-out infinite' }}>
+            <rect x="205" y="241" width="15" height="27" rx="7.5" fill="#7c2d12" opacity="0.7" />
+            <ellipse cx="212" cy="268" rx="11" ry="5.5" fill="#6b2214" opacity="0.75" />
+          </g>
+        </g>
 
-        {/* Legs */}
-        <rect x="42" y="142" width="16" height="48" rx="8" fill="#e2e8f0" />
-        <rect x="72" y="142" width="16" height="48" rx="8" fill="#e2e8f0" />
+        {/* ── TAIL ── */}
+        <g style={{ transformOrigin:'178px 190px', animation:'tailSwing 0.5s ease-in-out infinite' }}>
+          {/* Tail outer fur */}
+          <path d="M 180 190 Q 152 162 142 132" stroke="#d97706" strokeWidth="16"
+            fill="none" strokeLinecap="round" />
+          {/* Tail mid highlight */}
+          <path d="M 180 190 Q 152 162 142 132" stroke="#fcd34d" strokeWidth="8"
+            fill="none" strokeLinecap="round" opacity="0.55" />
+          {/* Tail inner shine */}
+          <path d="M 180 190 Q 152 162 142 132" stroke="#fef3c7" strokeWidth="3"
+            fill="none" strokeLinecap="round" opacity="0.28" />
+        </g>
 
-        {/* Feet */}
-        <ellipse cx="50"  cy="190" rx="13" ry="6" fill="#fbbf24" />
-        <ellipse cx="80"  cy="190" rx="13" ry="6" fill="#fbbf24" />
+        {/* ── BODY ── */}
+        {/* Body base */}
+        <ellipse cx="246" cy="198" rx="76" ry="40" fill="url(#bodyG)" />
+        {/* Fur sheen on top */}
+        <ellipse cx="236" cy="182" rx="58" ry="20" fill="url(#furSheen)" />
+        {/* Belly darker */}
+        <ellipse cx="250" cy="218" rx="60" ry="16" fill="rgba(92,33,5,0.32)" />
+        {/* Chest lighter */}
+        <ellipse cx="295" cy="195" rx="25" ry="22" fill="rgba(254,243,199,0.15)" />
 
-        {/* Toe lines */}
-        <line x1="44" y1="191" x2="56" y2="191" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="74" y1="191" x2="86" y2="191" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    </div>
+        {/* ── FRONT LEGS ── */}
 
-    {/* Animated namaste text */}
-    <p style={{
-      fontFamily:"'Noto Serif Gujarati', serif",
-      color:'#fcd34d', fontWeight:700, fontSize:17, marginTop:4,
-      animation:'namasteText 1.4s ease-in-out infinite',
-    }}>
-      જય શ્રી સ્વામિનારાયણ 🙏
-    </p>
-    <p style={{ color:'rgba(255,255,255,0.65)', fontSize:13, marginTop:4 }}>
-      Loading your page...
-    </p>
+        {/* Front-left (A phase - leads) */}
+        <g style={{ transformOrigin:'282px 215px', animation:'legAup 0.4s ease-in-out infinite' }}>
+          <rect x="274" y="215" width="17" height="33" rx="8.5" fill="url(#legFL)" />
+          {/* Knee dimple */}
+          <circle cx="282" cy="228" r="4" fill="rgba(0,0,0,0.15)" />
+          <g style={{ transformOrigin:'282px 248px', animation:'legAlow 0.4s ease-in-out infinite' }}>
+            <rect x="275" y="248" width="15" height="27" rx="7.5" fill="#d97706" />
+            <ellipse cx="282" cy="275" rx="11"  ry="5.5" fill="#b45309" />
+            <ellipse cx="278" cy="274" rx="4"   ry="2.5" fill="#92400e" />
+            <ellipse cx="286" cy="274" rx="4"   ry="2.5" fill="#92400e" />
+          </g>
+        </g>
+
+        {/* Front-right (B phase) */}
+        <g style={{ transformOrigin:'296px 215px', animation:'legBup 0.4s ease-in-out infinite' }}>
+          <rect x="288" y="215" width="17" height="33" rx="8.5" fill="#e9a012" />
+          <circle cx="296" cy="228" r="4" fill="rgba(0,0,0,0.12)" />
+          <g style={{ transformOrigin:'296px 248px', animation:'legBlow 0.4s ease-in-out infinite' }}>
+            <rect x="289" y="248" width="15" height="27" rx="7.5" fill="#d97706" />
+            <ellipse cx="296" cy="275" rx="11"  ry="5.5" fill="#b45309" />
+            <ellipse cx="292" cy="274" rx="4"   ry="2.5" fill="#92400e" />
+            <ellipse cx="300" cy="274" rx="4"   ry="2.5" fill="#92400e" />
+          </g>
+        </g>
+
+        {/* ── NECK ── */}
+        <ellipse cx="312" cy="194" rx="26" ry="28" fill="url(#bodyG)" />
+        {/* Neck sheen */}
+        <ellipse cx="307" cy="182" rx="16" ry="12" fill="rgba(254,243,199,0.18)" />
+
+        {/* ── HEAD GROUP ── */}
+        <g style={{ transformOrigin:'325px 165px', animation:'headBob 0.4s ease-in-out infinite' }}>
+
+          {/* Head base */}
+          <circle cx="325" cy="160" r="33" fill="url(#headG)" />
+          {/* Head sheen */}
+          <ellipse cx="316" cy="144" rx="20" ry="15" fill="rgba(254,251,200,0.28)" />
+          {/* Head underside */}
+          <ellipse cx="328" cy="178" rx="25" ry="14" fill="rgba(92,33,5,0.22)" />
+
+          {/* ── EAR BACK (partially visible left ear) ── */}
+          <path d="M 302 148 Q 287 150 280 164 Q 276 176 287 180"
+            stroke="#92400e" strokeWidth="16" fill="none" strokeLinecap="round" />
+          <path d="M 302 148 Q 288 150 283 163 Q 280 173 289 178"
+            stroke="#b45309" strokeWidth="8" fill="none" strokeLinecap="round" opacity="0.6" />
+
+          {/* ── EAR FRONT (right ear, floppy) ── */}
+          <g style={{ transformOrigin:'338px 143px', animation:'earFlop 0.4s ease-in-out infinite' }}>
+            {/* Ear outer */}
+            <path d="M 336 142 Q 362 136 372 155 Q 380 172 364 182 Q 350 190 338 174 Z"
+              fill="#b45309" />
+            {/* Ear inner */}
+            <path d="M 338 142 Q 360 138 368 155 Q 374 169 360 178 Q 349 184 340 170 Z"
+              fill="#d97706" opacity="0.65" />
+            {/* Ear highlight */}
+            <path d="M 342 145 Q 360 141 366 155 Q 370 164 360 173"
+              stroke="rgba(254,243,199,0.22)" strokeWidth="5" fill="none" strokeLinecap="round" />
+          </g>
+
+          {/* ── SNOUT ── */}
+          <ellipse cx="350" cy="172" rx="20" ry="14" fill="url(#snoutG)" />
+          {/* Snout shadow line */}
+          <path d="M 330 168 Q 340 165 350 168" stroke="rgba(146,64,14,0.35)" strokeWidth="2" fill="none" />
+          {/* Snout underside */}
+          <ellipse cx="352" cy="178" rx="16" ry="9" fill="rgba(180,83,9,0.25)" />
+          {/* Snout center divide */}
+          <line x1="350" y1="169" x2="350" y2="176" stroke="rgba(92,33,5,0.4)" strokeWidth="1.5" />
+
+          {/* ── NOSE ── */}
+          <ellipse cx="358" cy="164" rx="10" ry="7.5" fill="url(#noseG)" />
+          {/* Nose highlight */}
+          <ellipse cx="354" cy="160" rx="3.5" ry="2.5" fill="rgba(255,255,255,0.38)"
+            style={{ animation:'noseShine 2s ease-in-out infinite' }} />
+          <ellipse cx="361" cy="165" rx="1.5" ry="1.2" fill="rgba(255,255,255,0.18)" />
+
+          {/* ── MOUTH ── */}
+          <path d="M 345 176 Q 352 183 359 176" stroke="#92400e" strokeWidth="2"
+            fill="none" strokeLinecap="round" />
+
+          {/* ── TONGUE ── */}
+          <g style={{ transformOrigin:'352px 182px', animation:'tongueBob 0.4s ease-in-out infinite' }}>
+            <path d="M 346 181 Q 349 196 352 197 Q 355 196 358 181 Z" fill="#f87171" />
+            {/* Tongue center line */}
+            <line x1="352" y1="182" x2="352" y2="195" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" />
+            {/* Tongue highlight */}
+            <ellipse cx="349" cy="186" rx="2" ry="3" fill="rgba(255,200,200,0.4)" />
+          </g>
+
+          {/* ── EYE ── */}
+          {/* Eye socket */}
+          <ellipse cx="321" cy="153" rx="11" ry="10.5" fill="#0a0505" />
+          {/* Iris */}
+          <circle cx="321" cy="153" r="8.5" fill="url(#irisG)" />
+          {/* Pupil */}
+          <circle cx="321" cy="153" r="5.5" fill="#050202" />
+          {/* Main highlight */}
+          <ellipse cx="317" cy="149" rx="2.8" ry="2.5" fill="rgba(255,255,255,0.92)"
+            style={{ animation:'eyeShine 2.5s ease-in-out infinite' }} />
+          {/* Small secondary highlight */}
+          <circle cx="324" cy="155" r="1.2" fill="rgba(255,255,255,0.45)" />
+          {/* Eyelid top shadow */}
+          <path d="M 311 148 Q 321 143 331 148" stroke="rgba(92,33,5,0.5)"
+            strokeWidth="2.5" fill="none" strokeLinecap="round" />
+
+          {/* ── EYEBROW (expressive arch) ── */}
+          <path d="M 312 142 Q 321 138 330 142"
+            stroke="#92400e" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+
+          {/* ── COLLAR ── */}
+          <rect x="306" y="178" width="26" height="9" rx="4.5" fill="#dc2626" />
+          {/* Collar tag */}
+          <circle cx="319" cy="192" r="5" fill="#fbbf24" />
+          <circle cx="319" cy="192" r="2.5" fill="#d97706" />
+        </g>
+      </g>
+      {/* end dog */}
+
+      {/* ── DUST PARTICLES from paws ── */}
+      {[
+        [272, 245, 'dustA', '0s'],
+        [285, 248, 'dustB', '0.15s'],
+        [222, 242, 'dustA', '0.2s'],
+        [236, 245, 'dustB', '0.08s'],
+      ].map(([x,y,anim,delay],i) => (
+        <circle key={i} cx={x} cy={y} r="5"
+          fill={i%2===0 ? 'rgba(180,120,40,0.45)' : 'rgba(200,140,50,0.35)'}
+          style={{ animation:`${anim} 0.65s ease-out infinite`, animationDelay:delay }} />
+      ))}
+
+      {/* ── LOADING TEXT ── */}
+      <text x="176" y="272" fill="rgba(255,255,255,0.85)" fontSize="15"
+        fontWeight="600" fontFamily="system-ui,sans-serif" letterSpacing="2">
+        LOADING
+      </text>
+      {[0,1,2].map(i => (
+        <circle key={i} cx={280+i*14} cy={267} r="4" fill="#f59e0b"
+          style={{ animation:`dotBounce 1.1s ease-in-out infinite`, animationDelay:`${i*0.22}s` }} />
+      ))}
+    </svg>
   </div>
 );
 
-// ─────────────────────────────────────────
-//  MAIN OVERLAY EXPORT
-// ─────────────────────────────────────────
 export default function NavTransition({ show, showError, animType }) {
   if (!show) return null;
-
-  const Character = animType === 'dog' ? RunningDog
-                  : animType === 'flag' ? FlagBearer
-                  : NamasteUncle;
 
   return (
     <>
       <style>{`
-        @keyframes overlayIn  { from{opacity:0} to{opacity:1} }
-        @keyframes orbFloat1  { 0%,100%{transform:translate(0,0) scale(1)}      50%{transform:translate(55px,-70px) scale(1.2)}  }
-        @keyframes orbFloat2  { 0%,100%{transform:translate(0,0) rotate(0deg)}  50%{transform:translate(-65px,-45px) rotate(180deg)} }
-        @keyframes orbFloat3  { 0%,100%{transform:translate(0,0) scale(1)}      40%{transform:translate(70px,50px) scale(1.3)}  }
-        @keyframes orbFloat4  { 0%,100%{transform:translate(0,0) rotate(0deg)}  50%{transform:translate(-50px,65px) rotate(240deg)} }
-        @keyframes errorPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+        @keyframes overlayFade { from{opacity:0} to{opacity:1} }
+        @keyframes orb1 { 0%,100%{transform:translate(0,0) scale(1)}       50%{transform:translate(50px,-65px) scale(1.18)} }
+        @keyframes orb2 { 0%,100%{transform:translate(0,0) rotate(0deg)}   50%{transform:translate(-60px,-42px) rotate(180deg)} }
+        @keyframes orb3 { 0%,100%{transform:translate(0,0) scale(1)}       40%{transform:translate(68px,48px) scale(1.28)} }
+        @keyframes orb4 { 0%,100%{transform:translate(0,0) rotate(0deg)}   50%{transform:translate(-45px,62px) rotate(220deg)} }
+        @keyframes errPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
       `}</style>
 
       <div style={{
         position:'fixed', inset:0, zIndex:9999,
-        background:'rgba(10,18,38,0.93)',
-        backdropFilter:'blur(14px)',
+        background:'rgba(4,8,26,0.96)',
+        backdropFilter:'blur(16px)',
         display:'flex', flexDirection:'column',
         alignItems:'center', justifyContent:'center',
-        animation:'overlayIn 0.3s ease',
+        animation:'overlayFade 0.3s ease',
         overflow:'hidden',
       }}>
+        {/* Floating orbs */}
+        <div style={{ position:'absolute', width:230, height:230, borderRadius:'50%', background:'radial-gradient(circle, rgba(124,58,237,0.42), transparent 70%)', top:'6%',  left:'3%',  animation:'orb1 4.4s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', width:170, height:170, borderRadius:'50%', background:'radial-gradient(circle, rgba(37,99,235,0.42), transparent 70%)',  bottom:'10%',right:'5%',  animation:'orb2 3.8s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', width:140, height:140, borderRadius:'50%', background:'radial-gradient(circle, rgba(16,185,129,0.35), transparent 70%)', top:'46%', right:'12%', animation:'orb3 5.2s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', width:200, height:200, borderRadius:'50%', background:'radial-gradient(circle, rgba(245,158,11,0.32), transparent 70%)', bottom:'16%',left:'7%',  animation:'orb4 4.7s ease-in-out infinite' }} />
+        <div style={{ position:'absolute', width:110, height:110, borderRadius:'50%', background:'radial-gradient(circle, rgba(236,72,153,0.4), transparent 70%)',  top:'16%', right:'26%', animation:'orb1 3.3s ease-in-out infinite reverse' }} />
 
-        {/* Floating background orbs */}
-        <div style={{ position:'absolute', width:220, height:220, borderRadius:'50%', background:'radial-gradient(circle, rgba(124,58,237,0.45), transparent 70%)', top:'8%',  left:'4%',  animation:'orbFloat1 4.2s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', width:160, height:160, borderRadius:'50%', background:'radial-gradient(circle, rgba(37,99,235,0.45), transparent 70%)',  bottom:'12%',right:'6%',  animation:'orbFloat2 3.8s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', width:130, height:130, borderRadius:'50%', background:'radial-gradient(circle, rgba(16,185,129,0.4), transparent 70%)',  top:'48%', right:'14%', animation:'orbFloat3 5.1s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', width:190, height:190, borderRadius:'50%', background:'radial-gradient(circle, rgba(245,158,11,0.35), transparent 70%)', bottom:'18%',left:'8%',  animation:'orbFloat4 4.6s ease-in-out infinite' }} />
-        <div style={{ position:'absolute', width:100, height:100, borderRadius:'50%', background:'radial-gradient(circle, rgba(236,72,153,0.45), transparent 70%)', top:'18%', right:'28%', animation:'orbFloat1 3.2s ease-in-out infinite reverse' }} />
-
-        {/* Character or Error */}
+        {/* Content */}
         <div style={{ position:'relative', zIndex:2, display:'flex', flexDirection:'column', alignItems:'center' }}>
           {showError ? (
             <div style={{ textAlign:'center' }}>
-              <div style={{ fontSize:56, marginBottom:12, animation:'errorPulse 0.8s ease-in-out infinite' }}>⚠️</div>
-              <p style={{ fontSize:20, fontWeight:700, color:'#f87171', margin:'0 0 8px' }}>
-                Something went wrong!
-              </p>
-              <p style={{ fontSize:14, color:'rgba(255,255,255,0.6)', margin:0 }}>
-                Taking you back...
-              </p>
+              <div style={{ fontSize:54, marginBottom:14, animation:'errPulse 0.8s ease-in-out infinite' }}>⚠️</div>
+              <p style={{ fontSize:20, fontWeight:700, color:'#f87171', margin:'0 0 8px' }}>Something went wrong!</p>
+              <p style={{ fontSize:14, color:'rgba(255,255,255,0.55)', margin:0 }}>Taking you back...</p>
             </div>
           ) : (
-            <Character />
+            <RunningDog />
           )}
         </div>
-
       </div>
     </>
   );
