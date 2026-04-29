@@ -2,19 +2,17 @@
 export const dynamic = "force-dynamic";
 import { useRouter } from 'next/navigation'; //navigation tool to move bw pages
 import {useEffect} from 'react';
-import {useNavTransition} from '@/hooks/useNavTransition';
-import NavTransition from '@/components/NavTransition';
+
 export default function HomePage(){ // react function that returns UI
-  // const router=useRouter();    I AM REPLACYING THIS TO NAVIGATE FUNCTION TO ADD DYNAMIC OBJECTS WHILE NAVIGATION FORM ONE PAGE TO ANOTHER
-  const { navigateTo, transitioning, showError, animType } = useNavTransition();
+  const router=useRouter(); // now we can move user to any page by using variable router
 // auto redirect if already logged in
  useEffect(() => {
   const malik = localStorage.getItem("malik");
 
   if (malik) {
-    navigateTo("/dashboard/malik");
+    router.replace("/dashboard/malik");
   }
-},);
+}, [router]);
  
 
  return (
@@ -226,7 +224,7 @@ export default function HomePage(){ // react function that returns UI
       <div style={{ display:'flex', flexDirection:'column', gap:'14px', width:'100%' }}>
 
         <button
-          onClick={() => navigateTo('/login/malik')}
+          onClick={() => router.push('/login/malik')}
           style={{
             width:'100%', padding:'16px',
             background:'#2563eb', color:'white',
@@ -244,7 +242,7 @@ export default function HomePage(){ // react function that returns UI
         </button>
 
         <button
-          onClick={() => navigateTo('/login/grahak')}
+          onClick={() => router.push('/login/grahak')}
           style={{
             width:'100%', padding:'16px',
             background:'white', color:'#1e40af',
@@ -264,7 +262,7 @@ export default function HomePage(){ // react function that returns UI
         </button>
 
         <button
-          onClick={() => navigateTo('/signup/malik')}
+          onClick={() => router.push('/signup/malik')}
           style={{
             width:'100%', padding:'15px',
             background:'#f0fdf4', color:'#166534',
@@ -285,7 +283,6 @@ export default function HomePage(){ // react function that returns UI
 
       </div>
     </div>
-    
   </div>
 );
 }
