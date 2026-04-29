@@ -488,17 +488,6 @@ return (
         )}
 
         <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
-          <div style={{
-              
-              display:'flex', flexDirection:'column', gap:'8px',
-              
-                maxHeight: '60vh',   // ✅ adjust this value to your liking
-              
-                overflowY: 'auto',
-              
-                paddingRight: '4px', // ✅ so scrollbar doesn't overlap cards
-              
-              }}></div>
           {filteredCustomers.map((c) => (
             <div
               key={c.phone}
