@@ -14,11 +14,13 @@ type Grahak = {
 };
 
   // phone no validation
-        const isValidPhone=(phone:string):boolean=>{
-          const cleaned=phone.trim();
-          const phoneRegex=/^[6-9]\d{9}$/;
-          return phoneRegex.test(cleaned);
-        };
+      const isValidPhone = (phone: string): boolean => {
+  console.log("raw input:", JSON.stringify(phone)); // shows hidden chars
+  const cleaned = phone.trim().replace(/\s/g, '').replace(/\D/g, '').slice(0, 10);
+  console.log("cleaned:", cleaned);
+  const phoneRegex = /^[6-9]\d{9}$/;
+  return phoneRegex.test(cleaned);
+};
 
 export default function GrahakLoginPage(){
   const [phone,setPhone]=useState('');

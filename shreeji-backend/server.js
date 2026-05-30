@@ -2,6 +2,7 @@
 
 
 // create API server
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const {db}=require('./firebase'); //this was first required when i built api end point to get the list of shops in which grahak has khata in
@@ -21,6 +22,7 @@ const {loginGrahak}=require("./authGrahak");
 const {signupMalik}=require("./signupMalik");
 const {editGrahakName,editGrahakPhone}=require("./editGrahak");
 const testImport=require("./signupMalik");
+const {startScheduler} =require('./utils/scheduler');
 const { messaging } = require("firebase-admin");
 console.log("IMPORT CHECK:",testImport);
 const app = express();
@@ -404,4 +406,5 @@ app.get("/grahak/shops/:phone",validatePhone,async(req,res)=>{
 const PORT=process.env.PORT || 5000;
 app.listen(PORT,()=>{
     console.log(`Backend running on port${PORT}`);
+    // startScheduler();
 });

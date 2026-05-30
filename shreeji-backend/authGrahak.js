@@ -3,7 +3,8 @@ const { db } = require('./firebase');
 const def_malik_phone = '9276807790';
 
 async function loginGrahak(customerPhone) {
-    console.log("Looking for:", customerPhone);
+  const cleanedPhone = customerPhone.replace(/\D/g, '').slice(0, 10);
+    console.log("Looking for:", cleanedPhone);
   const malikSnap = await db.collection('maliks').doc(def_malik_phone).get();
 
   if (!malikSnap.exists) {

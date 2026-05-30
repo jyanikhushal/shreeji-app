@@ -1,5 +1,5 @@
 const {db}=require('./firebase');
-
+const {sendSMS}=require('./utils/smsService');
 
 // const def_malik_phone='9276807790';
 
@@ -44,6 +44,22 @@ async function addDepositEntry(malikPhone,customerPhone,depositAmount) {
         });
 
         console.log('Deposit entry added');
+
+        
+        const malikSnap=await db.collection("maliks").doc(malikPhone).get();
+        const shopName=malikSnap.data()?.shopName || malikPhone;
+        const depositMessage=
+                 `નમસ્તે ગ્રાહક !!\n` +
+                  `${shopName}\n\n` +
+                  `*** જમા :- ₹${depositAmount} *** \n\n` +
+                  `બિલ બાકી :- ₹${newTotal} \n\n` +
+                  `કૃપા કરી જલ્દી જમા કરાવો\n` +
+                  `ધન્યવાદ\n` +
+                  `${shopName}`;
+
+                  sendSMS(customerPhone,depositMessage).catch(err=>
+                    console.error('[SMS] Deposit SMS failed:',err.message)
+                  );
 }
 module.exports={addDepositEntry};
 
