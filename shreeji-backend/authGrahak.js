@@ -12,7 +12,7 @@ async function loginGrahak(customerPhone) {
   }
 
   // ✅ direct lookup
-  const customerRef = db.collection('maliks').doc(def_malik_phone).collection('customers').doc(customerPhone);
+  const customerRef = db.collection('maliks').doc(def_malik_phone).collection('customers').doc(cleanedPhone);
   const customerSnap = await customerRef.get();
 console.log("Exists:", customerSnap.exists);
   if (!customerSnap.exists) {

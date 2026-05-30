@@ -45,7 +45,7 @@ export default function GrahakLoginPage(){
   const handleLogin=async ()=>{ 
     // this runs when login button is pressed so session check should bew outside it
   if(loading)return; // prevent double click
-      const cleanedPhone = phone.trim();
+      const cleanedPhone = phone.trim().replace(/\s/g, '').replace(/\D/g, '').slice(0, 10);
 
     if(!cleanedPhone){
         showMessage('error','please enter phone number');
