@@ -28,9 +28,11 @@ const notificationRoutes = require('./modules/notifications/notificationRoutes')
 
 console.log("IMPORT CHECK:",testImport);
 const app = express();
-app.use('/api/push', notificationRoutes);
-app.use(cors());
 app.use(express.json());
+app.use(cors());
+app.use('/api/push', notificationRoutes);
+
+
 app.use((req,res,next)=>{
   console.log("REQUEST:", req.method, req.url);
   next();
@@ -410,3 +412,17 @@ app.listen(PORT,()=>{
     console.log(`Backend running on port${PORT}`);
     // startScheduler();
 });
+
+
+/*
+curl -X POST https://YOUR-RENDER-URL.onrender.com/api/push/subscribe \
+  -H "Content-Type: application/json" \
+  -d '{
+    "malikPhone": "9276807790",
+    "customerPhone": "9727691003",
+    "subscription": {
+      "endpoint": "https://fake-endpoint-for-testing.com/abc123",
+      "keys": { "p256dh": "fakekey", "auth": "fakeauth" }
+    }
+  }'
+*/
