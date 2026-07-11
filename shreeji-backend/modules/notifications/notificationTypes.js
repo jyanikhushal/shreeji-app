@@ -1,0 +1,9 @@
+const NOTIFICATION_TYPES = {
+  DEPOSIT_CONFIRMATION: 'DEPOSIT_CONFIRMATION',
+  PAYMENT_REMINDER: 'PAYMENT_REMINDER',
+  // Future types slot in here with zero changes elsewhere:
+  // RECOMMENDATION: 'RECOMMENDATION',
+  // LOW_BALANCE_ALERT: 'LOW_BALANCE_ALERT',
+};
+
+module.exports = { NOTIFICATION_TYPES };

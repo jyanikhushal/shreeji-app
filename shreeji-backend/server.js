@@ -24,6 +24,8 @@ const {editGrahakName,editGrahakPhone}=require("./editGrahak");
 const testImport=require("./signupMalik");
 const {startScheduler} =require('./utils/scheduler');
 const { messaging } = require("firebase-admin");
+const notificationRoutes = require('./modules/notifications/notificationRoutes');
+app.use('/api/push', notificationRoutes);
 console.log("IMPORT CHECK:",testImport);
 const app = express();
 

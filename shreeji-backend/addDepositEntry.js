@@ -49,6 +49,14 @@ async function addDepositEntry(malikPhone,customerPhone,depositAmount) {
          .collection('customers').doc(customerPhone)
          .update({ currentBalance: newTotal, lastDepositAt: depositDate });
 
+         const { sendNotification } = require('../modules/notifications/notificationService');
+const { NOTIFICATION_TYPES } = require('../modules/notifications/notificationTypes');
+
+         // ...after deposit is written and summary recomputed...
+         sendNotification(malikPhone, customerPhone, NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION, {
+           amount: depositAmount,
+           newBalance: updatedSummary.currentBalance,
+         }); // no await needed — fire and forget, don't block the response
         console.log('Deposit entry added');
 
         
