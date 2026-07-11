@@ -7,11 +7,13 @@ import { useToast } from "@/app/context/ToastContext";
 import{getData} from "@/app/utils/api";
 import { isSessionValid,clearSession } from "@/app/utils/session";
 import {db} from '@/app/firebase';
-import { onSnapshot,collection } from "firebase/firestore";
+import { onSnapshot,collection,Timestamp } from "firebase/firestore";
 
 type Customer = {
     name: string;
     phone: string;
+    currentBalance?: number;
+    lastDepositAt?: Timestamp | null; // Firestore Timestamp or null
 };
 type Malik = {
     name: string;
@@ -89,6 +91,19 @@ export default function MalikDashboardPage(){
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [searchText, setSearchText] = useState('');
+    const [sortOption, setSortOption] = useState<'name' | 'amount' | 'time'>('name');
+    const [now, setNow] = useState<number | null>(null);
+
+    useEffect(() => {
+  const updateNow = () => setNow(Date.now());
+  const timeout = setTimeout(updateNow, 0);           // defer initial set out of sync effect body
+  const interval = setInterval(updateNow, 60 * 1000);  // refresh every minute
+
+  return () => {
+    clearTimeout(timeout);
+    clearInterval(interval);
+  };
+}, []);
 
     // usestate declarations for edit customer option 
     const [showRowMenu,setShowRowMenu]=useState(false);
@@ -256,12 +271,38 @@ export default function MalikDashboardPage(){
   }
    }
 
-    // 🔍 Filter customers
-    const filteredCustomers = customers.filter(
-        (c) =>
-            c.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            c.phone.includes(searchText)
-    );
+
+
+    // 🔍 Filter + sort customers
+    const filteredCustomers = customers
+        .filter(
+            (c) =>
+                c.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                c.phone.includes(searchText)
+        )
+        .sort((a, b) => {
+            if (sortOption === 'amount') {
+                return (b.currentBalance ?? 0) - (a.currentBalance ?? 0); // highest due first
+            }
+            if (sortOption === 'time') {
+                const aTime = a.lastDepositAt ? a.lastDepositAt.toDate().getTime() : 0;
+                const bTime = b.lastDepositAt ? b.lastDepositAt.toDate().getTime() : 0;
+                return aTime - bTime; // oldest / never-paid first
+            }
+            return a.name.localeCompare(b.name); // default alphabetical
+        });
+
+
+    function formatDaysAgo(lastDepositAt: Timestamp | null | undefined, now: number): string {
+  if (!lastDepositAt) return "No deposits yet";
+  const date = lastDepositAt.toDate();
+  const diffMs = now - date.getTime();
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (days === 0) return "Today";
+  if (days === 1) return "1 day ago";
+  return `${days} days ago`;
+}
+
 // Add this state at the top of your component (just before the return):
 // const [showAddCustomer, setShowAddCustomer] = useState(false);
 // Already assumed you'll add it above
@@ -446,8 +487,27 @@ return (
           <h2 style={{ fontSize:'16px', fontWeight:700, color:'#14532d', margin:0 }}>
             Customer List
           </h2>
+
+          <select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value as 'name' | 'amount' | 'time')}
+            style={{
+              marginLeft:'auto',
+              fontSize:'12px', fontWeight:600, color:'#166534',
+              background:'rgba(220,252,231,0.85)',
+              border:'1px solid rgba(187,247,208,0.8)',
+              borderRadius:'8px',
+              padding:'5px 8px',
+              cursor:'pointer',
+              outline:'none',
+            }}
+          >
+            <option value="name">Name (A-Z)</option>
+            <option value="amount">Udhaar: High to Low</option>
+            <option value="time">Udhaar: Overdue First</option>
+          </select>
+
           <span style={{
-            marginLeft:'auto',
             background:'rgba(220,252,231,0.85)', color:'#166534',
             fontSize:'12px', fontWeight:600,
             padding:'3px 10px', borderRadius:'20px',
@@ -521,7 +581,18 @@ return (
                   <p style={{ margin:'2px 0 0', fontSize:'12px', color:'#4b5563' }}>{c.phone}</p>
                 </div>
               </div>
-              <button
+
+              <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
+                <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end' }}>
+                  <p style={{ margin:0, fontSize:'14px', fontWeight:700, color:'#dc2626' }}>
+                    ₹{(c.currentBalance ?? 0).toLocaleString('en-IN')}
+                  </p>
+                  <p style={{ margin:'2px 0 0', fontSize:'11px', color:'#6b7280' }}>
+                    {now ? formatDaysAgo(c.lastDepositAt, now) : '—'}
+                  </p>
+                </div>
+
+                <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedCustomer(c);
@@ -542,7 +613,8 @@ return (
                   <path d="M12 20h9"/>
                   <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
                 </svg>
-              </button>
+                </button>
+              </div>
             </div>
           ))}
         </div>
