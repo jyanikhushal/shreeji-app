@@ -64,6 +64,8 @@ async function deleteKhataEntry(malikPhone,customerPhone, entryNo) {
 
     await batch.commit();
 
+    const { recomputeCustomerSummary } = require('./utils/customerSummary');
+await recomputeCustomerSummary(malikPhone, customerPhone);
     console.log("Entry deleted and ledger corrected");
 }
 

@@ -35,6 +35,11 @@ async function addPurchaseEntry(malikPhone,customerPhone,itemName,price) {
         total:newTotal,
     });
 
+    // when new purchase entry is added this update the currentBalance field of that customer obj
+    await db.collection('maliks').doc(malikPhone)
+    .collection('customers').doc(customerPhone)
+    .update({ currentBalance: newTotal });
+
     console.log('Purchase entry added');
 
 }

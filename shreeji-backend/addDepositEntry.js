@@ -43,12 +43,18 @@ async function addDepositEntry(malikPhone,customerPhone,depositAmount) {
             total:newTotal,
         });
 
+        const depositDate=new Date();
+
+        await db.collection('maliks').doc(malikPhone)
+         .collection('customers').doc(customerPhone)
+         .update({ currentBalance: newTotal, lastDepositAt: depositDate });
+
         console.log('Deposit entry added');
 
         
         const malikSnap=await db.collection("maliks").doc(malikPhone).get();
         const shopName=malikSnap.data()?.shopName || malikPhone;
-        const depositMessage=
+        const depositMessage=  // this feature is not in use 
                  `નમસ્તે ગ્રાહક !!\n` +
                   `${shopName}\n\n` +
                   `*** જમા :- ₹${depositAmount} *** \n\n` +

@@ -23,6 +23,8 @@ async function addGrahak(malikPhone,name,customerPhone){
         name:name,
         phone:customerPhone,
         addedAt:new Date(),
+        currentBalance:0,
+        lastDepositAt:null,
     });
 
     console.log('customer added successfully');

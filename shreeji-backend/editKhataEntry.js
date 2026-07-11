@@ -71,6 +71,9 @@ if (entryType === 'deposit') {
     });
 
     await batch.commit();
+
+    const { recomputeCustomerSummary } = require('./utils/customerSummary');
+    await recomputeCustomerSummary(malikPhone, customerPhone);
     console.log('khata entry edited and totals updated');
 
 
