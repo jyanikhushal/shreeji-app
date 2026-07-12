@@ -1,7 +1,7 @@
 const {db}=require('./firebase');
 const {sendSMS}=require('./utils/smsService');
-const { sendNotification } = require('../modules/notifications/notificationService');
-const { NOTIFICATION_TYPES } = require('../modules/notifications/notificationTypes');
+const { sendNotification } = require('./modules/notifications/notificationService');
+const { NOTIFICATION_TYPES } = require('./modules/notifications/notificationTypes');
 // const def_malik_phone='9276807790';
 
 
