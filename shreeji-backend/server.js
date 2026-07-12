@@ -3,6 +3,7 @@
 
 // create API server
 require('dotenv').config();
+require('./utils/scheduler');
 const express = require("express");
 const cors = require("cors");
 const {db}=require('./firebase'); //this was first required when i built api end point to get the list of shops in which grahak has khata in
