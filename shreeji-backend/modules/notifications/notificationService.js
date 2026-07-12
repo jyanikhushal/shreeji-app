@@ -2,7 +2,7 @@
 const webpush = require('web-push');
 const { db } = require('../../firebase'); // adjust path to your existing firebase init
 const { buildNotificationContent } = require('./notificationTemplates');
-
+const { writeHistoryEntry, pruneOldHistory } = require('./notificationHistory');
 webpush.setVapidDetails(
   'mailto:youremail@example.com',
   process.env.VAPID_PUBLIC_KEY,
@@ -26,6 +26,8 @@ async function sendNotification(malikPhone, customerPhone, type, payload = {}) {
     if (subscriptions.length === 0) return;
 
     const content = buildNotificationContent(type, malikName, payload);
+    await writeHistoryEntry(malikPhone, customerPhone, type, content);
+    await pruneOldHistory(malikPhone, customerPhone);
     const message = JSON.stringify(content);
 
     const results = await Promise.allSettled(

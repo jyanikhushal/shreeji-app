@@ -8,12 +8,12 @@ const DIGIKHATA_BADGE = 'https://your-frontend-domain.com/digikhata-badge.png';
 // payload is type-specific data (e.g. amount, customerName).
 const templateBuilders = {
   [NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION]: (malikName, payload) => ({
-    title: malikName,
-    body: `Deposit of ₹${payload.amount} received. Updated balance: ₹${payload.newBalance}`,
-    icon: DIGIKHATA_ICON,
-    badge: DIGIKHATA_BADGE,
-    data: { type: NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION, ...payload },
-  }),
+  title: malikName,
+  body: `Deposit of ₹${Math.abs(payload.amount)} received. Updated balance: ₹${payload.newBalance}`,
+  icon: DIGIKHATA_ICON,
+  badge: DIGIKHATA_BADGE,
+  data: { type: NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION, ...payload },
+}),
 
   [NOTIFICATION_TYPES.PAYMENT_REMINDER]: (malikName, payload) => ({
     title: malikName,

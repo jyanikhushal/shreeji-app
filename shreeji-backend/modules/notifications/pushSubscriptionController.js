@@ -1,6 +1,9 @@
 // modules/notifications/pushSubscriptionController.js
 const { db } = require('../../firebase');
-
+const { sendNotification } = require('./notificationService');
+const { buildNotificationContent } = require('./notificationTemplates');
+const { writeHistoryEntry } = require('./notificationHistory');
+const { NOTIFICATION_TYPES } = require('./notificationTypes');
 async function subscribeToPush(req, res) {
   const { malikPhone, customerPhone, subscription } = req.body;
   if (!malikPhone || !customerPhone || !subscription) {
@@ -43,4 +46,57 @@ async function unsubscribeFromPush(req, res) {
   }
 }
 
-module.exports = { subscribeToPush, unsubscribeFromPush };
+async function initNotificationHistory(req, res) {
+  const { malikPhone, customerPhone } = req.body;
+  try {
+    await db.doc(`maliks/${malikPhone}/customers/${customerPhone}`)
+      .update({ notificationPermission: 'granted' });
+
+    const malikDoc = await db.doc(`maliks/${malikPhone}`).get();
+    const malikName = malikDoc.exists ? (malikDoc.data().shopName || 'digiKhata') : 'digiKhata';
+
+    const entriesSnap = await db
+      .collection(`maliks/${malikPhone}/customers/${customerPhone}/entries`)
+      .where('type', '==', 'deposit')
+      .orderBy('date', 'asc')
+      .get();
+
+    const deposits = entriesSnap.docs;
+
+    // Silent backfill for every deposit EXCEPT the last one
+    for (let i = 0; i < deposits.length - 1; i++) {
+      const entry = deposits[i].data();
+      const content = buildNotificationContent(NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION, malikName, {
+        amount: Math.abs(entry.amount),
+        newBalance: entry.total,
+      });
+      await writeHistoryEntry(
+        malikPhone, customerPhone,
+        NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION,
+        content,
+        entry.date.toDate()
+      );
+    }
+
+    // Real push for the LAST deposit (if any deposits exist at all)
+    if (deposits.length > 0) {
+      const lastEntry = deposits[deposits.length - 1].data();
+      await sendNotification(malikPhone, customerPhone, NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION, {
+        amount: lastEntry.amount,
+        newBalance: lastEntry.total,
+      });
+    }
+
+    // Real push for the reminder, always last in sequence
+    const customerDoc = await db.doc(`maliks/${malikPhone}/customers/${customerPhone}`).get();
+    await sendNotification(malikPhone, customerPhone, NOTIFICATION_TYPES.PAYMENT_REMINDER, {
+      currentBalance: customerDoc.data().currentBalance,
+    });
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('initNotificationHistory error:', err);
+    res.status(500).json({ error: 'Failed to initialize notification history' });
+  }
+}
+module.exports = { subscribeToPush, unsubscribeFromPush, initNotificationHistory };
