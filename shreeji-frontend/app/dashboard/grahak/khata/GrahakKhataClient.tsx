@@ -46,7 +46,9 @@ export default function GrahakKhataClient() {
   const [showHistoryPanel, setShowHistoryPanel] = useState(false);
   const [history, setHistory] = useState<NotificationItem[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
+   const [localGranted, setLocalGranted] = useState(false);
 
+  const getLocalStorageKey = () => `digikhata_push_${malikPhone}_${phone}`;
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search);
     setPhone(sp.get("phone"));
@@ -102,7 +104,7 @@ export default function GrahakKhataClient() {
     return () => unsubscribe();
   }, [phone, malikPhone, authChecked]);
 
-  // NEW: customer doc listener — checks notificationPermission field
+  // Firestore listener — tracks whether ANY device has ever granted (used to skip re-backfilling)
   useEffect(() => {
     if (!phone || !malikPhone || !authChecked) return;
 
@@ -112,24 +114,38 @@ export default function GrahakKhataClient() {
       const granted = data?.notificationPermission === 'granted';
       setNotificationGranted(granted);
       setPermissionKnown(true);
-      if (!granted) {
-        setShowPermissionModal(true);
-      } else {
-        setShowPermissionModal(false);
-      }
     });
     return () => unsubscribe();
   }, [phone, malikPhone, authChecked]);
 
-  const handleEnableNotifications = async () => {
+  // Local (per-browser) check — runs once phone/malikPhone are known.
+  // Decides whether THIS browser has already subscribed, independent of Firestore's global flag.
+  useEffect(() => {
+    if (!phone || !malikPhone) return;
+    const localFlag = localStorage.getItem(getLocalStorageKey()) === 'true';
+    setLocalGranted(localFlag);
+    if (!localFlag) {
+      setShowPermissionModal(true);
+    }
+  }, [phone, malikPhone]);
+
+ const handleEnableNotifications = async () => {
     if (!phone || !malikPhone) return;
     setEnabling(true);
     try {
+      // Always subscribe THIS browser — every device needs its own subscription.
       await subscribeToPushNotifications(malikPhone, phone);
-      await initNotificationHistory(malikPhone, phone);
-      showMessage("success", "Notifications enabled");
+
+      // Only run the one-time backfill if NO device has ever granted before.
+      if (!notificationGranted) {
+        await initNotificationHistory(malikPhone, phone);
+      }
+
+      // Mark this specific browser as subscribed.
+      localStorage.setItem(getLocalStorageKey(), 'true');
+      setLocalGranted(true);
       setShowPermissionModal(false);
-      // notificationGranted flips via the onSnapshot listener automatically
+      showMessage("success", "Notifications enabled");
     } catch (err) {
       if (err instanceof Error) {
         showMessage("error", err.message);
@@ -146,7 +162,7 @@ export default function GrahakKhataClient() {
   };
 
   const openHistoryPanel = async () => {
-    if (!notificationGranted || !phone || !malikPhone) return;
+    if (!localGranted || !phone || !malikPhone) return;
     setShowHistoryPanel(true);
     setHistoryLoading(true);
     try {
@@ -221,15 +237,15 @@ export default function GrahakKhataClient() {
           {/* BELL BUTTON */}
           <button
             onClick={openHistoryPanel}
-            disabled={!notificationGranted}
-            title={notificationGranted ? "View notifications" : "Enable notifications first"}
+            disabled={!localGranted}
+            title={localGranted ? "View notifications" : "Enable notifications first"}
             style={{
               padding: '9px 12px',
-              background: notificationGranted ? '#eff6ff' : '#f3f4f6',
-              color: notificationGranted ? '#2563eb' : '#9ca3af',
-              border: `1.5px solid ${notificationGranted ? '#bfdbfe' : '#e5e7eb'}`,
+              background: localGranted ? '#eff6ff' : '#f3f4f6',
+              color: localGranted ? '#2563eb' : '#9ca3af',
+              border: `1.5px solid ${localGranted ? '#bfdbfe' : '#e5e7eb'}`,
               borderRadius: 10, fontSize: 15,
-              cursor: notificationGranted ? 'pointer' : 'not-allowed',
+              cursor: localGranted ? 'pointer' : 'not-allowed',
             }}
           >
             🔔
