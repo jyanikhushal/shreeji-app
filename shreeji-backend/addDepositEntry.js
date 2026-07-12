@@ -1,6 +1,7 @@
 const {db}=require('./firebase');
 const {sendSMS}=require('./utils/smsService');
-
+const { sendNotification } = require('../modules/notifications/notificationService');
+const { NOTIFICATION_TYPES } = require('../modules/notifications/notificationTypes');
 // const def_malik_phone='9276807790';
 
 
@@ -54,9 +55,9 @@ const { NOTIFICATION_TYPES } = require('../modules/notifications/notificationTyp
 
          // ...after deposit is written and summary recomputed...
          sendNotification(malikPhone, customerPhone, NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION, {
-           amount: depositAmount,
-           newBalance: updatedSummary.currentBalance,
-         }); // no await needed — fire and forget, don't block the response
+            amount: depositAmount,
+            newBalance: newTotal,
+          }); // no await needed — fire and forget, don't block the response
         console.log('Deposit entry added');
 
         
