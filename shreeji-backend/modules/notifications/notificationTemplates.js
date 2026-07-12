@@ -1,8 +1,8 @@
 // modules/notifications/notificationTemplates.js
 const { NOTIFICATION_TYPES } = require('./notificationTypes');
 
-const DIGIKHATA_ICON = 'https://your-frontend-domain.com/digikhata-logo.png';
-const DIGIKHATA_BADGE = 'https://your-frontend-domain.com/digikhata-badge.png';
+const DIGIKHATA_ICON = 'https://shreeji-5dfuluu8v-jyani-khushals-projects.vercel.app/digiKhata-logo.png';
+const DIGIKHATA_BADGE = 'https://shreeji-5dfuluu8v-jyani-khushals-projects.vercel.app/digiKhata-logo.png';
 
 // Each builder takes (malikBusinessName, payload) and returns the push content.
 // payload is type-specific data (e.g. amount, customerName).
