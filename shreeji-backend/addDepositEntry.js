@@ -1,7 +1,7 @@
 const {db}=require('./firebase');
 const {sendSMS}=require('./utils/smsService');
-const { sendNotification } = require('./modules/notifications/notificationService');
-const { NOTIFICATION_TYPES } = require('./modules/notifications/notificationTypes');
+// const { sendNotification } = require('./modules/notifications/notificationService');
+// const { NOTIFICATION_TYPES } = require('./modules/notifications/notificationTypes');
 // const def_malik_phone='9276807790';
 
 
@@ -50,8 +50,8 @@ async function addDepositEntry(malikPhone,customerPhone,depositAmount) {
          .collection('customers').doc(customerPhone)
          .update({ currentBalance: newTotal, lastDepositAt: depositDate });
 
-         const { sendNotification } = require('../modules/notifications/notificationService');
-const { NOTIFICATION_TYPES } = require('../modules/notifications/notificationTypes');
+         const { sendNotification } = require('./modules/notifications/notificationService');
+const { NOTIFICATION_TYPES } = require('./modules/notifications/notificationTypes');
 
          // ...after deposit is written and summary recomputed...
          sendNotification(malikPhone, customerPhone, NOTIFICATION_TYPES.DEPOSIT_CONFIRMATION, {
