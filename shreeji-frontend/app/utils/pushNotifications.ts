@@ -42,3 +42,19 @@ export async function subscribeToPushNotifications(malikPhone: string, customerP
 
   return subscription;
 }
+
+export async function initNotificationHistory(malikPhone: string, customerPhone: string) {
+  const res = await fetch(`${API_URL}/api/push/init-history`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ malikPhone, customerPhone }),
+  });
+  if (!res.ok) throw new Error('Failed to initialize notification history');
+  return res.json();
+}
+
+export async function fetchNotificationHistory(malikPhone: string, customerPhone: string) {
+  const res = await fetch(`${API_URL}/api/push/history?malikPhone=${malikPhone}&customerPhone=${customerPhone}`);
+  if (!res.ok) throw new Error('Failed to fetch notification history');
+  return res.json(); // { history: [...] }
+}

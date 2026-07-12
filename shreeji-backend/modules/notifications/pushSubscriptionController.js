@@ -99,4 +99,33 @@ async function initNotificationHistory(req, res) {
     res.status(500).json({ error: 'Failed to initialize notification history' });
   }
 }
-module.exports = { subscribeToPush, unsubscribeFromPush, initNotificationHistory };
+
+async function getNotificationHistory(req, res) {
+  const { malikPhone, customerPhone } = req.query;
+  if (!malikPhone || !customerPhone) {
+    return res.status(400).json({ error: 'malikPhone and customerPhone required' });
+  }
+  try {
+    const snap = await db
+      .collection(`maliks/${malikPhone}/customers/${customerPhone}/notifications`)
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    const history = snap.docs.map((doc) => {
+      const d = doc.data();
+      return {
+        id: doc.id,
+        type: d.type,
+        title: d.title,
+        body: d.body,
+        createdAt: d.createdAt.toDate().toISOString(),
+      };
+    });
+
+    res.json({ history });
+  } catch (err) {
+    console.error('getNotificationHistory error:', err);
+    res.status(500).json({ error: 'Failed to fetch notification history' });
+  }
+}
+module.exports = { subscribeToPush, unsubscribeFromPush, initNotificationHistory, getNotificationHistory };

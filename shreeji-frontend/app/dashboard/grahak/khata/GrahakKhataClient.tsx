@@ -1,13 +1,16 @@
-// will reuse the existing khata UI but in read only mode
 'use client';
-export const dynamic = "force-dynamic";
 
-import {db} from '@/app/firebase';
-import { useEffect, useState, Suspense } from 'react';
+import { db } from '@/app/firebase';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/app/context/ToastContext';
-import { isSessionValid,clearSession } from '@/app/utils/session';
-import {onSnapshot,collection} from 'firebase/firestore'; // as we are using firebase it has onsnapshotlisteners that fires instantly whenver data changes same like trigger
+import { isSessionValid, clearSession } from '@/app/utils/session';
+import { onSnapshot, collection, doc } from 'firebase/firestore';
+import {
+  subscribeToPushNotifications,
+  initNotificationHistory,
+  fetchNotificationHistory,
+} from '@/app/utils/pushNotifications';
 
 type Entry = {
   entryNo: number;
@@ -17,9 +20,16 @@ type Entry = {
   total: number;
 };
 
-// ── INNER COMPONENT (does all the real work) ──
-function GrahakKhataInner() {
-   const router = useRouter();
+type NotificationItem = {
+  id: string;
+  type: string;
+  title: string;
+  body: string;
+  createdAt: string;
+};
+
+export default function GrahakKhataClient() {
+  const router = useRouter();
   const { showMessage } = useToast();
 
   const [loading, setLoading] = useState(true);
@@ -28,14 +38,21 @@ function GrahakKhataInner() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [authChecked, setAuthChecked] = useState(false);
 
-  // ✅ FIX 1: Get URL params from window
+  // notification-related state
+  const [permissionKnown, setPermissionKnown] = useState(false); // has the doc loaded yet
+  const [notificationGranted, setNotificationGranted] = useState(false);
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const [enabling, setEnabling] = useState(false);
+  const [showHistoryPanel, setShowHistoryPanel] = useState(false);
+  const [history, setHistory] = useState<NotificationItem[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search);
     setPhone(sp.get("phone"));
     setMalikPhone(sp.get("malikPhone"));
   }, []);
 
-  // ✅ FIX 2: Auth check — separate, runs once on mount
   useEffect(() => {
     if (!isSessionValid("grahak")) {
       router.replace("/login/grahak");
@@ -50,19 +67,15 @@ function GrahakKhataInner() {
     return phoneRegex.test(p.trim());
   };
 
-  // ✅ FIX 3: Firestore listener — only runs when ALL 3 are ready
+  // entries listener (unchanged from before)
   useEffect(() => {
     if (!phone || !malikPhone || !authChecked) return;
-
     if (!isValidPhone(phone)) {
       showMessage("error", "Invalid customer phone");
       return;
     }
 
-    const entriesRef = collection(
-      db, 'maliks', malikPhone, 'customers', phone, 'entries'
-    );
-
+    const entriesRef = collection(db, 'maliks', malikPhone, 'customers', phone, 'entries');
     const unsubscribe = onSnapshot(
       entriesRef,
       (snapshot) => {
@@ -76,7 +89,6 @@ function GrahakKhataInner() {
             date: d.date?.toDate().toLocaleDateString() || '',
           };
         });
-
         const sorted = data.sort((a, b) => (a.entryNo || 0) - (b.entryNo || 0));
         setEntries(sorted);
         setLoading(false);
@@ -87,9 +99,65 @@ function GrahakKhataInner() {
         setLoading(false);
       }
     );
-
     return () => unsubscribe();
-  }, [phone, malikPhone, authChecked]); // ✅ all 3 dependencies correct
+  }, [phone, malikPhone, authChecked]);
+
+  // NEW: customer doc listener — checks notificationPermission field
+  useEffect(() => {
+    if (!phone || !malikPhone || !authChecked) return;
+
+    const customerRef = doc(db, 'maliks', malikPhone, 'customers', phone);
+    const unsubscribe = onSnapshot(customerRef, (snap) => {
+      const data = snap.data();
+      const granted = data?.notificationPermission === 'granted';
+      setNotificationGranted(granted);
+      setPermissionKnown(true);
+      if (!granted) {
+        setShowPermissionModal(true);
+      } else {
+        setShowPermissionModal(false);
+      }
+    });
+    return () => unsubscribe();
+  }, [phone, malikPhone, authChecked]);
+
+  const handleEnableNotifications = async () => {
+    if (!phone || !malikPhone) return;
+    setEnabling(true);
+    try {
+      await subscribeToPushNotifications(malikPhone, phone);
+      await initNotificationHistory(malikPhone, phone);
+      showMessage("success", "Notifications enabled");
+      setShowPermissionModal(false);
+      // notificationGranted flips via the onSnapshot listener automatically
+    } catch (err) {
+      if (err instanceof Error) {
+        showMessage("error", err.message);
+      } else {
+        showMessage("error", "Failed to enable notifications");
+      }
+    } finally {
+      setEnabling(false);
+    }
+  };
+
+  const handleDeclineNotifications = () => {
+    setShowPermissionModal(false); // no persistence — reappears next visit
+  };
+
+  const openHistoryPanel = async () => {
+    if (!notificationGranted || !phone || !malikPhone) return;
+    setShowHistoryPanel(true);
+    setHistoryLoading(true);
+    try {
+      const res = await fetchNotificationHistory(malikPhone, phone);
+      setHistory(res.history || []);
+    } catch (err) {
+      showMessage("error", "Failed to load notifications");
+    } finally {
+      setHistoryLoading(false);
+    }
+  };
 
   const lastTotal = entries.length > 0 ? entries[entries.length - 1].total : 0;
 
@@ -100,10 +168,9 @@ function GrahakKhataInner() {
       display: 'flex', alignItems: 'center', justifyContent: 'center',
     }}>
       <div style={{
-        background: 'rgba(255,255,255,0.88)',
-        backdropFilter: 'blur(16px)',
-        border: '0.5px solid rgba(200,210,240,0.7)',
-        borderRadius: 20, padding: '2rem 3rem', textAlign: 'center',
+        background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)',
+        border: '0.5px solid rgba(200,210,240,0.7)', borderRadius: 20,
+        padding: '2rem 3rem', textAlign: 'center',
       }}>
         <p style={{ margin: 0, fontSize: 15, color: '#6b7280', fontWeight: 500 }}>
           Loading khata...
@@ -121,20 +188,14 @@ function GrahakKhataInner() {
 
       {/* ── TOP BAR ── */}
       <div style={{
-        background: 'rgba(255,255,255,0.88)',
-        backdropFilter: 'blur(16px)',
-        border: '0.5px solid rgba(200,210,240,0.7)',
-        borderRadius: 20,
-        padding: '1rem 1.25rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '1.25rem',
+        background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)',
+        border: '0.5px solid rgba(200,210,240,0.7)', borderRadius: 20,
+        padding: '1rem 1.25rem', display: 'flex', justifyContent: 'space-between',
+        alignItems: 'center', marginBottom: '1.25rem',
       }}>
         <div style={{ display:'flex', alignItems:'center', gap: 12 }}>
           <div style={{
-            width: 46, height: 46, borderRadius: '50%',
-            background: '#dcfce7',
+            width: 46, height: 46, borderRadius: '50%', background: '#dcfce7',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 18, fontWeight: 700, color: '#16a34a', flexShrink: 0,
           }}>
@@ -151,20 +212,33 @@ function GrahakKhataInner() {
             <div style={{
               background: lastTotal > 0 ? '#fee2e2' : '#dcfce7',
               color: lastTotal > 0 ? '#dc2626' : '#16a34a',
-              borderRadius: 20, padding: '5px 14px',
-              fontSize: 13, fontWeight: 700,
+              borderRadius: 20, padding: '5px 14px', fontSize: 13, fontWeight: 700,
             }}>
               ₹{lastTotal}
             </div>
           )}
+
+          {/* BELL BUTTON */}
           <button
-            onClick={() => {
-              clearSession("grahak");
-                  router.replace("/login/grahak");
-            }}
+            onClick={openHistoryPanel}
+            disabled={!notificationGranted}
+            title={notificationGranted ? "View notifications" : "Enable notifications first"}
             style={{
-              padding:'9px 16px',
-              background:'white', color:'#dc2626',
+              padding: '9px 12px',
+              background: notificationGranted ? '#eff6ff' : '#f3f4f6',
+              color: notificationGranted ? '#2563eb' : '#9ca3af',
+              border: `1.5px solid ${notificationGranted ? '#bfdbfe' : '#e5e7eb'}`,
+              borderRadius: 10, fontSize: 15,
+              cursor: notificationGranted ? 'pointer' : 'not-allowed',
+            }}
+          >
+            🔔
+          </button>
+
+          <button
+            onClick={() => { clearSession("grahak"); router.replace("/login/grahak"); }}
+            style={{
+              padding:'9px 16px', background:'white', color:'#dc2626',
               border:'1.5px solid #fca5a5', borderRadius:10,
               fontSize:13, fontWeight:500, cursor:'pointer',
               display:'flex', alignItems:'center', gap:6,
@@ -202,7 +276,7 @@ function GrahakKhataInner() {
         </div>
       )}
 
-      {/* ── KHATA TABLE ── */}
+      {/* ── KHATA TABLE (unchanged) ── */}
       <div style={{ background:'rgba(255,255,255,0.88)', backdropFilter:'blur(16px)', border:'0.5px solid rgba(200,210,240,0.7)', borderRadius:20, overflow:'hidden' }}>
         {entries.length === 0 ? (
           <div style={{ padding:'3rem', textAlign:'center', color:'#9ca3af', fontSize:15 }}>No entries found</div>
@@ -266,32 +340,98 @@ function GrahakKhataInner() {
       <p style={{ textAlign:'center', fontSize:12, color:'#9ca3af', marginTop:16 }}>
         Read-only view · Contact your store for any changes
       </p>
-    </div>
-  );
-}
 
-// ── OUTER PAGE — wraps inner in Suspense so Next.js build doesn't crash ──
-export default function GrahakKhataPage() {
-  return (
-    <Suspense fallback={
-      <div style={{
-        minHeight:'100vh',
-        background:'linear-gradient(135deg, #dbeafe 0%, #eff6ff 40%, #e0e7ff 100%)',
-        display:'flex', alignItems:'center', justifyContent:'center',
-      }}>
+      {/* ── PERMISSION MODAL (blocking) ── */}
+      {permissionKnown && showPermissionModal && (
         <div style={{
-          background:'rgba(255,255,255,0.88)',
-          backdropFilter:'blur(16px)',
-          border:'0.5px solid rgba(200,210,240,0.7)',
-          borderRadius:20, padding:'2rem 3rem', textAlign:'center',
+          position:'fixed', inset:0, zIndex:9999,
+          background:'rgba(0,0,0,0.6)',
+          display:'flex', alignItems:'center', justifyContent:'center',
         }}>
-          <p style={{ margin:0, fontSize:15, color:'#6b7280', fontWeight:500 }}>
-            Loading...
-          </p>
+          <div style={{
+            background:'white', borderRadius:20, padding:32, width:320,
+            boxShadow:'0 20px 60px rgba(0,0,0,0.3)', textAlign:'center',
+          }}>
+            <div style={{ fontSize: 40, marginBottom: 12 }}>🔔</div>
+            <h2 style={{ fontWeight:700, marginBottom:8, color:'#111', fontSize:18 }}>
+              Enable Notifications?
+            </h2>
+            <p style={{ color:'#6b7280', fontSize:14, marginBottom:24, lineHeight:1.5 }}>
+              Get notified instantly when a deposit is recorded, and reminders when payment is due.
+            </p>
+            <div style={{ display:'flex', gap:10 }}>
+              <button
+                onClick={handleDeclineNotifications}
+                disabled={enabling}
+                style={{
+                  flex:1, padding:'11px 0', border:'1px solid #e5e7eb', borderRadius:10,
+                  background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500,
+                }}
+              >
+                Not now
+              </button>
+              <button
+                onClick={handleEnableNotifications}
+                disabled={enabling}
+                style={{
+                  flex:1, padding:'11px 0', background:'#2563eb', color:'white',
+                  border:'none', borderRadius:10, cursor:'pointer', fontSize:15, fontWeight:700,
+                }}
+              >
+                {enabling ? 'Enabling...' : 'Yes, enable'}
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    }>
-      <GrahakKhataInner />
-    </Suspense>
+      )}
+
+      {/* ── NOTIFICATION HISTORY PANEL ── */}
+      {showHistoryPanel && (
+        <div style={{
+          position:'fixed', inset:0, zIndex:9999,
+          background:'rgba(0,0,0,0.45)',
+          display:'flex', alignItems:'center', justifyContent:'center',
+        }}
+          onClick={() => setShowHistoryPanel(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background:'white', borderRadius:16, padding:20, width:340,
+              maxHeight:'70vh', overflowY:'auto', boxShadow:'0 16px 48px rgba(0,0,0,0.2)',
+            }}
+          >
+            <h2 style={{ fontWeight:700, marginBottom:12, color:'#111', fontSize:16 }}>Notifications</h2>
+            {historyLoading ? (
+              <p style={{ color:'#9ca3af', fontSize:14, textAlign:'center' }}>Loading...</p>
+            ) : history.length === 0 ? (
+              <p style={{ color:'#9ca3af', fontSize:14, textAlign:'center' }}>No notifications yet</p>
+            ) : (
+              history.map((item) => (
+                <div key={item.id} style={{
+                  padding:'10px 0', borderBottom:'1px solid #f3f4f6',
+                }}>
+                  <p style={{ margin:0, fontSize:13, fontWeight:600, color:'#111' }}>{item.title}</p>
+                  <p style={{ margin:'2px 0', fontSize:13, color:'#374151' }}>{item.body}</p>
+                  <p style={{ margin:0, fontSize:11, color:'#9ca3af' }}>
+                    {new Date(item.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              ))
+            )}
+            <button
+              onClick={() => setShowHistoryPanel(false)}
+              style={{
+                width:'100%', marginTop:14, padding:'10px 0', border:'1px solid #e5e7eb',
+                borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:14,
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+    </div>
   );
 }
