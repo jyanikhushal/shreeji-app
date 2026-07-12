@@ -1,7 +1,6 @@
 // modules/notifications/notificationRoutes.js
 const express = require('express');
 const router = express.Router();
-const { subscribeToPush, unsubscribeFromPush, initNotificationHistory } = require('./pushSubscriptionController');
 const { subscribeToPush, unsubscribeFromPush, initNotificationHistory, getNotificationHistory } = require('./pushSubscriptionController');
 
 router.get('/history', getNotificationHistory);
