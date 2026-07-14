@@ -40,7 +40,7 @@ async function addPurchaseEntry(malikPhone,customerPhone,itemName,price) {
     .collection('customers').doc(customerPhone)
     .update({ currentBalance: newTotal });
 
-    console.log('Purchase entry added');
+    console.log('Purchase entry added successfully.');
 
 }
 

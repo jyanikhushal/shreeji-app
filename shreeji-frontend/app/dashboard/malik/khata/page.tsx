@@ -46,7 +46,7 @@ function RunningKhataInner(){
   const interval = setInterval(() => {
     if (!isSessionValid("malik")) {
       clearSession("malik");
-      showMessage("error", "Session expired. Please login again.");
+      showMessage("error", "Session expired.Please login again.");
       router.push("/login/malik");
     }
   }, 60 * 1000); // check every 1 minute
