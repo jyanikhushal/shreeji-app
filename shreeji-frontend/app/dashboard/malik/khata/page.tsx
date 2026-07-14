@@ -384,6 +384,79 @@ useEffect(()=>{
   runQueue();
 };
 
+const handleResubmit = (index: number) => {
+    const current = entries[index];
+    if(!current.item || !current.amount){
+      showMessage("error",'Please fill item and amount');
+      return;
+    }
+    if(!isValidAmount(current.amount)){
+      showMessage('error',"Enter valid amount");
+      return;
+    }
+    if(isResyncing) return;
+
+    const amountNum = Number(current.amount);
+    const prevRow = entries[index - 1];
+    const previewTotal = (prevRow ? prevRow.total : 0) + amountNum;
+    const entryNo = current.entryNo;
+    const todayStr = formatToday();
+    const itemName = current.item;
+
+    // mark this row pending, drop awaitingResubmit, fill in the provisional total
+    setEntries(prev => prev.map((row, i) =>
+      i === index
+        ? { ...row, total: previewTotal, pending: true, awaitingResubmit: false }
+        : row
+    ));
+
+    setTimeout(() => {
+      const nextAwaiting = entriesRef.current.findIndex(r => r.awaitingResubmit);
+      if(nextAwaiting !== -1){
+        amountInputRefs.current[nextAwaiting]?.focus();
+      }
+    }, 0);
+
+    submitQueueItemsRef.current.push({
+      id: entryNo,
+      run: async () => {
+        try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/khata/addPurchase`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              malikPhone: localStorage.getItem("malikPhone"),
+              phone: customerPhone,
+              item: itemName,
+              amount: amountNum,
+            }),
+          });
+          const confirmed = await getData<{entryNo:number; date:string|{_seconds:number}; description:string; amount:number; total:number}>(res);
+
+          if(!queueValidRef.current) return;
+
+          let confirmedDate = todayStr;
+          if(confirmed.date && typeof confirmed.date !== 'string' && confirmed.date._seconds){
+            const jsDate = new Date(confirmed.date._seconds * 1000);
+            confirmedDate = `${String(jsDate.getDate()).padStart(2,'0')}/${String(jsDate.getMonth()+1).padStart(2,'0')}/${jsDate.getFullYear()}`;
+          }
+
+          setEntries(prev => prev.map(row =>
+            row.entryNo === entryNo && row.pending
+              ? { entryNo: confirmed.entryNo, date: confirmedDate, item: confirmed.description, amount: String(confirmed.amount), total: confirmed.total }
+              : row
+          ));
+        } catch(err){
+          console.error(err);
+          if(!queueValidRef.current) return;
+          await handleQueueFailure(entryNo);
+        }
+      },
+    });
+
+    runQueue();
+  };
+
   const handleDepositConfirm = async() => {
     if(isSubmitting) return;
     const dep = Number(depositAmount);
@@ -627,6 +700,8 @@ useEffect(()=>{
               const isLastRow = index === entries.length - 1;
               const isDeposit = (row.item || '').startsWith('Deposit');
               const isDimmed = editingRow !== null && !isEditing;
+              const isEarliestAwaitingResubmit = row.awaitingResubmit &&
+                entries.findIndex(r => r.awaitingResubmit) === index;
 
               return (
                 <tr
@@ -665,7 +740,7 @@ useEffect(()=>{
                       ref={(el) => { itemInputRefs.current[index] = el; }}
                       value={row.item}
                       disabled={isSubmitting ||
-                        (editingRow !== index && !(editingRow === null && isLastRow)) ||
+                        (editingRow !== index && !(editingRow === null && isLastRow) && !isEarliestAwaitingResubmit) ||
                         isDeposit
                       }
                       onChange={(e) => handleChange(index, 'item', e.target.value)}
@@ -691,7 +766,7 @@ useEffect(()=>{
                       ref={(el) => { amountInputRefs.current[index] = el; }}
                       value={row.amount}
                       disabled={isSubmitting ||
-                        (editingRow !== index && !(editingRow === null && isLastRow))
+                        (editingRow !== index && !(editingRow === null && isLastRow) && !isEarliestAwaitingResubmit)
                       }
                       onChange={(e) => {
                         const value = e.target.value;
@@ -708,6 +783,9 @@ useEffect(()=>{
                           if(editingRow === index){
                             await handleEditAmount(index, e.currentTarget.value);
                             setEditingRow(null);
+                          } else if(row.awaitingResubmit){
+                            if(!isEarliestAwaitingResubmit) return; // strict order guard
+                            handleResubmit(index);
                           } else {
                             handleEnter(index);
                           }
