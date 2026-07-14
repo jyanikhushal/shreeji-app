@@ -312,7 +312,8 @@ useEffect(()=>{
   if(isResyncing) return; // Phase 6 guard, wired in now since it's a one-line check
 
   const amountNum = Number(current.amount);
-  const previewTotal = current.total + amountNum;
+  const prevRow = entries[index - 1];
+  const previewTotal = (prevRow ? prevRow.total : 0) + amountNum;
   const provisionalEntryNo = current.entryNo;
   const todayStr = formatToday();
   const itemName = current.item;
