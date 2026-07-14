@@ -117,7 +117,7 @@ function RunningKhataInner(){
     if(customerPhone) fetchCustomer();
   },[customerPhone]);
 
-  async function loadKhata(){
+  async function loadKhata(): Promise<boolean>{
     try{
       const url = `${process.env.NEXT_PUBLIC_API_URL}/khata/${customerPhone}?malikPhone=${localStorage.getItem("malikPhone")}`;
       console.log("FINAL URL:", url);
@@ -171,9 +171,11 @@ function RunningKhataInner(){
         const todayStr = `${day}/${month}/${year}`;
         setEntries([{ entryNo:1, date:todayStr, item:"", amount:"", total:0 }]);
       }
+      return true;
     } catch(err){
       console.error("Error loading khata", err);
       showMessage("error","Error loading khata");
+      return false;
     }
   }
 
@@ -235,8 +237,19 @@ const handleQueueFailure = async (failedEntryNo: number) => {
   const failIndex = snapshot.findIndex(r => r.entryNo === failedEntryNo);
   const cachedTail = failIndex === -1 ? [] : snapshot.slice(failIndex).map(r => ({ item: r.item, amount: r.amount }));
 
-  // 2. Resync to server truth
-  await loadKhata();
+  // 2. Resync to server truth — retry until it actually succeeds.
+  // If we proceed on a failed sync, the rebuild below would run on stale/unknown
+  // state instead of confirmed server truth — that was the exact bug we hit.
+  let synced = await loadKhata();
+  let toldOffline = false;
+  while(!synced){
+    if(!toldOffline){
+      showMessage("error", "No internet connection — will keep retrying");
+      toldOffline = true;
+    }
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    synced = await loadKhata();
+  }
 
   // 3. Strip loadKhata's own trailing blank row, rebuild the tail from cache
   setEntries(prev => {
