@@ -83,6 +83,14 @@ function RunningKhataInner(){
     return true;
   };
 
+  const formatToday = () => {
+  const d = new Date();
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
   useEffect(()=>{
     const fetchCustomer = async() => {
       const malikPhone = localStorage.getItem("malikPhone");
@@ -212,6 +220,18 @@ const runQueue = async () => {
   queueRunningRef.current = false;
 };
 
+const handleQueueFailure = async (failedEntryNo: number) => {
+  // Phase 4 will implement: cache uncommitted rows, invalidate queue,
+  // resync via loadKhata(), re-append as awaitingResubmit.
+  // For now: minimal safe fallback — full resync, lose in-progress typing.
+  queueValidRef.current = false;
+  showMessage("error", `Entry #${failedEntryNo} failed to save — refreshing khata`);
+  setIsResyncing(true);
+  await loadKhata();
+  queueValidRef.current = true;
+  setIsResyncing(false);
+};
+
   // useeffect to implement the auto scroll
 useEffect(()=>{
   if(entries.length>0){
@@ -226,43 +246,87 @@ useEffect(()=>{
   };
 
   // addPurchase entry logic
-  const handleEnter = async(index:number) => {
-    if(isSubmitting) return;
-    const current = entries[index];
-    if(!current.item || !current.amount){
-      showMessage("error",'Please fill item and amount');
-      return;
-    }
-    const amountNum = Number(current.amount);
-    if(!isValidAmount(current.amount)){
-      showMessage('error',"Enter valid amount");
-      return;
-    }
-    setIssubmitting(true);
-    try{
-      setLoading(true);
-      setError("");
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/khata/addPurchase`,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-          malikPhone:localStorage.getItem("malikPhone"),
-          phone:customerPhone,
-          item:current.item,
-          amount:amountNum,
-        }),
-      });
-      await getData(res);
-      await loadKhata();
-    } catch(err){
-      console.error(err);
-      setError("failed to add purchase");
-      showMessage("error","Failed to add purchase");
-    } finally{
-      setLoading(false);
-      setIssubmitting(false);
-    }
-  };
+  const handleEnter = (index:number) => {
+  const current = entries[index];
+  if(!current.item || !current.amount){
+    showMessage("error",'Please fill item and amount');
+    return;
+  }
+  if(!isValidAmount(current.amount)){
+    showMessage('error',"Enter valid amount");
+    return;
+  }
+  if(index !== entries.length - 1) return; // only the active/last row can submit
+  if(isResyncing) return; // Phase 6 guard, wired in now since it's a one-line check
+
+  const amountNum = Number(current.amount);
+  const previewTotal = current.total + amountNum;
+  const provisionalEntryNo = current.entryNo;
+  const todayStr = formatToday();
+  const itemName = current.item;
+
+  // 1. INSTANT UI UPDATE
+  setEntries(prev => {
+    const updated = [...prev];
+    updated[index] = {
+      entryNo: provisionalEntryNo,
+      date: todayStr,
+      item: itemName,
+      amount: current.amount,
+      total: previewTotal,
+      pending: true,
+    };
+    updated.push({
+      entryNo: provisionalEntryNo + 1,
+      date: todayStr,
+      item: '',
+      amount: '',
+      total: previewTotal,
+    });
+    return updated;
+  });
+
+  // 2. ENQUEUE the actual server call
+  submitQueueItemsRef.current.push({
+    id: provisionalEntryNo,
+    run: async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/khata/addPurchase`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            malikPhone: localStorage.getItem("malikPhone"),
+            phone: customerPhone,
+            item: itemName,
+            amount: amountNum,
+          }),
+        });
+        const confirmed = await getData<{entryNo:number; date:string|{_seconds:number}; description:string; amount:number; total:number}>(res);
+
+        if(!queueValidRef.current) return; // invalidated while this was in flight — skip touching state
+
+        let confirmedDate = todayStr;
+        if(confirmed.date && typeof confirmed.date !== 'string' && confirmed.date._seconds){
+          const jsDate = new Date(confirmed.date._seconds * 1000);
+          confirmedDate = `${String(jsDate.getDate()).padStart(2,'0')}/${String(jsDate.getMonth()+1).padStart(2,'0')}/${jsDate.getFullYear()}`;
+        }
+
+        // 3. RECONCILE by entryNo match
+        setEntries(prev => prev.map(row =>
+          row.entryNo === provisionalEntryNo && row.pending
+            ? { entryNo: confirmed.entryNo, date: confirmedDate, item: confirmed.description, amount: String(confirmed.amount), total: confirmed.total }
+            : row
+        ));
+      } catch(err){
+        console.error(err);
+        if(!queueValidRef.current) return; // already being handled by another failure
+        await handleQueueFailure(provisionalEntryNo);
+      }
+    },
+  });
+
+  runQueue();
+};
 
   const handleDepositConfirm = async() => {
     if(isSubmitting) return;
@@ -566,7 +630,7 @@ useEffect(()=>{
                     />
                   </td>
 
-                  <td style={{ padding: '6px 8px' }}>
+                  <td style={{ padding: '6px 8px' ,position:'relative' }}>
                     <input
                       ref={(el) => { amountInputRefs.current[index] = el; }}
                       value={row.amount}
@@ -602,6 +666,15 @@ useEffect(()=>{
                         padding: '6px 8px', borderRadius: 6,
                       }}
                     />
+                    {row.pending && (
+                      <span style={{
+                        position: 'absolute',
+                        top: 4, right: 4,
+                        width: 7, height: 7,
+                        borderRadius: '50%',
+                        background: '#dc2626',
+                      }} />
+                    )}
                   </td>
 
                   <td style={{
