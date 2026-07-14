@@ -286,6 +286,10 @@ useEffect(()=>{
     return updated;
   });
 
+  setTimeout(() => {
+    itemInputRefs.current[index + 1]?.focus();
+  }, 0);
+
   // 2. ENQUEUE the actual server call
   submitQueueItemsRef.current.push({
     id: provisionalEntryNo,
@@ -614,7 +618,7 @@ useEffect(()=>{
                       }
                       onChange={(e) => handleChange(index, 'item', e.target.value)}
                       onKeyDown={(e) => {
-                        if(e.key === 'Enter' && editingRow === index){
+                        if(e.key === 'Enter' && (editingRow === index || (editingRow === null && isLastRow))){
                           e.preventDefault();
                           amountInputRefs.current[index]?.focus();
                         }
