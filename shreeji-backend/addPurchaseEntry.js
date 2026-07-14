@@ -1,17 +1,12 @@
-// const { Model } = require('firebase-admin/machine-learning');
 const {db}=require('./firebase');
-
-// const def_malik_phone='9276807790';
 
 async function addPurchaseEntry(malikPhone,customerPhone,itemName,price) {
 
     if(price<=0){
         throw new Error('Purchase should always be positive.');
     }
-    // const khataRef=db.collection('running_khata').doc(def_malik_phone).collection(customerPhone);
 
     const khataRef=db.collection('maliks').doc(malikPhone).collection('customers').doc(customerPhone).collection('entries');
-    
 
     const lastSnap=await khataRef.orderBy('entryNo','desc').limit(1).get();
 
@@ -25,23 +20,30 @@ async function addPurchaseEntry(malikPhone,customerPhone,itemName,price) {
     }
 
     const newTotal=previousTotal+price;
+    const entryDate = new Date();
 
     await khataRef.doc(String(nextEntryNo)).set({
         entryNo:nextEntryNo,
-        date:new Date(),
+        date:entryDate,
         type:'purchase',
         description:itemName,
         amount:price,
         total:newTotal,
     });
 
-    // when new purchase entry is added this update the currentBalance field of that customer obj
     await db.collection('maliks').doc(malikPhone)
     .collection('customers').doc(customerPhone)
     .update({ currentBalance: newTotal });
 
-    console.log('Purchase entry added successfully.');
+    console.log('Purchase entry added');
 
+    return {
+        entryNo: nextEntryNo,
+        date: entryDate,
+        description: itemName,
+        amount: price,
+        total: newTotal,
+    };
 }
 
 module.exports={addPurchaseEntry};
