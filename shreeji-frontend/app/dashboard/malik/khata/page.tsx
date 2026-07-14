@@ -20,7 +20,14 @@ type Entry = {
     item: string;
     amount: string;
     total: number;
+    pending?: boolean;
+    awaitingResubmit?: boolean;
 };
+
+
+
+
+
 
 // ── INNER COMPONENT (all real logic lives here) ──
 function RunningKhataInner(){
@@ -178,6 +185,32 @@ function RunningKhataInner(){
   const amountInputRefs = useRef<(HTMLInputElement|null)[]>([]);
   const lastRowRef=useRef<HTMLTableRowElement | null>(null); // for auto scroll
   const [editingRow, setEditingRow] = useState<number|null>(null);
+
+  // queue item
+  type QueueItem = {
+  id: number; // matches provisional entryNo, used to identify/cancel
+  run: () => Promise<void>;
+};
+
+const submitQueueItemsRef = useRef<QueueItem[]>([]);
+const queueRunningRef = useRef(false);
+const queueValidRef = useRef(true); // flips false on failure, cancels remaining items
+const [isResyncing, setIsResyncing] = useState(false);
+// queue runner
+const runQueue = async () => {
+  if(queueRunningRef.current) return; // already running, don't start a second runner
+  queueRunningRef.current = true;
+  while(submitQueueItemsRef.current.length > 0){
+    if(!queueValidRef.current){
+      // queue was invalidated by a failure — drop everything remaining
+      submitQueueItemsRef.current = [];
+      break;
+    }
+    const item = submitQueueItemsRef.current.shift()!;
+    await item.run();
+  }
+  queueRunningRef.current = false;
+};
 
   // useeffect to implement the auto scroll
 useEffect(()=>{
