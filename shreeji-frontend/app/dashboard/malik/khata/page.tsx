@@ -718,13 +718,17 @@ const handleResubmit = (index: number) => {
                     onClick={() => {
                       if(editingRow !== null) return;
                       if(isLastRow) return;
+                      if(row.pending || row.awaitingResubmit){
+                        showMessage("info", "Still confirming — try again in a moment");
+                        return;
+                      }
                       setSelectedRow(index);
                       setShowRowMenu(true);
                     }}
                     style={{
                       padding: '10px 10px', textAlign: 'center',
-                      cursor: isLastRow ? 'default' : 'pointer',
-                      color: isLastRow ? '#d1d5db' : '#2563eb',
+                      cursor: (isLastRow || row.pending || row.awaitingResubmit) ? 'default' : 'pointer',
+                      color: (isLastRow || row.pending || row.awaitingResubmit) ? '#d1d5db' : '#2563eb',
                       fontWeight: 600, fontSize: 13, userSelect: 'none',
                     }}
                   >
