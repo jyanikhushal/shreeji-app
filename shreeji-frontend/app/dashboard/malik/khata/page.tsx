@@ -204,6 +204,8 @@ const submitQueueItemsRef = useRef<QueueItem[]>([]);
 const queueRunningRef = useRef(false);
 const queueValidRef = useRef(true); // flips false on failure, cancels remaining items
 const [isResyncing, setIsResyncing] = useState(false);
+const entriesRef = useRef<Entry[]>(entries);
+useEffect(() => { entriesRef.current = entries; }, [entries]);
 // queue runner
 const runQueue = async () => {
   if(queueRunningRef.current) return; // already running, don't start a second runner
@@ -221,15 +223,52 @@ const runQueue = async () => {
 };
 
 const handleQueueFailure = async (failedEntryNo: number) => {
-  // Phase 4 will implement: cache uncommitted rows, invalidate queue,
-  // resync via loadKhata(), re-append as awaitingResubmit.
-  // For now: minimal safe fallback — full resync, lose in-progress typing.
+  if(!queueValidRef.current) return; // already being handled by another failure
   queueValidRef.current = false;
-  showMessage("error", `Entry #${failedEntryNo} failed to save — refreshing khata`);
+  submitQueueItemsRef.current = []; // drop anything not yet sent to the server
+
+  showMessage("error", `Entry #${failedEntryNo} failed to save — please reconfirm from there`);
   setIsResyncing(true);
+
+  // 1. Cache every row from the failed entry through the currently-live row
+  const snapshot = entriesRef.current;
+  const failIndex = snapshot.findIndex(r => r.entryNo === failedEntryNo);
+  const cachedTail = failIndex === -1 ? [] : snapshot.slice(failIndex).map(r => ({ item: r.item, amount: r.amount }));
+
+  // 2. Resync to server truth
   await loadKhata();
+
+  // 3. Strip loadKhata's own trailing blank row, rebuild the tail from cache
+  setEntries(prev => {
+    const confirmedPart = prev.slice(0, -1);
+    const lastConfirmed = confirmedPart[confirmedPart.length - 1];
+    let nextEntryNo = lastConfirmed ? lastConfirmed.entryNo + 1 : 1;
+    const rowDate = lastConfirmed ? lastConfirmed.date : formatToday();
+
+    const rebuiltTail: Entry[] = cachedTail.map((cached, i) => {
+      const isLastCached = i === cachedTail.length - 1;
+      return {
+        entryNo: nextEntryNo++,
+        date: rowDate,
+        item: cached.item,
+        amount: cached.amount,
+        total: lastConfirmed ? lastConfirmed.total : 0,
+        awaitingResubmit: isLastCached ? undefined : true,
+      };
+    });
+
+    return [...confirmedPart, ...rebuiltTail];
+  });
+
   queueValidRef.current = true;
   setIsResyncing(false);
+
+  setTimeout(() => {
+    const firstAwaitingIndex = entriesRef.current.findIndex(r => r.awaitingResubmit);
+    if(firstAwaitingIndex !== -1){
+      amountInputRefs.current[firstAwaitingIndex]?.focus();
+    }
+  }, 0);
 };
 
   // useeffect to implement the auto scroll
@@ -670,7 +709,7 @@ useEffect(()=>{
                         padding: '6px 8px', borderRadius: 6,
                       }}
                     />
-                    {row.pending && (
+                    {(row.pending || row.awaitingResubmit) && (
                       <span style={{
                         position: 'absolute',
                         top: 4, right: 4,
@@ -687,7 +726,7 @@ useEffect(()=>{
                     color: row.total > 0 ? '#dc2626' : row.total < 0 ? '#16a34a' : '#9ca3af',
                     whiteSpace: 'nowrap',
                   }}>
-                    {row.total !== 0 || !isLastRow ? `₹${row.total}` : ''}
+                    {row.awaitingResubmit ? '' : (row.total !== 0 || !isLastRow ? `₹${row.total}` : '')}
                   </td>
                 </tr>
               );
