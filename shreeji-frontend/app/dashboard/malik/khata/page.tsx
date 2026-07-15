@@ -305,7 +305,7 @@ useEffect(()=>{
     return;
   }
   if(!isValidAmount(current.amount)){
-    showMessage('error',"Enter valid amount");
+    showMessage('error',"Enter valid amount properly.");
     return;
   }
   if(index !== entries.length - 1) return; // only the active/last row can submit
