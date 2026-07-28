@@ -6,6 +6,11 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/app/context/ToastContext';
 import { isSessionValid, clearSession } from '@/app/utils/session';
 import { onSnapshot, collection, doc } from 'firebase/firestore';
+import { motion, AnimatePresence } from 'framer-motion';
+import KiranaBackground from "@/components/home/KiranaBackground";
+import StampButton from "@/components/ui/StampButton";
+import NavTransition from "@/components/NavTransition";
+import { useNavTransition } from "@/hooks/useNavTransition";
 import {
   subscribeToPushNotifications,
   initNotificationHistory,
@@ -31,6 +36,7 @@ type NotificationItem = {
 export default function GrahakKhataClient() {
   const router = useRouter();
   const { showMessage } = useToast();
+  const { navigateTo, stamping } = useNavTransition();
 
   const [loading, setLoading] = useState(true);
   const [phone, setPhone] = useState<string | null>(null);
@@ -38,17 +44,18 @@ export default function GrahakKhataClient() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [authChecked, setAuthChecked] = useState(false);
 
-  // notification-related state
-  const [permissionKnown, setPermissionKnown] = useState(false); // has the doc loaded yet
+  // notification-related state — unchanged
+  const [permissionKnown, setPermissionKnown] = useState(false);
   const [notificationGranted, setNotificationGranted] = useState(false);
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [enabling, setEnabling] = useState(false);
   const [showHistoryPanel, setShowHistoryPanel] = useState(false);
   const [history, setHistory] = useState<NotificationItem[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
-   const [localGranted, setLocalGranted] = useState(false);
+  const [localGranted, setLocalGranted] = useState(false);
 
   const getLocalStorageKey = () => `digikhata_push_${malikPhone}_${phone}`;
+
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search);
     setPhone(sp.get("phone"));
@@ -69,7 +76,7 @@ export default function GrahakKhataClient() {
     return phoneRegex.test(p.trim());
   };
 
-  // entries listener (unchanged from before)
+  // entries listener — unchanged
   useEffect(() => {
     if (!phone || !malikPhone || !authChecked) return;
     if (!isValidPhone(phone)) {
@@ -104,61 +111,45 @@ export default function GrahakKhataClient() {
     return () => unsubscribe();
   }, [phone, malikPhone, authChecked]);
 
-  // Firestore listener — tracks whether ANY device has ever granted (used to skip re-backfilling)
+  // cross-device granted flag — unchanged
   useEffect(() => {
     if (!phone || !malikPhone || !authChecked) return;
-
     const customerRef = doc(db, 'maliks', malikPhone, 'customers', phone);
     const unsubscribe = onSnapshot(customerRef, (snap) => {
       const data = snap.data();
-      const granted = data?.notificationPermission === 'granted';
-      setNotificationGranted(granted);
+      setNotificationGranted(data?.notificationPermission === 'granted');
       setPermissionKnown(true);
     });
     return () => unsubscribe();
   }, [phone, malikPhone, authChecked]);
 
-  // Local (per-browser) check — runs once phone/malikPhone are known.
-  // Decides whether THIS browser has already subscribed, independent of Firestore's global flag.
+  // per-browser granted flag — unchanged
   useEffect(() => {
     if (!phone || !malikPhone) return;
     const localFlag = localStorage.getItem(getLocalStorageKey()) === 'true';
     setLocalGranted(localFlag);
-    if (!localFlag) {
-      setShowPermissionModal(true);
-    }
+    if (!localFlag) setShowPermissionModal(true);
   }, [phone, malikPhone]);
 
- const handleEnableNotifications = async () => {
+  const handleEnableNotifications = async () => {
     if (!phone || !malikPhone) return;
     setEnabling(true);
     try {
-      // Always subscribe THIS browser — every device needs its own subscription.
       await subscribeToPushNotifications(malikPhone, phone);
-
-      // Only run the one-time backfill if NO device has ever granted before.
-      if (!notificationGranted) {
-        await initNotificationHistory(malikPhone, phone);
-      }
-
-      // Mark this specific browser as subscribed.
+      if (!notificationGranted) await initNotificationHistory(malikPhone, phone);
       localStorage.setItem(getLocalStorageKey(), 'true');
       setLocalGranted(true);
       setShowPermissionModal(false);
       showMessage("success", "Notifications enabled");
     } catch (err) {
-      if (err instanceof Error) {
-        showMessage("error", err.message);
-      } else {
-        showMessage("error", "Failed to enable notifications");
-      }
+      showMessage("error", err instanceof Error ? err.message : "Failed to enable notifications");
     } finally {
       setEnabling(false);
     }
   };
 
   const handleDeclineNotifications = () => {
-    setShowPermissionModal(false); // no persistence — reappears next visit
+    setShowPermissionModal(false);
   };
 
   const openHistoryPanel = async () => {
@@ -168,7 +159,7 @@ export default function GrahakKhataClient() {
     try {
       const res = await fetchNotificationHistory(malikPhone, phone);
       setHistory(res.history || []);
-    } catch (err) {
+    } catch {
       showMessage("error", "Failed to load notifications");
     } finally {
       setHistoryLoading(false);
@@ -177,277 +168,328 @@ export default function GrahakKhataClient() {
 
   const lastTotal = entries.length > 0 ? entries[entries.length - 1].total : 0;
 
-  if (loading) return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #dbeafe 0%, #eff6ff 40%, #e0e7ff 100%)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-    }}>
+  if (loading) {
+    return (
       <div style={{
-        background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)',
-        border: '0.5px solid rgba(200,210,240,0.7)', borderRadius: 20,
-        padding: '2rem 3rem', textAlign: 'center',
+        minHeight: '100vh',
+        background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        <p style={{ margin: 0, fontSize: 15, color: '#6b7280', fontWeight: 500 }}>
-          Loading khata...
-        </p>
+        <div style={{
+          background: 'var(--color-paper)', borderRadius: 4,
+          borderLeft: '6px solid var(--color-rule-red)',
+          padding: '1.75rem 2.5rem', boxShadow: '0 12px 30px rgba(35,42,59,0.2)',
+        }}>
+          <p style={{ margin: 0, fontSize: 15, color: 'var(--color-ink)', fontWeight: 500, fontFamily: 'var(--font-rozha, serif)' }}>
+            Opening your khata...
+          </p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   return (
     <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #dbeafe 0%, #eff6ff 40%, #e0e7ff 100%)',
-      padding: '1.25rem',
+      height: '100vh', // Changed to fixed height
+      overflow: 'hidden', // Stop entire page from scrolling
+      display: 'flex',
+      flexDirection: 'column',
+      background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
+      padding: '1.25rem', position: 'relative',
     }}>
+      <NavTransition show={stamping} />
+      <KiranaBackground />
 
-      {/* ── TOP BAR ── */}
-      <div style={{
-        background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(16px)',
-        border: '0.5px solid rgba(200,210,240,0.7)', borderRadius: 20,
-        padding: '1rem 1.25rem', display: 'flex', justifyContent: 'space-between',
-        alignItems: 'center', marginBottom: '1.25rem',
+      {/* Main column layout that takes exactly 100% of the screen height */}
+      <div style={{ 
+        position: 'relative', 
+        zIndex: 2, 
+        maxWidth: '800px', 
+        margin: '0 auto',
+        width: '100%',
+        height: '100%', 
+        display: 'flex', 
+        flexDirection: 'column' 
       }}>
-        <div style={{ display:'flex', alignItems:'center', gap: 12 }}>
-          <div style={{
-            width: 46, height: 46, borderRadius: '50%', background: '#dcfce7',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 18, fontWeight: 700, color: '#16a34a', flexShrink: 0,
-          }}>
-            {(phone||'?').charAt(0)}
-          </div>
-          <div>
-            <p style={{ margin: 0, fontSize: 17, fontWeight: 600, color: '#14532d' }}>My Khata</p>
-            <p style={{ margin: '2px 0 0', fontSize: 12, color: '#9ca3af' }}>{phone}</p>
-          </div>
-        </div>
 
-        <div style={{ display:'flex', alignItems:'center', gap: 10, flexShrink: 0 }}>
-          {entries.length > 0 && (
+        {/* ── TOP BAR ── */}
+        <motion.div
+          initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}
+          style={{
+            flexShrink: 0, // Prevents shrinking
+            background: 'var(--color-paper)', borderRadius: 4,
+            borderLeft: '6px solid var(--color-brass)',
+            padding: '1rem 1.25rem', display: 'flex', justifyContent: 'space-between',
+            alignItems: 'center', marginBottom: '1.25rem',
+            boxShadow: '0 8px 24px rgba(35,42,59,0.15)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{
-              background: lastTotal > 0 ? '#fee2e2' : '#dcfce7',
-              color: lastTotal > 0 ? '#dc2626' : '#16a34a',
-              borderRadius: 20, padding: '5px 14px', fontSize: 13, fontWeight: 700,
+              width: 46, height: 46, borderRadius: '50%', background: 'var(--color-ink)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 18, fontWeight: 700, color: 'var(--color-paper)', flexShrink: 0,
             }}>
-              ₹{lastTotal}
+              {(phone || '?').charAt(0)}
             </div>
-          )}
-
-          {/* BELL BUTTON */}
-          <button
-            onClick={openHistoryPanel}
-            disabled={!localGranted}
-            title={localGranted ? "View notifications" : "Enable notifications first"}
-            style={{
-              padding: '9px 12px',
-              background: localGranted ? '#eff6ff' : '#f3f4f6',
-              color: localGranted ? '#2563eb' : '#9ca3af',
-              border: `1.5px solid ${localGranted ? '#bfdbfe' : '#e5e7eb'}`,
-              borderRadius: 10, fontSize: 15,
-              cursor: localGranted ? 'pointer' : 'not-allowed',
-            }}
-          >
-            🔔
-          </button>
-
-          <button
-            onClick={() => { clearSession("grahak"); router.replace("/login/grahak"); }}
-            style={{
-              padding:'9px 16px', background:'white', color:'#dc2626',
-              border:'1.5px solid #fca5a5', borderRadius:10,
-              fontSize:13, fontWeight:500, cursor:'pointer',
-              display:'flex', alignItems:'center', gap:6,
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-            Logout
-          </button>
-        </div>
-      </div>
-
-      {/* ── SUMMARY CARDS ── */}
-      {entries.length > 0 && (
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:12, marginBottom:'1.25rem' }}>
-          <div style={{ background:'rgba(255,255,255,0.88)', backdropFilter:'blur(16px)', border:'0.5px solid rgba(200,210,240,0.7)', borderRadius:16, padding:'1rem', textAlign:'center' }}>
-            <p style={{ margin:0, fontSize:11, color:'#9ca3af', fontWeight:500, marginBottom:4 }}>ENTRIES</p>
-            <p style={{ margin:0, fontSize:22, fontWeight:700, color:'#1e3a8a' }}>{entries.length}</p>
+            <div>
+              <p style={{ margin: 0, fontSize: 17, fontWeight: 600, color: 'var(--color-ink)', fontFamily: 'var(--font-rozha, serif)' }}>My Khata</p>
+              <p style={{ margin: '2px 0 0', fontSize: 12, color: 'var(--color-ink)', opacity: 0.6 }}>{phone}</p>
+            </div>
           </div>
-          <div style={{ background:'rgba(255,255,255,0.88)', backdropFilter:'blur(16px)', border:'0.5px solid rgba(200,210,240,0.7)', borderRadius:16, padding:'1rem', textAlign:'center' }}>
-            <p style={{ margin:0, fontSize:11, color:'#9ca3af', fontWeight:500, marginBottom:4 }}>PURCHASED</p>
-            <p style={{ margin:0, fontSize:22, fontWeight:700, color:'#dc2626' }}>
-              ₹{entries.filter(e => !(e.description || '').startsWith('Deposit')).reduce((sum,e) => sum + Math.abs(e.amount), 0)}
-            </p>
-          </div>
-          <div style={{ background:'rgba(255,255,255,0.88)', backdropFilter:'blur(16px)', border:'0.5px solid rgba(200,210,240,0.7)', borderRadius:16, padding:'1rem', textAlign:'center' }}>
-            <p style={{ margin:0, fontSize:11, color:'#9ca3af', fontWeight:500, marginBottom:4 }}>DEPOSITED</p>
-            <p style={{ margin:0, fontSize:22, fontWeight:700, color:'#16a34a' }}>
-              ₹{entries.filter(e => (e.description || '').startsWith('Deposit')).reduce((sum,e) => sum + Math.abs(e.amount), 0)}
-            </p>
-          </div>
-        </div>
-      )}
 
-      {/* ── KHATA TABLE (unchanged) ── */}
-      <div style={{ background:'rgba(255,255,255,0.88)', backdropFilter:'blur(16px)', border:'0.5px solid rgba(200,210,240,0.7)', borderRadius:20, overflow:'hidden' }}>
-        {entries.length === 0 ? (
-          <div style={{ padding:'3rem', textAlign:'center', color:'#9ca3af', fontSize:15 }}>No entries found</div>
-        ) : (
-          <table style={{ width:'100%', borderCollapse:'collapse', fontSize:14 }}>
-            <thead>
-              <tr style={{ background:'#f0fdf4' }}>
-                {['#','Date','Item','Amount','Total'].map((h) => (
-                  <th key={h} style={{
-                    padding:'12px 10px', color:'#14532d', fontWeight:600, fontSize:13,
-                    borderBottom:'1.5px solid #bbf7d0',
-                    textAlign: h==='Amount'||h==='Total' ? 'right' : 'center',
-                  }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {entries.map((e, index) => {
-                const isDeposit = (e.description || '').startsWith('Deposit');
-                const isLast = index === entries.length - 1;
-                return (
-                  <tr key={e.entryNo} style={{
-                    background: isDeposit ? '#f0fdf4' : isLast ? '#f8faff' : 'white',
-                    borderBottom:'0.5px solid #e0e7ef',
-                  }}>
-                    <td style={{ padding:'10px 10px', textAlign:'center', fontSize:13, fontWeight:600, color: isDeposit ? '#16a34a' : '#2563eb' }}>{e.entryNo}</td>
-                    <td style={{ padding:'10px 10px', textAlign:'center', fontSize:12, color:'#9ca3af', whiteSpace:'nowrap' }}>{e.date}</td>
-                    <td style={{ padding:'10px 10px', fontSize:14, color: isDeposit ? '#16a34a' : '#111827', fontWeight: isDeposit ? 600 : 400 }}>{(e.description || '')}</td>
-                    <td style={{ padding:'10px 14px', textAlign:'right', fontSize:14, fontWeight:500, color: isDeposit ? '#16a34a' : '#dc2626' }}>
-                      {isDeposit ? '-' : '+'}₹{Math.abs(e.amount)}
-                    </td>
-                    <td style={{ padding:'10px 14px', textAlign:'right', fontWeight:700, fontSize:14, color: e.total > 0 ? '#dc2626' : e.total < 0 ? '#16a34a' : '#9ca3af' }}>
-                      ₹{e.total}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-            <tfoot>
-              <tr style={{ background: lastTotal > 0 ? '#fee2e2' : '#dcfce7' }}>
-                <td colSpan={4} style={{
-                  padding:'13px 14px', textAlign:'right', fontWeight:700, fontSize:14,
-                  color: lastTotal > 0 ? '#dc2626' : '#16a34a',
-                  borderTop:`2px solid ${lastTotal > 0 ? '#fca5a5' : '#86efac'}`,
-                }}>
-                  {lastTotal > 0 ? 'Amount Due' : 'Credit Balance'}
-                </td>
-                <td style={{
-                  padding:'13px 14px', textAlign:'right', fontWeight:800, fontSize:16,
-                  color: lastTotal > 0 ? '#dc2626' : '#16a34a',
-                  borderTop:`2px solid ${lastTotal > 0 ? '#fca5a5' : '#86efac'}`,
-                }}>
-                  ₹{Math.abs(lastTotal)}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+            {entries.length > 0 && (
+              <div style={{
+                background: 'transparent',
+                border: `1.5px solid ${lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)'}`,
+                color: lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)',
+                borderRadius: 20, padding: '5px 14px', fontSize: 13, fontWeight: 700,
+              }}>
+                ₹{lastTotal}
+              </div>
+            )}
+
+            <StampButton tone="brass" onClick={openHistoryPanel} disabled={!localGranted}>
+              🔔
+            </StampButton>
+
+            <StampButton
+              tone="ink"
+              onClick={() => { clearSession("grahak"); navigateTo("/login/grahak"); }}
+            >
+              Logout
+            </StampButton>
+          </div>
+        </motion.div>
+
+        {/* ── SUMMARY CARDS ── */}
+        {entries.length > 0 && (
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(3, 1fr)', 
+            gap: 12, 
+            marginBottom: '1.25rem',
+            flexShrink: 0 // Keep cards intact at the top
+          }}>
+            {[
+              { label: 'ENTRIES', value: entries.length, color: 'var(--color-ink)' },
+              {
+                label: 'PURCHASED',
+                value: `₹${entries.filter(e => !(e.description || '').startsWith('Deposit')).reduce((s, e) => s + Math.abs(e.amount), 0)}`,
+                color: 'var(--color-rule-red)',
+              },
+              {
+                label: 'DEPOSITED',
+                value: `₹${entries.filter(e => (e.description || '').startsWith('Deposit')).reduce((s, e) => s + Math.abs(e.amount), 0)}`,
+                color: 'var(--color-stamp-green)',
+              },
+            ].map((card) => (
+              <div key={card.label} style={{
+                background: 'var(--color-paper)', borderRadius: 6,
+                borderTop: '3px solid var(--color-brass)',
+                padding: '1rem', textAlign: 'center',
+                boxShadow: '0 4px 12px rgba(35,42,59,0.1)',
+              }}>
+                <p style={{ margin: 0, fontSize: 11, color: 'var(--color-ink)', opacity: 0.6, fontWeight: 600, letterSpacing: '0.5px', marginBottom: 4 }}>
+                  {card.label}
+                </p>
+                <p style={{ margin: 0, fontSize: 21, fontWeight: 700, color: card.color, fontFamily: 'var(--font-rozha, serif)' }}>
+                  {card.value}
+                </p>
+              </div>
+            ))}
+          </div>
         )}
-      </div>
 
-      <p style={{ textAlign:'center', fontSize:12, color:'#9ca3af', marginTop:16 }}>
-        Read-only view · Contact your store for any changes
-      </p>
+        {/* ── KHATA TABLE ── */}
+        {/* Table container takes up the remaining space (flex: 1) and scrolls (overflow: auto) */}
+        <div style={{ 
+          flex: 1, 
+          overflow: 'auto', 
+          minHeight: 0, // Flexbox shrinking fix
+          background: 'var(--color-paper)', 
+          borderRadius: 6, 
+          boxShadow: '0 8px 24px rgba(35,42,59,0.12)' 
+        }}>
+          {entries.length === 0 ? (
+            <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--color-ink)', opacity: 0.5, fontSize: 15 }}>
+              No entries found
+            </div>
+          ) : (
+            <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, fontSize: 14 }}>
+              <thead>
+                <tr>
+                  {['#', 'Date', 'Item', 'Amount', 'Total'].map((h) => (
+                    <th key={h} style={{
+                      position: 'sticky', 
+                      top: 0, // Header sticks perfectly to the top of the scrolling table container
+                      zIndex: 50,
+                      background: '#DED0AC',
+                      padding: '12px 10px', color: 'var(--color-ink)', fontWeight: 600, fontSize: 13,
+                      borderBottom: '2px solid var(--color-brass)',
+                      textAlign: h === 'Amount' || h === 'Total' ? 'right' : 'center',
+                    }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {entries.map((e, index) => {
+                  const isDeposit = (e.description || '').startsWith('Deposit');
+                  const isLast = index === entries.length - 1;
+                  return (
+                    <tr key={e.entryNo} style={{
+                      background: isDeposit ? 'rgba(47,107,79,0.07)' : isLast ? 'rgba(184,135,59,0.07)' : 'transparent',
+                      borderBottom: '1px solid rgba(35,42,59,0.08)',
+                    }}>
+                      <td style={{ padding: '10px', textAlign: 'center', fontSize: 13, fontWeight: 600, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-brass)' }}>
+                        {e.entryNo}
+                      </td>
+                      <td style={{ padding: '10px', textAlign: 'center', fontSize: 12, color: 'var(--color-ink)', opacity: 0.55, whiteSpace: 'nowrap' }}>
+                        {e.date}
+                      </td>
+                      <td style={{ padding: '10px', fontSize: 14, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-ink)', fontWeight: isDeposit ? 600 : 400 }}>
+                        {e.description || ''}
+                      </td>
+                      <td style={{ padding: '10px 14px', textAlign: 'right', fontSize: 14, fontWeight: 500, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-rule-red)' }}>
+                        {isDeposit ? '-' : '+'}₹{Math.abs(e.amount)}
+                      </td>
+                      <td style={{
+                        padding: '10px 14px', textAlign: 'right', fontWeight: 700, fontSize: 14,
+                        color: e.total > 0 ? 'var(--color-rule-red)' : e.total < 0 ? 'var(--color-stamp-green)' : 'var(--color-ink)',
+                      }}>
+                        ₹{e.total}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+              <tfoot>
+                <tr style={{ background: lastTotal > 0 ? 'rgba(180,67,63,0.1)' : 'rgba(47,107,79,0.1)' }}>
+                  <td colSpan={4} style={{
+                    padding: '13px 14px', textAlign: 'right', fontWeight: 700, fontSize: 14,
+                    color: lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)',
+                    borderTop: `2px solid ${lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)'}`,
+                  }}>
+                    {lastTotal > 0 ? 'Amount Due' : 'Credit Balance'}
+                  </td>
+                  <td style={{
+                    padding: '13px 14px', textAlign: 'right', fontWeight: 800, fontSize: 16,
+                    color: lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)',
+                    borderTop: `2px solid ${lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)'}`,
+                  }}>
+                    ₹{Math.abs(lastTotal)}
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          )}
+        </div>
+
+        <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--color-ink)', opacity: 0.5, marginTop: 16, flexShrink: 0 }}>
+          Read-only view · Contact your store for any changes
+        </p>
+      </div>
 
       {/* ── PERMISSION MODAL (blocking) ── */}
-      {permissionKnown && showPermissionModal && (
-        <div style={{
-          position:'fixed', inset:0, zIndex:9999,
-          background:'rgba(0,0,0,0.6)',
-          display:'flex', alignItems:'center', justifyContent:'center',
-        }}>
-          <div style={{
-            background:'white', borderRadius:20, padding:32, width:320,
-            boxShadow:'0 20px 60px rgba(0,0,0,0.3)', textAlign:'center',
-          }}>
-            <div style={{ fontSize: 40, marginBottom: 12 }}>🔔</div>
-            <h2 style={{ fontWeight:700, marginBottom:8, color:'#111', fontSize:18 }}>
-              Enable Notifications?
-            </h2>
-            <p style={{ color:'#6b7280', fontSize:14, marginBottom:24, lineHeight:1.5 }}>
-              Get notified instantly when a deposit is recorded, and reminders when payment is due.
-            </p>
-            <div style={{ display:'flex', gap:10 }}>
-              <button
-                onClick={handleDeclineNotifications}
-                disabled={enabling}
-                style={{
-                  flex:1, padding:'11px 0', border:'1px solid #e5e7eb', borderRadius:10,
-                  background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500,
-                }}
-              >
-                Not now
-              </button>
-              <button
-                onClick={handleEnableNotifications}
-                disabled={enabling}
-                style={{
-                  flex:1, padding:'11px 0', background:'#2563eb', color:'white',
-                  border:'none', borderRadius:10, cursor:'pointer', fontSize:15, fontWeight:700,
-                }}
-              >
-                {enabling ? 'Enabling...' : 'Yes, enable'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── NOTIFICATION HISTORY PANEL ── */}
-      {showHistoryPanel && (
-        <div style={{
-          position:'fixed', inset:0, zIndex:9999,
-          background:'rgba(0,0,0,0.45)',
-          display:'flex', alignItems:'center', justifyContent:'center',
-        }}
-          onClick={() => setShowHistoryPanel(false)}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {permissionKnown && showPermissionModal && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             style={{
-              background:'white', borderRadius:16, padding:20, width:340,
-              maxHeight:'70vh', overflowY:'auto', boxShadow:'0 16px 48px rgba(0,0,0,0.2)',
+              position: 'fixed', inset: 0, zIndex: 9999,
+              background: 'rgba(35,42,59,0.55)', // <-- Reverted back to normal
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              backdropFilter: 'blur(4px)', // Optional: Adds a nice blur to the background text so the popup pops more
             }}
           >
-            <h2 style={{ fontWeight:700, marginBottom:12, color:'#111', fontSize:16 }}>Notifications</h2>
-            {historyLoading ? (
-              <p style={{ color:'#9ca3af', fontSize:14, textAlign:'center' }}>Loading...</p>
-            ) : history.length === 0 ? (
-              <p style={{ color:'#9ca3af', fontSize:14, textAlign:'center' }}>No notifications yet</p>
-            ) : (
-              history.map((item) => (
-                <div key={item.id} style={{
-                  padding:'10px 0', borderBottom:'1px solid #f3f4f6',
-                }}>
-                  <p style={{ margin:0, fontSize:13, fontWeight:600, color:'#111' }}>{item.title}</p>
-                  <p style={{ margin:'2px 0', fontSize:13, color:'#374151' }}>{item.body}</p>
-                  <p style={{ margin:0, fontSize:11, color:'#9ca3af' }}>
-                    {new Date(item.createdAt).toLocaleString()}
-                  </p>
-                </div>
-              ))
-            )}
-            <button
-              onClick={() => setShowHistoryPanel(false)}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
               style={{
-                width:'100%', marginTop:14, padding:'10px 0', border:'1px solid #e5e7eb',
-                borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:14,
+                background: '#FFFFFF', // <-- Changed to solid white (or you can use #F8F9FA) so text behind it is completely hidden
+                borderRadius: 6, padding: 32, width: 320,
+                borderLeft: '6px solid var(--color-brass)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.5)', // <-- Made the shadow slightly darker to make the popup stand out more
+                textAlign: 'center',
               }}
             >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+              <div style={{ fontSize: 40, marginBottom: 12 }}>🔔</div>
+              <h2 style={{ fontWeight: 600, marginBottom: 8, color: 'var(--color-ink)', fontSize: 19, fontFamily: 'var(--font-rozha, serif)' }}>
+                Enable Notifications?
+              </h2>
+              <p style={{ color: 'var(--color-ink)', opacity: 0.7, fontSize: 14, marginBottom: 24, lineHeight: 1.5 }}>
+                Get notified instantly when a deposit is recorded, and reminders when payment is due.
+              </p>
+              <div style={{ display: 'flex', gap: 10 }}>
+                <div style={{ flex: 1 }}>
+                  <StampButton tone="brass" onClick={handleDeclineNotifications} disabled={enabling}>
+                    Not now
+                  </StampButton>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <StampButton tone="ink" onClick={handleEnableNotifications} disabled={enabling}>
+                    {enabling ? 'Enabling...' : 'Yes, enable'}
+                  </StampButton>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
+      {/* ── NOTIFICATION HISTORY PANEL ── */}
+      <AnimatePresence>
+        {showHistoryPanel && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 9999,
+              background: 'rgba(35,42,59,0.45)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+            onClick={() => setShowHistoryPanel(false)}
+          >
+            <motion.div
+              initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                background: 'var(--color-paper)', borderRadius: 6, padding: 20, width: 340,
+                borderLeft: '6px solid var(--color-brass)',
+                maxHeight: '70vh', overflowY: 'auto', boxShadow: '0 16px 48px rgba(0,0,0,0.25)',
+              }}
+            >
+              <h2 style={{ fontWeight: 600, marginBottom: 12, color: 'var(--color-ink)', fontSize: 17, fontFamily: 'var(--font-rozha, serif)' }}>
+                Notifications
+              </h2>
+              {historyLoading ? (
+                <p style={{ color: 'var(--color-ink)', opacity: 0.5, fontSize: 14, textAlign: 'center' }}>Loading...</p>
+              ) : history.length === 0 ? (
+                <p style={{ color: 'var(--color-ink)', opacity: 0.5, fontSize: 14, textAlign: 'center' }}>No notifications yet</p>
+              ) : (
+                history.map((item) => (
+                  <div key={item.id} style={{
+                    padding: '10px 0',
+                    borderBottom: '1px dashed rgba(35,42,59,0.2)',
+                  }}>
+                    <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: 'var(--color-ink)' }}>{item.title}</p>
+                    <p style={{ margin: '2px 0', fontSize: 13, color: 'var(--color-ink)', opacity: 0.75 }}>{item.body}</p>
+                    <p style={{ margin: 0, fontSize: 11, color: 'var(--color-ink)', opacity: 0.5 }}>
+                      {new Date(item.createdAt).toLocaleString()}
+                    </p>
+                  </div>
+                ))
+              )}
+              <div style={{ marginTop: 14 }}>
+                <StampButton tone="brass" onClick={() => setShowHistoryPanel(false)}>
+                  Close
+                </StampButton>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

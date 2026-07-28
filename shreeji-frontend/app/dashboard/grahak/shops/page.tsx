@@ -1,10 +1,17 @@
-"use client";
+'use client';
 export const dynamic = "force-dynamic";
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useToast } from "@/app/context/ToastContext";
 import { getData } from "@/app/utils/api";
-import { isSessionValid,clearSession } from "@/app/utils/session";
+import { isSessionValid, clearSession } from "@/app/utils/session";
+import { motion, AnimatePresence } from "framer-motion";
+import KiranaBackground from "@/components/home/KiranaBackground";
+import NavTransition from "@/components/NavTransition";
+import { useNavTransition } from "@/hooks/useNavTransition";
+
 type Shop = {
   malikPhone: string;
   shopName: string;
@@ -12,298 +19,125 @@ type Shop = {
 };
 
 export default function GrahakShopsPage() {
- const router = useRouter();
-  const { showMessage } = useToast();
+  const router = useRouter();
+  const { showMessage: showmessage } = useToast();
+  const { navigateTo: navigateto, stamping } = useNavTransition();
 
   const [shops, setShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(true);
   const [grahakPhone, setGrahakPhone] = useState<string | null>(null);
-  const [authChecked, setAuthChecked] = useState(false);
 
-  // ✅ FIX 1: Single auth effect — check session AND read phone together
-  // so they are always in sync, no split reads
   useEffect(() => {
     if (!isSessionValid("grahak")) {
       router.replace("/login/grahak");
       return;
     }
-
     const phone = localStorage.getItem("grahakPhone");
     if (!phone) {
-      // Session expiry exists but phone missing — clear and redirect
       router.replace("/login/grahak");
       return;
     }
-
     setGrahakPhone(phone);
-    setAuthChecked(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [router]);
 
-  // ✅ FIX 2: Show "no shops" only after auth+load is fully done
   useEffect(() => {
-    if (authChecked && !loading && shops.length === 0) {
-      showMessage("info", "No shops found");
-    }
-  }, [shops.length, loading, authChecked]);
-
-  // ✅ FIX 3: Correct dependency array — include authChecked
-  useEffect(() => {
-    if (!grahakPhone || !authChecked) return;
+    if (!grahakPhone) return;
 
     const fetchShops = async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/grahak/shops/${grahakPhone}`
-        );
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/shops/${grahakPhone}`);
         const data = await getData<Shop[]>(res, { expectArray: true });
         setShops(data);
       } catch (err) {
         console.error("Error fetching shops:", err);
-        if (err instanceof Error) {
-          showMessage("error", err.message);
-        } else {
-          showMessage("error", "Error in fetching shops");
-        }
+        showmessage("error", "Error in fetching shops");
       } finally {
         setLoading(false);
       }
     };
-
     fetchShops();
-  }, [grahakPhone, authChecked]); // ✅ authChecked added
+  }, [grahakPhone, showmessage]);
 
-  // ⏳ Loading UI
-if (loading) {
+  if (loading) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)' }}>
+        <p style={{ color: 'var(--color-ink)', fontWeight: 600 }}>Loading your shops...</p>
+      </div>
+    );
+  }
+
   return (
     <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #dbeafe 0%, #eff6ff 40%, #e0e7ff 100%)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      minHeight: '100vh', padding: '2rem',
+      background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
+      position: 'relative', overflow: 'hidden',
     }}>
-      <div style={{
-        background: 'rgba(255,255,255,0.88)',
-        backdropFilter: 'blur(16px)',
-        border: '0.5px solid rgba(200,210,240,0.7)',
-        borderRadius: 20, padding: '2rem 3rem',
-        textAlign: 'center',
-      }}>
-        <div style={{
-          width: 48, height: 48, borderRadius: 14,
-          background: '#dcfce7',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 12px',
-        }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-          </svg>
-        </div>
-        <p style={{ margin: 0, fontSize: 15, color: '#6b7280', fontWeight: 500 }}>
-          Loading your shops...
-        </p>
-      </div>
-    </div>
-  );
-}
+      <NavTransition show={stamping} />
+      <KiranaBackground />
 
-
-
-// ❌ No shops
-
-if(shops.length===0){
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #dbeafe 0%, #eff6ff 40%, #e0e7ff 100%)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '2rem',
-    }}>
-      <div style={{
-        background: 'rgba(255,255,255,0.88)',
-        backdropFilter: 'blur(16px)',
-        border: '0.5px solid rgba(200,210,240,0.7)',
-        borderRadius: 24, padding: '2.5rem',
-        textAlign: 'center', maxWidth: 360, width: '100%',
-      }}>
-        <div style={{
-          width: 56, height: 56, borderRadius: 16,
-          background: '#fee2e2',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 16px',
-        }}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-        </div>
-        <p style={{ margin: 0, fontSize: 17, fontWeight: 600, color: '#111827' }}>
-          No shops found
-        </p>
-        <p style={{ margin: '8px 0 24px', fontSize: 13, color: '#9ca3af' }}>
-          You have not been added to any shop yet. Contact your store owner to get added.
-        </p>
-        <button
-          onClick={() => {
-           clearSession("grahak");
-           router.replace("/login/grahak");
-
-          }}
-          style={{
-            width: '100%', padding: '12px',
-            background: 'white', color: '#dc2626',
-            border: '1.5px solid #fca5a5', borderRadius: 10,
-            fontSize: 14, fontWeight: 500, cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-          }}
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          Logout
-        </button>
-      </div>
-    </div>
-  );
-}
-
-
-// ── MAIN RETURN ──
-return (
-  <div style={{
-    minHeight: '100vh',
-    background: 'linear-gradient(135deg, #dbeafe 0%, #eff6ff 40%, #e0e7ff 100%)',
-    padding: '1.25rem',
-  }}>
-
-    {/* ── TOP BAR ── */}
-    <div style={{
-      background: 'rgba(255,255,255,0.88)',
-      backdropFilter: 'blur(16px)',
-      border: '0.5px solid rgba(200,210,240,0.7)',
-      borderRadius: 20,
-      padding: '1rem 1.25rem',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: '1.5rem',
-    }}>
-      <div style={{ display:'flex', alignItems:'center', gap: 12 }}>
-        <div style={{
-          width: 46, height: 46, borderRadius: '50%',
-          background: '#dcfce7',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 17, fontWeight: 700, color: '#16a34a', flexShrink: 0,
-        }}>
-          {(grahakPhone||'?').charAt(0)}
-        </div>
-        <div>
-          <p style={{ margin: 0, fontSize: 16, fontWeight: 600, color: '#14532d' }}>
-            Select Your Shop
-          </p>
-          <p style={{ margin: '2px 0 0', fontSize: 12, color: '#9ca3af' }}>
-            {grahakPhone}
-          </p>
-        </div>
-      </div>
-
-      <button
-        onClick={() => {
-          clearSession("grahak");
-router.replace("/login/grahak");
-        }}
-        style={{
-          padding: '9px 16px',
-          background: 'white', color: '#dc2626',
-          border: '1.5px solid #fca5a5', borderRadius: 10,
-          fontSize: 13, fontWeight: 500, cursor: 'pointer',
-          display: 'flex', alignItems: 'center', gap: 6,
-          flexShrink: 0,
-        }}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        style={{ maxWidth: '480px', margin: '0 auto', position: 'relative', zIndex: 2 }}
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-          <polyline points="16 17 21 12 16 7"/>
-          <line x1="21" y1="12" x2="9" y2="12"/>
-        </svg>
-        Logout
-      </button>
-    </div>
-
-    {/* ── SHOP COUNT HINT ── */}
-    <p style={{
-      textAlign: 'center', fontSize: 13,
-      color: '#6b7280', marginBottom: '1rem',
-    }}>
-      {shops.length} {shops.length === 1 ? 'shop' : 'shops'} linked to your account
-    </p>
-
-    {/* ── SHOP CARDS ── */}
-    <div style={{
-      display: 'flex', flexDirection: 'column',
-      gap: 12, maxWidth: 480, margin: '0 auto',
-    }}>
-      {shops.map((shop) => (
-        <div
-          key={shop.malikPhone}
-          onClick={() => {
-            router.push(
-              `/dashboard/grahak/khata?phone=${grahakPhone}&malikPhone=${shop.malikPhone}`
-            );
-          }}
-          style={{
-            background: 'rgba(255,255,255,0.88)',
-            backdropFilter: 'blur(16px)',
-            border: '0.5px solid rgba(200,210,240,0.7)',
-            borderRadius: 18,
-            padding: '1rem 1.25rem',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 12,
-            transition: 'background 0.15s',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.98)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.88)')}
-        >
-          <div style={{ display:'flex', alignItems:'center', gap: 14 }}>
-
-            {/* Shop icon */}
+        {/* Top Header */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{
-              width: 48, height: 48, borderRadius: 14,
-              background: '#dbeafe', flexShrink: 0,
+              width: 50, height: 50, borderRadius: '50%',
+              background: '#E8E4D9', border: '2px solid #A88D5A',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              overflow: 'hidden', position: 'relative'
             }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 0 1-8 0"/>
-              </svg>
+              <Image src="/digiKhata-logo.png" alt="logo" fill style={{ objectFit: 'cover' }} priority />
             </div>
-
             <div>
-              <p style={{ margin: 0, fontSize: 16, fontWeight: 600, color: '#1e3a8a' }}>
-                {shop.shopName}
-              </p>
-              <p style={{ margin: '3px 0 0', fontSize: 12, color: '#9ca3af' }}>
-                Owner: {shop.malikName}
-              </p>
+              <h1 style={{ margin: 0, fontSize: '18px', color: 'var(--color-ink)' }}>Select Shop</h1>
+              <p style={{ margin: 0, fontSize: '12px', opacity: 0.7 }}>{grahakPhone}</p>
             </div>
           </div>
-
-          {/* Arrow */}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
+          <button onClick={() => { clearSession("grahak"); navigateto('/login/grahak'); }} style={{ background: 'transparent', border: '1px solid var(--color-rule-red)', color: 'var(--color-rule-red)', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>
+            Logout
+          </button>
         </div>
-      ))}
-    </div>
 
-  </div>
-);
+        {/* Shop List */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {shops.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '2rem', background: 'var(--color-paper)', borderRadius: '12px' }}>
+              <p>No shops found.</p>
+            </div>
+          ) : (
+            shops.map((shop, i) => (
+              <motion.div
+                key={shop.malikPhone}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1 }}
+                onClick={() => navigateto(`/dashboard/grahak/khata?phone=${grahakPhone}&malikPhone=${shop.malikPhone}`)}
+                style={{
+                  background: 'var(--color-paper)',
+                  padding: '1.25rem', borderRadius: '12px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  cursor: 'pointer', boxShadow: '0 4px 12px rgba(35,42,59,0.1)',
+                  borderLeft: '4px solid var(--color-brass)'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <div style={{ width: 40, height: 40, borderRadius: '8px', background: 'var(--color-ink)', color: 'var(--color-paper)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+                    {shop.shopName.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <p style={{ margin: 0, fontWeight: 600 }}>{shop.shopName}</p>
+                    <p style={{ margin: 0, fontSize: '12px', opacity: 0.6 }}>Owner: {shop.malikName}</p>
+                  </div>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </motion.div>
+            ))
+          )}
+        </div>
+      </motion.div>
+    </div>
+  );
 }

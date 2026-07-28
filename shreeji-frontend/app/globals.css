@@ -1,7 +1,8 @@
-@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Gujarati:wght@600;700&display=swap');
 
 :root {
-  --background: #ffffff;
+  --background: #cb5b5b;
   --foreground: #171717;
 }
 
@@ -41,5 +42,8 @@ input::-webkit-credentials-auto-fill-button {
   pointer-events: none;
 }
 
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Gujarati:wght@600;700&display=swap');

@@ -1,793 +1,735 @@
-
 'use client';
 export const dynamic = "force-dynamic";
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useToast } from "@/app/context/ToastContext";
-import{getData} from "@/app/utils/api";
-import { isSessionValid,clearSession } from "@/app/utils/session";
-import {db} from '@/app/firebase';
-import { onSnapshot,collection,Timestamp } from "firebase/firestore";
+import { getData } from "@/app/utils/api";
+import { isSessionValid, clearSession } from "@/app/utils/session";
+import { db } from '@/app/firebase';
+import { onSnapshot, collection, Timestamp } from "firebase/firestore";
+import { motion, AnimatePresence } from "framer-motion";
+import KiranaBackground from "@/components/home/KiranaBackground";
+import LedgerField from "@/components/ui/LedgerField";
+import StampButton from "@/components/ui/StampButton";
+import NavTransition from "@/components/NavTransition";
+import { useNavTransition } from "@/hooks/useNavTransition";
 
-type Customer = {
-    name: string;
-    phone: string;
-    currentBalance?: number;
-    lastDepositAt?: Timestamp | null; // Firestore Timestamp or null
+type customer = {
+  name: string;
+  phone: string;
+  currentBalance?: number;
+  lastDepositAt?: Timestamp | null;
 };
-type Malik = {
-    name: string;
-    phone: string;
-    shopName: string;
+
+type malik = {
+  name: string;
+  phone: string;
+  shopName: string;
 };
-export default function MalikDashboardPage(){
-  
-  
-    const {showMessage}=useToast();
-    const router = useRouter();
-    const [showAddCustomer, setShowAddCustomer] = useState(false);
-   const [malik, setMalik] = useState<Malik | null>(null);
-   useEffect(() => {
-  const stored = localStorage.getItem("malik");
 
-  if (stored && stored !== "undefined") {
-    try {
-      const parsed = JSON.parse(stored);
+export default function MalikDashboardPage() {
+  const { showMessage: showmessage } = useToast();
+  const router = useRouter();
+  const { navigateTo: navigateto, stamping } = useNavTransition();
+  const [showaddcustomer, setshowaddcustomer] = useState(false);
+  const [malikdata, setmalikdata] = useState<malik | null>(null);
 
-      // delay state update (avoids warning)
-      setTimeout(() => {
-        setMalik(parsed);
-      }, 0);
+  useEffect(() => {
+    const stored = localStorage.getItem("malik");
+    if (stored && stored !== "undefined") {
+      try {
+        const parsed = JSON.parse(stored);
+        setTimeout(() => {
+          setmalikdata(parsed);
+        }, 0);
+      } catch {}
+    }
+  }, []);
 
-    } catch {}
-  }
-}, []);
-   
-    // 🔐 Protect page
-    useEffect(()=>{
-        if(!isSessionValid("malik")){
-          clearSession("malik");
-          router.push("/login/malik");
-        }
-    },[]);
-
-    //Periodic check for session expiry in every 1 minute
-    useEffect(() => {
-  const interval = setInterval(() => {
+  useEffect(() => {
     if (!isSessionValid("malik")) {
       clearSession("malik");
-      showMessage("error", "Session expired. Please login again.");
       router.push("/login/malik");
     }
-  }, 60 * 1000); // check every 1 minute
+  }, [router]);
 
-  return () => clearInterval(interval);
-}, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isSessionValid("malik")) {
+        clearSession("malik");
+        showmessage("error", "session expired. please login again.");
+        router.push("/login/malik");
+      }
+    }, 60 * 1000);
+    return () => clearInterval(interval);
+  }, [router, showmessage]);
 
-    // 📦 Customer list
-    const [customers, setCustomers] = useState<Customer[]>([]);
+  const [customers, setcustomers] = useState<customer[]>([]);
 
-     useEffect(() => { // ** replaced fetch customer useeffect with onsnapshot type eliminating try/catch block to ensure auto update of customer when new customer added
-  const malikPhone = localStorage.getItem("malikPhone");
-  if (!malikPhone) return;
+  useEffect(() => {
+    const malikphone = localStorage.getItem("malikPhone");
+    if (!malikphone) return;
 
-  const customersRef = collection(db, 'maliks', malikPhone, 'customers');
-  // No orderBy here — sort manually below
-  const unsubscribe = onSnapshot(customersRef, (snapshot) => {
-    const data = snapshot.docs.map(doc => ({
-      ...doc.data()
-    })) as unknown as Customer[];
+    const customersref = collection(db, 'maliks', malikphone, 'customers');
+    const unsubscribe = onSnapshot(customersref, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({
+        ...doc.data()
+      })) as unknown as customer[];
 
-    // Sort alphabetically in JS
-    const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
-    setCustomers(sorted);
-  }, (err) => {
-    showMessage("error", err.message);
-  });
+      const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+      setcustomers(sorted);
+    }, (err) => {
+      showmessage("error", err.message);
+    });
 
-  return () => unsubscribe();
-}, []);
+    return () => unsubscribe();
+  }, [showmessage]);
 
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [searchText, setSearchText] = useState('');
-    const [sortOption, setSortOption] = useState<'name' | 'amount' | 'time'>('name');
-    const [now, setNow] = useState<number | null>(null);
+  const [name, setname] = useState('');
+  const [phone, setphone] = useState('');
+  
+  // ── OPTIMIZATION: DEBOUNCED SEARCH ──
+  const [searchtext, setsearchtext] = useState('');
+  const [debouncedsearchtext, setdebouncedsearchtext] = useState('');
 
-    useEffect(() => {
-  const updateNow = () => setNow(Date.now());
-  const timeout = setTimeout(updateNow, 0);           // defer initial set out of sync effect body
-  const interval = setInterval(updateNow, 60 * 1000);  // refresh every minute
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setdebouncedsearchtext(searchtext);
+    }, 150); // 150ms delay makes typing instant while reducing re-renders
 
-  return () => {
-    clearTimeout(timeout);
-    clearInterval(interval);
+    return () => clearTimeout(handler);
+  }, [searchtext]);
+
+  const [sortoption, setsortoption] = useState<'name' | 'amount' | 'time'>('name');
+  const [now, setnow] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updatenow = () => setnow(Date.now());
+    const timeout = setTimeout(updatenow, 0);
+    const interval = setInterval(updatenow, 60 * 1000);
+
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const [showrowmenu, setshowrowmenu] = useState(false);
+  const [selectedcustomer, setselectedcustomer] = useState<customer | null>(null);
+  const [showeditname, setshoweditname] = useState(false);
+  const [showeditphone, setshoweditphone] = useState(false);
+  const [editphone, seteditphone] = useState('');
+  const [editname, seteditname] = useState('');
+  const [isediting, setisediting] = useState(false);
+
+  const resetform = () => {
+    setname("");
+    setphone("");
   };
-}, []);
 
-    // usestate declarations for edit customer option 
-    const [showRowMenu,setShowRowMenu]=useState(false);
-    // const [showEditCustomer,setShowEditCustomer]=useState(false);
-    const [selectedCustomer,setSelectedCustomer]=useState<Customer |null>(null);
-    const [showEditName,setShowEditName]=useState(false);
-    const [showEditPhone,setShowEditPhone]=useState(false);
-    const [editPhone,setEditPhone]=useState('');
-    const [editName,setEditName]=useState('');
-    const [isEditing,setIsEditing]=useState(false);
-    const resetForm=()=>{
-      setName("");
-      setPhone("");
+  const addcustomer = async () => {
+    if (!name || !phone) {
+      showmessage("error", 'please fill all fields');
+      return;
     }
-    // ➕ Add customer
-    const addCustomer =async () => {
-      
-        if (!name || !phone) {
-            showMessage("error",'Please fill all fields');
-            return;
-        }
 
-        // phone no validation
-        const isValidPhone=(phone:string):boolean=>{
-          const cleaned=phone.trim();
-          const phoneRegex=/^[6-9]\d{9}$/;
-          return phoneRegex.test(cleaned);
-        };
+    const isvalidphone = (p: string): boolean => {
+      const cleaned = p.trim();
+      const regex = /^[6-9]\d{9}$/;
+      return regex.test(cleaned);
+    };
 
-        if(!isValidPhone(phone)){
-          showMessage("error","Enter valid phone number");
-          return ;
-        }
+    if (!isvalidphone(phone)) {
+      showmessage("error", "enter valid phone number");
+      return;
+    }
 
     try {
-  const malikPhone = localStorage.getItem("malikPhone");
+      const malikphone = localStorage.getItem("malikPhone");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ malikPhone: malikphone, name, phone })
+      });
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/add`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      malikPhone,
-      name,
-      phone
-    })
-  });
+      const addedcustomer = await getData<customer>(res);
 
-  const addedCustomer = await getData<Customer>(res); // ✅ FIX
-
-  if (!addedCustomer) {
-    showMessage("error", "Invalid server response");
-    return;
-  }
-
-  showMessage("success", "Customer added");
-
-  resetForm();
-  setShowAddCustomer(false);
-
-  // as onsnapshot handles the auto update the list we can remove the manual code to refresh the list
-
-  // // 🔄 refresh list
-  // const updated = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_URL}/grahak?malikPhone=${malikPhone}`
-  // );
-
-  // const updatedData = await getData<Customer[]>(updated, { expectArray: true });
-
-  // const sorted = updatedData.sort((a, b) =>
-  //   a.name.localeCompare(b.name)
-  // );
-
-  // setCustomers(sorted);
-
-  router.push(`/dashboard/malik/khata?phone=${phone}`);
-
-} catch (err: unknown) {
-  console.error(err);
-
-  if (err instanceof Error) {
-    showMessage("error", err.message);
-  } else {
-    showMessage("error", "Check your Internet Connectivity");
-  }
-
-  resetForm();
-}
-
-        
-    };
-
-
-
-    // EDIT Customer Name only
-    const editCustomerName=async()=>{ // this is only declaration of the editName function its usage will be in the ui code 
-      if(!editName){
-        showMessage("error","Please enter a name");
-        return ;
+      if (!addedcustomer) {
+        showmessage("error", "invalid server response");
+        return;
       }
 
-      if(!selectedCustomer)return;
-      setIsEditing(true);
-      try{
-        const malikPhone=localStorage.getItem("malikPhone");
-        const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/editName`,{
-          method:"PUT",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({malikPhone,phone:selectedCustomer.phone,newName:editName}),
-          
-        });
-        await getData(res);
-        setCustomers(prev =>{
-          const updated=prev.map(c=>
-            c.phone===selectedCustomer.phone?{...c,name:editName}:c
-          );
-
-          return updated.sort((a,b)=>a.name.localeCompare(b.name));
-        });
-        showMessage("success","Name updated");
-        setShowEditName(false);
-        setSelectedCustomer(null);
-        setEditName('');
-        setIsEditing(false);
+      showmessage("success", "customer added");
+      resetform();
+      setshowaddcustomer(false);
+      navigateto(`/dashboard/malik/khata?phone=${phone}`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        showmessage("error", err.message);
+      } else {
+        showmessage("error", "check your internet connectivity");
       }
-      catch(err){
-        console.error(err);
-        showMessage("error","Failed to update name");
-        setIsEditing(false);
-      }
+      resetform();
+    }
+  };
 
-    };
+  const editcustomername = async () => {
+    if (!editname) {
+      showmessage("error", "please enter a name");
+      return;
+    }
+    if (!selectedcustomer) return;
+    
+    setisediting(true);
+    try {
+      const malikphone = localStorage.getItem("malikPhone");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/editName`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ malikPhone: malikphone, phone: selectedcustomer.phone, newName: editname }),
+      });
+      
+      await getData(res);
+      setcustomers(prev => {
+        const updated = prev.map(c =>
+          c.phone === selectedcustomer.phone ? { ...c, name: editname } : c
+        );
+        return updated.sort((a, b) => a.name.localeCompare(b.name));
+      });
+      
+      showmessage("success", "name updated");
+      setshoweditname(false);
+      setselectedcustomer(null);
+      seteditname('');
+      setisediting(false);
+    } catch (err) {
+      showmessage("error", "failed to update name");
+      setisediting(false);
+    }
+  };
 
+  const editcustomerphone = async () => {
+    const isvalidphone = (p: string) => /^[6-9]\d{9}$/.test(p.trim());
+    if (!isvalidphone(editphone)) { showmessage("error", "enter valid phone number"); return; }
+    if (!selectedcustomer) return;
+    
+    setisediting(true);
+    try {
+      const malikphone = localStorage.getItem("malikPhone");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/editPhone`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ malikPhone: malikphone, oldPhone: selectedcustomer.phone, newPhone: editphone }),
+      });
+      
+      await getData(res);
+      setcustomers(prev => {
+        const updated = prev.map(c =>
+          c.phone === selectedcustomer.phone ? { ...c, phone: editphone } : c
+        );
+        return updated.sort((a, b) => a.name.localeCompare(b.name));
+      });
+      
+      showmessage("success", "phone number updated");
+      setshoweditphone(false);
+      setselectedcustomer(null);
+      seteditphone('');
+      setisediting(false);
+    } catch (err) {
+      showmessage("error", "failed to update phone number");
+      setisediting(false);
+    }
+  };
 
-// edit customer phone(full migration -->first creating new customer doc then copying the data of existing cus doc into new one and then deleting the existing doc)
-   const editCustomerPhone=async()=>{
-    const isValidPhone = (p: string) => /^[6-9]\d{9}$/.test(p.trim());
-  if (!isValidPhone(editPhone)) { showMessage("error", "Enter valid phone number"); return; }
-  if (!selectedCustomer) return;
- setIsEditing(true);
-  try{
-    const malikPhone=localStorage.getItem("malikPhone");
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/editPhone`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ malikPhone, oldPhone: selectedCustomer.phone, newPhone: editPhone }),
-    });
-    await getData(res);
-    setCustomers(prev => {
-      const updated = prev.map(c =>
-        c.phone === selectedCustomer.phone ? { ...c, phone: editPhone } : c
-      );
-      return updated.sort((a, b) => a.name.localeCompare(b.name));
-    });
-    showMessage("success", "Phone number updated");
-    setShowEditPhone(false);
-    setSelectedCustomer(null);
-    setEditPhone('');
-    setIsEditing(false);
-  }catch(err){
-     console.error(err);
-    showMessage("error", "Failed to update phone number");
-    setIsEditing(false);
+  // ── OPTIMIZATION: USEMEMO CACHED FILTER & SORT ──
+  const filteredcustomers = useMemo(() => {
+    return customers
+      .filter((c) => 
+        c.name.toLowerCase().includes(debouncedsearchtext.toLowerCase()) || 
+        c.phone.includes(debouncedsearchtext)
+      )
+      .sort((a, b) => {
+        if (sortoption === 'amount') {
+          return (b.currentBalance ?? 0) - (a.currentBalance ?? 0);
+        }
+        if (sortoption === 'time') {
+          const atime = a.lastDepositAt ? a.lastDepositAt.toDate().getTime() : 0;
+          const btime = b.lastDepositAt ? b.lastDepositAt.toDate().getTime() : 0;
+          return atime - btime;
+        }
+        return a.name.localeCompare(b.name);
+      });
+  }, [customers, debouncedsearchtext, sortoption]);
+
+  function formatdaysago(lastdepositat: Timestamp | null | undefined, currentnow: number): string {
+    if (!lastdepositat) return "no deposits yet";
+    const date = lastdepositat.toDate();
+    const diffms = currentnow - date.getTime();
+    const days = Math.floor(diffms / (1000 * 60 * 60 * 24));
+    if (days === 0) return "today";
+    if (days === 1) return "1 day ago";
+    return `${days} days ago`;
   }
-   }
 
+  if (!malikdata) return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', color: '#6b7280' }}>Loading...</div>;
 
-
-    // 🔍 Filter + sort customers
-    const filteredCustomers = customers
-        .filter(
-            (c) =>
-                c.name.toLowerCase().includes(searchText.toLowerCase()) ||
-                c.phone.includes(searchText)
-        )
-        .sort((a, b) => {
-            if (sortOption === 'amount') {
-                return (b.currentBalance ?? 0) - (a.currentBalance ?? 0); // highest due first
-            }
-            if (sortOption === 'time') {
-                const aTime = a.lastDepositAt ? a.lastDepositAt.toDate().getTime() : 0;
-                const bTime = b.lastDepositAt ? b.lastDepositAt.toDate().getTime() : 0;
-                return aTime - bTime; // oldest / never-paid first
-            }
-            return a.name.localeCompare(b.name); // default alphabetical
-        });
-
-
-    function formatDaysAgo(lastDepositAt: Timestamp | null | undefined, now: number): string {
-  if (!lastDepositAt) return "No deposits yet";
-  const date = lastDepositAt.toDate();
-  const diffMs = now - date.getTime();
-  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  if (days === 0) return "Today";
-  if (days === 1) return "1 day ago";
-  return `${days} days ago`;
-}
-
-// Add this state at the top of your component (just before the return):
-// const [showAddCustomer, setShowAddCustomer] = useState(false);
-// Already assumed you'll add it above
-
-if(!malik) return <div style={{minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'16px', color:'#6b7280'}}>Loading...</div>
-
-return (
-  <div style={{
-    minHeight: '100vh',
-    position: 'relative',
-    padding: '1.5rem',
-  }}>
-
-    {/* ── BACKGROUND IMAGE ── */}
+  return (
     <div style={{
-      position: 'fixed',
-      inset: 0,
-      zIndex: 0,
-      backgroundImage: "url('/swaminarayan img.jpg')",
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundAttachment: 'fixed',
-    }} />
+      minHeight: '100vh', display: 'flex', flexDirection: 'column',
+      alignItems: 'center', padding: '2rem',
+      background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
+      position: 'relative', overflow: 'hidden',
+    }}>
+      <NavTransition show={stamping} />
+      <KiranaBackground />
 
-    {/* ── BACKGROUND OVERLAY (soft white tint so text stays readable) ── */}
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      zIndex: 1,
-      background: 'rgba(255,255,255,0.18)',
-    }} />
-
-    {/* ── GAP COVER ── */}          {/* ✅ ADD HERE */}
-<div style={{
-  position: 'fixed',
-  top: 0, left: 0, right: 0,
-  height: '1.5rem',
-  zIndex: 50,
-  backgroundImage: "url('/swaminarayan img.jpg')",
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-}} />
-<div style={{
-  position: 'fixed',
-  top: 0, left: 0, right: 0,
-  height: '1.5rem',
-  zIndex: 51,
-  background: 'rgba(255,255,255,0.18)',
-}} />
-
-    {/* ── ALL CONTENT ABOVE BACKGROUND ── */}
-    <div style={{ position: 'relative', zIndex: 2 }}>
-
-      {/* ── HEADER ── */}
-      <div style={{
-        background: 'rgba(255,255,255,0.82)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: '0.5px solid rgba(200,210,240,0.7)',
-        borderRadius: '20px',
-        padding: '1.25rem 1.5rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '1.5rem',
-        // keep the navbar intact at position
-        position:'sticky',
-        top:'1.5rem',
-        zIndex:100,
-      }}>
-        <div style={{ display:'flex', alignItems:'center', gap:'14px' }}>
-          <div style={{
-            width: 52, height: 52, borderRadius: '14px',
-            background: '#dbeafe',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <path d="M16 10a4 4 0 0 1-8 0"/>
-            </svg>
+      <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1000px' }}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+          style={{
+            background: 'var(--color-paper)',
+            borderRadius: '12px',
+            padding: '1.25rem 1.5rem',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '1.5rem',
+            boxShadow: '0 8px 30px rgba(35,42,59,0.15)',
+            borderLeft: '6px solid var(--color-rule-red)',
+            position: 'sticky',
+            top: '1.5rem',
+            zIndex: 100,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{
+              width: 52, height: 52, borderRadius: '50%',
+              background: '#E8E4D9', border: '2px solid #A88D5A',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              overflow: 'hidden', position: 'relative', flexShrink: 0
+            }}>
+              <Image 
+                src="/digiKhata-logo.png" 
+                alt="digikhata logo" 
+                fill
+                style={{ objectFit: 'cover' }}
+                priority 
+              />
+            </div>
+            <div>
+              <p style={{ fontSize: '18px', fontWeight: 600, color: 'var(--color-ink)', margin: 0 }}>
+                {malikdata?.shopName || 'My Shop'}
+              </p>
+              <p style={{ fontSize: '13px', color: 'var(--color-ink)', opacity: 0.7, margin: '3px 0 0' }}>
+                {malikdata?.name} &nbsp;·&nbsp; {malikdata?.phone}
+              </p>
+            </div>
           </div>
-          <div>
-            <p style={{ fontSize:'18px', fontWeight:600, color:'#1e3a8a', margin:0, lineHeight:1.2 }}>
-              {malik?.shopName || 'My Shop'}
-            </p>
-            <p style={{ fontSize:'13px', color:'#6b7280', margin:'3px 0 0' }}>
-              {malik?.name} &nbsp;·&nbsp; {malik?.phone}
+
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <p style={{
+              fontFamily: 'var(--font-noto-gujarati)',
+              fontSize: '22px', fontWeight: 700, color: 'var(--color-brass)',
+              margin: 0, letterSpacing: '0.5px', textAlign: 'center',
+            }}>
+              જય શ્રી સ્વામિનારાયણ
             </p>
           </div>
-        </div>
 
-        {/* ── ADD THIS IN MIDDLE ── */}
-<div style={{
-  flex: 1,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}}>
-  <p style={{
-    fontFamily: "'Noto Serif Gujarati', serif",
-    fontSize: '22px',
-    fontWeight: 700,
-    color: '#7c3aed',
-    margin: 0,
-    letterSpacing: '0.5px',
-    textShadow: '0 1px 6px rgba(124,58,237,0.18)',
-    lineHeight: 1.3,
-    textAlign: 'center',
-  }}>
-    જય શ્રી સ્વામિનારાયણ
-  </p>
-</div>
-
-        {/* Right side buttons */}
-        <div style={{ display:'flex', flexDirection:'column', alignItems:'stretch', gap:'8px', flexShrink:0 }}>
-          <button
-            onClick={()=>{ clearSession("malik"); router.push('/'); }}
-            style={{
-              padding:'8px 16px',
-              background:'rgba(255,255,255,0.9)', color:'#dc2626',
-              border:'1.5px solid #fca5a5', borderRadius:'10px',
-              fontSize:'13px', fontWeight:500,
-              cursor:'pointer',
-              display:'flex', alignItems:'center', justifyContent:'center', gap:'7px',
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-            Logout
-          </button>
-
-          <button
-            onClick={() => { resetForm(); setShowAddCustomer(true); }}
-            style={{
-              padding:'8px 16px',
-              background:'#2563eb', color:'white',
-              border:'none', borderRadius:'10px',
-              fontSize:'13px', fontWeight:600,
-              cursor:'pointer',
-              display:'flex', alignItems:'center', justifyContent:'center', gap:'7px',
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"/>
-              <line x1="5" y1="12" x2="19" y2="12"/>
-            </svg>
-            New Customer
-          </button>
-        </div>
-      </div>
-
-      {/* ── CUSTOMER LIST ── */}
-      <div style={{
-        background: 'rgba(255,255,255,0.45)',
-        backdropFilter: 'blur(24px)',
-        WebkitBackdropFilter: 'blur(24px)',
-        border: '1px solid rgba(255,255,255,0.6)',
-        borderRadius: '24px',
-        padding: '1.5rem',
-        maxWidth: '380px',
-        margin: '0',
-        boxShadow: '0 8px 32px rgba(31,38,135,0.10)',
-      }}>
-        <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'1.2rem' }}>
-          <div style={{
-            width:36, height:36, borderRadius:'10px',
-            background:'rgba(220,252,231,0.8)',
-            display:'flex', alignItems:'center', justifyContent:'center',
-          }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
-          </div>
-          <h2 style={{ fontSize:'16px', fontWeight:700, color:'#14532d', margin:0 }}>
-            Customer List
-          </h2>
-
-          <select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value as 'name' | 'amount' | 'time')}
-            style={{
-              marginLeft:'auto',
-              fontSize:'12px', fontWeight:600, color:'#166534',
-              background:'rgba(220,252,231,0.85)',
-              border:'1px solid rgba(187,247,208,0.8)',
-              borderRadius:'8px',
-              padding:'5px 8px',
-              cursor:'pointer',
-              outline:'none',
-            }}
-          >
-            <option value="name">Name (A-Z)</option>
-            <option value="amount">Udhaar: High to Low</option>
-            <option value="time">Udhaar: Overdue First</option>
-          </select>
-
-          <span style={{
-            background:'rgba(220,252,231,0.85)', color:'#166534',
-            fontSize:'12px', fontWeight:600,
-            padding:'3px 10px', borderRadius:'20px',
-          }}>
-            {filteredCustomers.length} total
-          </span>
-        </div>
-
-        {/* Search */}
-        <div style={{
-          display:'flex', alignItems:'center', gap:'10px',
-          border:'1.5px solid rgba(187,247,208,0.8)', borderRadius:'10px',
-          padding:'0 14px', background:'rgba(255,255,255,0.7)',
-          marginBottom:'14px',
-          backdropFilter:'blur(8px)',
-        }}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          <input
-            type="text"
-            placeholder="Search by name or phone..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            style={{
-              flex:1, border:'none', outline:'none',
-              fontSize:'14px', padding:'11px 0',
-              background:'transparent', color:'#111827',
-            }}
-          />
-        </div>
-
-        {filteredCustomers.length === 0 && (
-          <div style={{ textAlign:'center', padding:'2rem', color:'#374151', fontSize:'14px', fontWeight:500 }}>
-            No customer found
-          </div>
-        )}
-
-        <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
-          {filteredCustomers.map((c) => (
-            <div
-              key={c.phone}
-              onClick={() => router.push(`/dashboard/malik/khata?phone=${c.phone}`)}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: '8px', flexShrink: 0 }}>
+            <button
+              onClick={() => { clearSession("malik"); navigateto('/'); }}
               style={{
-                display:'flex', alignItems:'center', justifyContent:'space-between',
-                padding:'12px 16px',
-                background:'rgba(255,255,255,0.55)',
-                backdropFilter:'blur(12px)',
-                WebkitBackdropFilter:'blur(12px)',
-                border:'1px solid rgba(255,255,255,0.75)',
-                borderRadius:'14px',
-                cursor:'pointer',
-                transition:'background 0.2s',
+                padding: '8px 16px', background: 'transparent', color: 'var(--color-rule-red)',
+                border: '1.5px solid var(--color-rule-red)', borderRadius: '6px',
+                fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px',
               }}
-              onMouseEnter={e=>(e.currentTarget.style.background='rgba(224,242,254,0.75)')}
-              onMouseLeave={e=>(e.currentTarget.style.background='rgba(255,255,255,0.55)')}
             >
-              <div style={{ display:'flex', alignItems:'center', gap:'12px' }}>
-                <div style={{
-                  width:40, height:40, borderRadius:'50%',
-                  background:'rgba(219,234,254,0.9)',
-                  display:'flex', alignItems:'center', justifyContent:'center',
-                  fontSize:'15px', fontWeight:700, color:'#1d4ed8', flexShrink:0,
-                  border:'1.5px solid rgba(147,197,253,0.6)',
-                }}>
-                  {c.name.charAt(0).toUpperCase()}
-                </div>
-                <div>
-                  <p style={{ margin:0, fontSize:'15px', fontWeight:600, color:'#111827' }}>{c.name}</p>
-                  <p style={{ margin:'2px 0 0', fontSize:'12px', color:'#4b5563' }}>{c.phone}</p>
-                </div>
-              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-rule-red)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              Logout
+            </button>
+            <StampButton
+              tone="brass"
+              onClick={() => { resetform(); setshowaddcustomer(true); }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}>
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              New Customer
+            </StampButton>
+          </div>
+        </motion.div>
 
-              <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-                <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end' }}>
-                  <p style={{ margin:0, fontSize:'14px', fontWeight:700, color:'#dc2626' }}>
-                    ₹{(c.currentBalance ?? 0).toLocaleString('en-IN')}
-                  </p>
-                  <p style={{ margin:'2px 0 0', fontSize:'11px', color:'#6b7280' }}>
-                    {now ? formatDaysAgo(c.lastDepositAt, now) : '—'}
-                  </p>
-                </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          style={{
+            background: 'var(--color-paper)',
+            borderRadius: '12px',
+            padding: '1.5rem',
+            margin: '0 auto',
+            maxWidth: '600px',
+            boxShadow: '0 8px 32px rgba(35,42,59,0.15)',
+            borderTop: '4px solid var(--color-brass)'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.2rem' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--color-ink)', margin: 0 }}>
+              Customer List
+            </h2>
+            <select
+              value={sortoption}
+              onChange={(e) => setsortoption(e.target.value as 'name' | 'amount' | 'time')}
+              style={{
+                marginLeft: 'auto', fontSize: '13px', fontWeight: 600, color: 'var(--color-ink)',
+                background: 'transparent', border: '1px solid rgba(35,42,59,0.3)',
+                borderRadius: '6px', padding: '6px 10px', cursor: 'pointer', outline: 'none',
+              }}
+            >
+              <option value="name">Name (A-Z)</option>
+              <option value="amount">Udhaar: High to Low</option>
+              <option value="time">Udhaar: Overdue First</option>
+            </select>
+            <span style={{
+              background: 'var(--color-brass)', color: 'var(--color-paper)',
+              fontSize: '12px', fontWeight: 600, padding: '4px 12px', borderRadius: '20px',
+            }}>
+              {filteredcustomers.length} total
+            </span>
+          </div>
 
-                <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedCustomer(c);
-                  setEditName(c.name);
-                  setEditPhone(c.phone);
-                  setShowRowMenu(true);
-                }}
-                style={{
-                  background:'rgba(239,246,255,0.8)', border:'1px solid rgba(191,219,254,0.6)',
-                  cursor:'pointer', padding:'7px',
-                  borderRadius:8,
-                  display:'flex', alignItems:'center', justifyContent:'center',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(219,234,254,0.9)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(239,246,255,0.8)')}
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 20h9"/>
-                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
-                </svg>
-                </button>
-              </div>
+          <LedgerField
+            label=""
+            value={searchtext}
+            onChange={setsearchtext}
+            placeholder="Search by name or phone..."
+            icon={
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            }
+          />
+
+          {filteredcustomers.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-ink)', opacity: 0.6, fontSize: '14px', fontWeight: 500 }}>
+              No customer found
             </div>
-          ))}
-        </div>
+          )}
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
+            <AnimatePresence mode="popLayout">
+              {filteredcustomers.map((c, i) => (
+                <motion.div
+                  key={c.phone}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  layout
+                  onClick={() => navigateto(`/dashboard/malik/khata?phone=${c.phone}`)}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '14px 18px',
+                    background: 'rgba(255,255,255,0.4)',
+                    border: '1px solid rgba(35,42,59,0.1)',
+                    borderRadius: '8px', cursor: 'pointer',
+                    transition: 'background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.8)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(35,42,59,0.08)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.4)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <div style={{
+                      width: 44, height: 44, borderRadius: '50%',
+                      background: 'var(--color-ink)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '16px', fontWeight: 700, color: 'var(--color-paper)', flexShrink: 0,
+                    }}>
+                      {c.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: 'var(--color-ink)' }}>{c.name}</p>
+                      <p style={{ margin: '2px 0 0', fontSize: '13px', color: 'var(--color-ink)', opacity: 0.7 }}>{c.phone}</p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                      <p style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: 'var(--color-rule-red)' }}>
+                        ₹{(c.currentBalance ?? 0).toLocaleString('en-IN')}
+                      </p>
+                      <p style={{ margin: '2px 0 0', fontSize: '12px', color: 'var(--color-ink)', opacity: 0.6 }}>
+                        {now ? formatdaysago(c.lastDepositAt, now) : '—'}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setselectedcustomer(c);
+                        seteditname(c.name);
+                        seteditphone(c.phone);
+                        setshowrowmenu(true);
+                      }}
+                      style={{
+                        background: 'transparent', border: '1px solid rgba(35,42,59,0.2)',
+                        cursor: 'pointer', padding: '8px', borderRadius: '6px',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        color: 'var(--color-ink)', transition: 'background 0.2s',
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(35,42,59,0.05)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 20h9"/>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </motion.div>
       </div>
 
-      {/* ── ADD CUSTOMER POPUP ── */}
-      {showAddCustomer && (
-        <div style={{
-          position:'fixed', inset:0, zIndex:9999,
-          background:'rgba(0,0,0,0.45)',
-          display:'flex', alignItems:'center', justifyContent:'center',
-        }}>
-          <div style={{
-            background:'white', borderRadius:20, padding:28,
-            width:340, boxShadow:'0 16px 48px rgba(0,0,0,0.2)',
-          }}>
-            <div style={{ display:'flex', justifyContent:'center', marginBottom:12 }}>
-              <div style={{ width:48, height:48, borderRadius:14, background:'#dbeafe', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <line x1="19" y1="8" x2="19" y2="14"/>
-                  <line x1="16" y1="11" x2="22" y2="11"/>
-                </svg>
+      {/* Popups (Add, Edit Name, Edit Phone, Row Menu) remain optimized and accessible below */}
+      <AnimatePresence>
+        {showaddcustomer && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 9999,
+              background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              style={{
+                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
+                width: '360px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                borderLeft: '6px solid var(--color-rule-red)',
+              }}
+            >
+              <h2 style={{ fontWeight: 700, marginBottom: '6px', textAlign: 'center', color: 'var(--color-ink)', fontSize: '20px' }}>Add Customer</h2>
+              <p style={{ textAlign: 'center', color: 'var(--color-ink)', opacity: 0.7, fontSize: '13px', marginBottom: '24px' }}>Enter the customer details below</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
+                <LedgerField
+                  label="Customer Name"
+                  value={name}
+                  onChange={setname}
+                  placeholder="Enter customer name"
+                  icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
+                />
+                <LedgerField
+                  label="Phone Number"
+                  value={phone}
+                  onChange={(val) => setphone(val.replace(/\D/g, ""))}
+                  placeholder="Enter phone number"
+                  type="text"
+                  icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>}
+                />
               </div>
-            </div>
-            <h2 style={{ fontWeight:700, marginBottom:4, textAlign:'center', color:'#111', fontSize:17 }}>Add New Customer</h2>
-            <p style={{ textAlign:'center', color:'#9ca3af', fontSize:13, marginBottom:20 }}>Enter the customer details below</p>
-            <div style={{ marginBottom:12 }}>
-              <label style={{ fontSize:'12px', fontWeight:500, color:'#6b7280', display:'block', marginBottom:5 }}>Customer Name</label>
-              <div style={{ display:'flex', alignItems:'center', gap:10, border:'1.5px solid #bfdbfe', borderRadius:10, padding:'0 14px', background:'white' }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-                <input type="text" placeholder="Enter customer name" value={name} onChange={(e) => setName(e.target.value)}
-                  style={{ flex:1, border:'none', outline:'none', fontSize:'15px', padding:'11px 0', background:'transparent', color:'#111827' }} />
+
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button
+                  onClick={() => { setshowaddcustomer(false); resetform(); }}
+                  style={{ flex: 1, padding: '12px 0', border: '1px dashed rgba(35,42,59,0.3)', borderRadius: '6px', background: 'transparent', color: 'var(--color-ink)', cursor: 'pointer', fontSize: '15px', fontWeight: 500 }}
+                >
+                  Cancel
+                </button>
+                <div style={{ flex: 1 }}>
+                  <StampButton tone="ink" onClick={addcustomer}>Add</StampButton>
+                </div>
               </div>
-            </div>
-            <div style={{ marginBottom:20 }}>
-              <label style={{ fontSize:'12px', fontWeight:500, color:'#6b7280', display:'block', marginBottom:5 }}>Phone Number</label>
-              <div style={{ display:'flex', alignItems:'center', gap:10, border:'1.5px solid #bfdbfe', borderRadius:10, padding:'0 14px', background:'white' }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-                <input type="text" placeholder="Enter phone number" value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))} maxLength={10}
-                  style={{ flex:1, border:'none', outline:'none', fontSize:'15px', padding:'11px 0', background:'transparent', color:'#111827' }} />
-              </div>
-            </div>
-            <div style={{ display:'flex', gap:10 }}>
-              <button onClick={() => { setShowAddCustomer(false); setName(''); setPhone(''); }}
-                style={{ flex:1, padding:'12px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500 }}>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showrowmenu && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 9999,
+              background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              style={{
+                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
+                width: '320px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                borderLeft: '6px solid var(--color-rule-red)',
+              }}
+            >
+              <h2 style={{ fontWeight: 700, marginBottom: '4px', textAlign: 'center', color: 'var(--color-ink)', fontSize: '18px' }}>Options</h2>
+              <p style={{ textAlign: 'center', color: 'var(--color-ink)', opacity: 0.7, fontSize: '13px', marginBottom: '20px' }}>{selectedcustomer?.name}</p>
+              
+              <button
+                onClick={() => { setshowrowmenu(false); setshoweditname(true); }}
+                style={{ width: '100%', marginBottom: '10px', padding: '12px 0', border: '1.5px solid var(--color-brass)', borderRadius: '6px', background: 'transparent', color: 'var(--color-ink)', cursor: 'pointer', fontSize: '14px', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit Name
+              </button>
+              
+              <button
+                onClick={() => { setshowrowmenu(false); setshoweditphone(true); }}
+                style={{ width: '100%', marginBottom: '16px', padding: '12px 0', border: '1.5px solid var(--color-brass)', borderRadius: '6px', background: 'transparent', color: 'var(--color-ink)', cursor: 'pointer', fontSize: '14px', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Edit Phone Number
+              </button>
+              
+              <button
+                onClick={() => { setshowrowmenu(false); setselectedcustomer(null); }}
+                style={{ width: '100%', padding: '12px 0', border: '1px dashed rgba(35,42,59,0.3)', borderRadius: '6px', background: 'transparent', color: 'var(--color-ink)', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}
+              >
                 Cancel
               </button>
-              <button onClick={addCustomer}
-                style={{ flex:1, padding:'12px 0', background:'#2563eb', color:'white', border:'none', borderRadius:10, cursor:'pointer', fontSize:15, fontWeight:700 }}>
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* ── ROW MENU POPUP ── */}
-      {showRowMenu && (
-        <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-          <div style={{ background:'white', borderRadius:16, padding:24, width:280, boxShadow:'0 16px 48px rgba(0,0,0,0.2)' }}>
-            <h2 style={{ fontWeight:700, marginBottom:4, textAlign:'center', color:'#111', fontSize:16 }}>Customer Options</h2>
-            <p style={{ textAlign:'center', color:'#9ca3af', fontSize:12, marginBottom:16 }}>{selectedCustomer?.name}</p>
-            <button onClick={() => { setShowRowMenu(false); setShowEditName(true); }}
-              style={{ width:'100%', marginBottom:8, padding:'11px 0', border:'1.5px solid #bfdbfe', borderRadius:10, background:'#eff6ff', color:'#1e40af', cursor:'pointer', fontSize:15, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-              </svg>
-              Edit Name
-            </button>
-            <button onClick={() => { setShowRowMenu(false); setShowEditPhone(true); }}
-              style={{ width:'100%', marginBottom:8, padding:'11px 0', border:'1.5px solid #bbf7d0', borderRadius:10, background:'#f0fdf4', color:'#15803d', cursor:'pointer', fontSize:15, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-              Edit Phone Number
-            </button>
-            <button onClick={() => { setShowRowMenu(false); setSelectedCustomer(null); }}
-              style={{ width:'100%', padding:'11px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:14, fontWeight:500 }}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {showeditname && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 9999,
+              background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              style={{
+                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
+                width: '360px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                borderLeft: '6px solid var(--color-rule-red)',
+              }}
+            >
+              <h2 style={{ fontWeight: 700, marginBottom: '6px', textAlign: 'center', color: 'var(--color-ink)', fontSize: '20px' }}>Edit Name</h2>
+              <p style={{ textAlign: 'center', color: 'var(--color-ink)', opacity: 0.7, fontSize: '13px', marginBottom: '24px' }}>Change name for {selectedcustomer?.phone}</p>
+              
+              <div style={{ marginBottom: '24px' }}>
+                <LedgerField
+                  label="Customer Name"
+                  value={editname}
+                  onChange={seteditname}
+                  placeholder="Enter new name"
+                  icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
+                />
+              </div>
 
-      {/* ── EDIT NAME POPUP ── */}
-      {showEditName && (
-        <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-          <div style={{ background:'white', borderRadius:20, padding:28, width:340, boxShadow:'0 16px 48px rgba(0,0,0,0.2)' }}>
-            <div style={{ display:'flex', justifyContent:'center', marginBottom:12 }}>
-              <div style={{ width:48, height:48, borderRadius:14, background:'#dbeafe', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                </svg>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button
+                  onClick={() => { setshoweditname(false); setselectedcustomer(null); }}
+                  style={{ flex: 1, padding: '12px 0', border: '1px dashed rgba(35,42,59,0.3)', borderRadius: '6px', background: 'transparent', color: 'var(--color-ink)', cursor: 'pointer', fontSize: '15px', fontWeight: 500 }}
+                >
+                  Cancel
+                </button>
+                <div style={{ flex: 1 }}>
+                  <StampButton tone="ink" onClick={editcustomername}>
+                    {isediting ? 'Saving...' : 'Change'}
+                  </StampButton>
+                </div>
               </div>
-            </div>
-            <h2 style={{ fontWeight:700, marginBottom:4, textAlign:'center', color:'#111', fontSize:17 }}>Edit Name</h2>
-            <p style={{ textAlign:'center', color:'#9ca3af', fontSize:13, marginBottom:20 }}>Change name for {selectedCustomer?.phone}</p>
-            <div style={{ marginBottom:20 }}>
-              <label style={{ fontSize:'12px', fontWeight:500, color:'#6b7280', display:'block', marginBottom:5 }}>Customer Name</label>
-              <div style={{ display:'flex', alignItems:'center', gap:10, border:'1.5px solid #bfdbfe', borderRadius:10, padding:'0 14px', background:'white' }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-                <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)}
-                  style={{ flex:1, border:'none', outline:'none', fontSize:'15px', padding:'11px 0', background:'transparent', color:'#111827' }} />
-              </div>
-            </div>
-            <div style={{ display:'flex', gap:10 }}>
-              <button onClick={() => { setShowEditName(false); setSelectedCustomer(null); }}
-                style={{ flex:1, padding:'12px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500 }}>
-                Cancel
-              </button>
-              <button onClick={editCustomerName} disabled={isEditing}
-                style={{ flex:1, padding:'12px 0', background: isEditing ? '#93c5fd' : '#2563eb', color:'white', border:'none', borderRadius:10, cursor: isEditing ? 'not-allowed' : 'pointer', fontSize:15, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
-                {isEditing ? (
-                  <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation:'spin 1s linear infinite' }}><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>Saving...</>
-                ) : 'Change'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* ── EDIT PHONE POPUP ── */}
-      {showEditPhone && (
-        <div style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.45)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-          <div style={{ background:'white', borderRadius:20, padding:28, width:340, boxShadow:'0 16px 48px rgba(0,0,0,0.2)' }}>
-            <div style={{ display:'flex', justifyContent:'center', marginBottom:12 }}>
-              <div style={{ width:48, height:48, borderRadius:14, background:'#f0fdf4', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
+      <AnimatePresence>
+        {showeditphone && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 9999,
+              background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              style={{
+                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
+                width: '360px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                borderLeft: '6px solid var(--color-rule-red)',
+              }}
+            >
+              <h2 style={{ fontWeight: 700, marginBottom: '6px', textAlign: 'center', color: 'var(--color-ink)', fontSize: '20px' }}>Edit Phone</h2>
+              <p style={{ textAlign: 'center', color: 'var(--color-ink)', opacity: 0.7, fontSize: '13px', marginBottom: '24px' }}>Migrate khata to a new number</p>
+              
+              <div style={{ marginBottom: '24px' }}>
+                <LedgerField
+                  label="New Phone Number"
+                  value={editphone}
+                  onChange={(val) => seteditphone(val.replace(/\D/g, ""))}
+                  placeholder="Enter new phone number"
+                  icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>}
+                />
               </div>
-            </div>
-            <h2 style={{ fontWeight:700, marginBottom:4, textAlign:'center', color:'#111', fontSize:17 }}>Edit Phone Number</h2>
-            <p style={{ textAlign:'center', color:'#9ca3af', fontSize:13, marginBottom:20 }}>All khata data will be migrated to new number</p>
-            <div style={{ marginBottom:20 }}>
-              <label style={{ fontSize:'12px', fontWeight:500, color:'#6b7280', display:'block', marginBottom:5 }}>New Phone Number</label>
-              <div style={{ display:'flex', alignItems:'center', gap:10, border:'1.5px solid #bbf7d0', borderRadius:10, padding:'0 14px', background:'white' }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-                <input type="text" value={editPhone} onChange={(e) => setEditPhone(e.target.value.replace(/\D/g, ""))} maxLength={10}
-                  style={{ flex:1, border:'none', outline:'none', fontSize:'15px', padding:'11px 0', background:'transparent', color:'#111827' }} />
-              </div>
-            </div>
-            <div style={{ display:'flex', gap:10 }}>
-              <button onClick={() => { setShowEditPhone(false); setSelectedCustomer(null); }}
-                style={{ flex:1, padding:'12px 0', border:'1px solid #e5e7eb', borderRadius:10, background:'white', color:'#6b7280', cursor:'pointer', fontSize:15, fontWeight:500 }}>
-                Cancel
-              </button>
-              <button onClick={editCustomerPhone} disabled={isEditing}
-                style={{ flex:1, padding:'12px 0', background: isEditing ? '#86efac' : '#16a34a', color:'white', border:'none', borderRadius:10, cursor: isEditing ? 'not-allowed' : 'pointer', fontSize:15, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
-                {isEditing ? (
-                  <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation:'spin 1s linear infinite' }}><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>Saving...</>
-                ) : 'Change'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
-    </div>{/* end content wrapper */}
-  </div>
-);
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button
+                  onClick={() => { setshoweditphone(false); setselectedcustomer(null); }}
+                  style={{ flex: 1, padding: '12px 0', border: '1px dashed rgba(35,42,59,0.3)', borderRadius: '6px', background: 'transparent', color: 'var(--color-ink)', cursor: 'pointer', fontSize: '15px', fontWeight: 500 }}
+                >
+                  Cancel
+                </button>
+                <div style={{ flex: 1 }}>
+                  <StampButton tone="ink" onClick={editcustomerphone}>
+                    {isediting ? 'Saving...' : 'Change'}
+                  </StampButton>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }

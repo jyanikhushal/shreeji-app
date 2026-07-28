@@ -1,57 +1,30 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-// Updated animations for your product theme
-const ANIMATIONS = ['ledger', 'digital', 'sync'];
+const STAMP_DURATION = 1300; // ms — time the stamp animation plays before navigating
 
 export function useNavTransition() {
   const router = useRouter();
-
-  const [transitioning, setTransitioning] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const [animType, setAnimType] = useState('ledger');
-
+  const [stamping, setStamping] = useState(false);
   const timersRef = useRef([]);
 
-  const clearAll = () => {
-    timersRef.current.forEach(clearTimeout);
-    timersRef.current = [];
-  };
-
-  // cleanup on unmount (important for Next.js navigation)
   useEffect(() => {
-    return () => clearAll();
+    return () => timersRef.current.forEach(clearTimeout);
   }, []);
 
   const navigateTo = useCallback((path) => {
-    clearAll();
+    setStamping(true);
 
-    // random but still meaningful (even if not used visually)
-    setAnimType(ANIMATIONS[Math.floor(Math.random() * ANIMATIONS.length)]);
-    setTransitioning(true);
-    setShowError(false);
-
+    // Let the stamp animation actually play before navigating away
     const t1 = setTimeout(() => {
       router.push(path);
-
-      const t2 = setTimeout(() => {
-        setShowError(true);
-
-        const t3 = setTimeout(() => {
-          setTransitioning(false);
-          setShowError(false);
-          router.back();
-        }, 2000);
-
-        timersRef.current.push(t3);
-      }, 3000);
-
+      // Give the new page a beat to mount before clearing the overlay
+      const t2 = setTimeout(() => setStamping(false), 250);
       timersRef.current.push(t2);
-    }, 2000);
+    }, STAMP_DURATION);
 
     timersRef.current.push(t1);
-
   }, [router]);
 
-  return { navigateTo, transitioning, showError, animType };
+  return { navigateTo, stamping };
 }

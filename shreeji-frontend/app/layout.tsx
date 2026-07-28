@@ -1,8 +1,19 @@
 'use client';
-
+import Toast from "@/components/ui/Toast";
 import { useState } from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Serif_Gujarati, Rozha_One } from "next/font/google";
+const rozhaOne = Rozha_One({
+  variable: "--font-rozha",
+  weight: "400",
+  subsets: ["latin"],
+});
+const notoSerifGujarati = Noto_Serif_Gujarati({
+  variable: "--font-noto-gujarati",
+  weight: ["600", "700"],
+  subsets: ["gujarati"],
+});
+
 import "./globals.css";
 import { ToastContext } from "@/app/context/ToastContext";
 
@@ -47,37 +58,14 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${notoSerifGujarati.variable} ${rozhaOne.variable} antialiased`}>
          {/*making it global */}
         <ToastContext.Provider value={{ showMessage }}>
           {children}
         </ToastContext.Provider>
 
         {/* ✅ TOAST UI */}
-        {message && (
-          <div
-            style={{
-              position: "fixed",
-              top: 20,
-              right: 20,
-              zIndex: 9999,
-              padding: "12px 18px",
-              borderRadius: "10px",
-              color: "white",
-              fontSize: "14px",
-              fontWeight: 500,
-              background:
-                type === "success"
-                  ? "#16a34a"
-                  : type === "error"
-                  ? "#dc2626"
-                  : "#2563eb",
-              boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
-            }}
-          >
-            {message}
-          </div>
-        )}
+        <Toast message={message} type={type} />
 
       </body>
     </html>
