@@ -79,7 +79,8 @@ export default function GrahakLoginPage() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', padding: '2rem',
+      alignItems: 'center', justifyContent: 'center', 
+      padding: 'clamp(1rem, 5vw, 2rem)', // Fluid outer padding
       background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
       position: 'relative', overflow: 'hidden',
     }}>
@@ -94,7 +95,7 @@ export default function GrahakLoginPage() {
           background: 'var(--color-paper)',
           position: 'relative', zIndex: 1,
           width: '100%', maxWidth: '420px',
-          padding: '2.5rem 2.25rem 2.25rem 2.75rem',
+          padding: 'clamp(1.75rem, 6vw, 2.5rem) clamp(1.5rem, 5vw, 2.25rem) clamp(1.75rem, 5vw, 2.25rem) clamp(1.5rem, 6vw, 2.75rem)',
           borderRadius: '4px',
           boxShadow: '0 20px 50px rgba(35,42,59,0.25)',
           borderLeft: '6px solid var(--color-rule-red)',
@@ -105,7 +106,7 @@ export default function GrahakLoginPage() {
           )`,
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(1.25rem, 4vw, 1.5rem)' }}>
 
           <div style={{
             width: 76, height: 76, borderRadius: '50%',
@@ -126,17 +127,17 @@ export default function GrahakLoginPage() {
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <h1 style={{ fontFamily: 'var(--font-rozha, serif)', fontSize: '26px', color: 'var(--color-ink)', margin: 0, fontWeight: 400 }}>
+            <h1 style={{ fontFamily: 'var(--font-rozha, serif)', fontSize: 'clamp(22px, 6vw, 26px)', color: 'var(--color-ink)', margin: 0, fontWeight: 400 }}>
               Grahak Login
             </h1>
-            <p style={{ fontSize: '14px', color: 'var(--color-ink)', opacity: 0.7, margin: '6px 0 0', fontFamily: 'var(--font-noto-gujarati)' }}>
+            <p style={{ fontSize: 'clamp(12px, 3.5vw, 14px)', color: 'var(--color-ink)', opacity: 0.7, margin: '6px 0 0', fontFamily: 'var(--font-noto-gujarati)' }}>
               ગ્રાહક તરીકે લૉગિન કરો
             </p>
           </div>
 
           <div style={{ width: '100%', height: '1px', background: 'repeating-linear-gradient(to right, rgba(35,42,59,0.3) 0, rgba(35,42,59,0.3) 4px, transparent 4px, transparent 8px)' }} />
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(10px, 3vw, 14px)', width: '100%' }}>
             <LedgerField
               label="phone number"
               value={phone}
@@ -174,7 +175,7 @@ export default function GrahakLoginPage() {
                 width: '100%', padding: '12px',
                 background: 'transparent', color: 'var(--color-ink)', opacity: 0.6,
                 border: '1px dashed rgba(35,42,59,0.3)', borderRadius: '6px',
-                fontSize: '14px', fontWeight: 500, cursor: 'pointer',
+                fontSize: 'clamp(13px, 3.5vw, 14px)', fontWeight: 500, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
               }}
             >

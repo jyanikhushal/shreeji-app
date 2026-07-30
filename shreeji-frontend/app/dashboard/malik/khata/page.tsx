@@ -13,6 +13,7 @@ import LedgerField from "@/components/ui/LedgerField";
 import StampButton from "@/components/ui/StampButton";
 import NavTransition from "@/components/NavTransition";
 import { useNavTransition } from "@/hooks/useNavTransition";
+import MarqueeText from "@/components/ui/MarqueeText";
 
 type customer = {
   name: string;
@@ -165,7 +166,7 @@ function RunningKhataInner() {
         setentries([{ entryNo: 1, date: todaystr, item: "", amount: "", total: 0 }]);
       }
       return true;
-    } catch (err) {
+    } catch {
       showmessage("error", "Error loading khata");
       return false;
     }
@@ -354,7 +355,7 @@ function RunningKhataInner() {
               ? { entryNo: confirmed.entryNo, date: confirmeddate, item: confirmed.description, amount: String(confirmed.amount), total: confirmed.total }
               : row
           ));
-        } catch (err) {
+        } catch {
           if (!queuevalidref.current) return;
           await handlequeuefailure(provisionalentryno);
         }
@@ -425,7 +426,7 @@ function RunningKhataInner() {
               ? { entryNo: confirmed.entryNo, date: confirmeddate, item: confirmed.description, amount: String(confirmed.amount), total: confirmed.total }
               : row
           ));
-        } catch (err) {
+        } catch {
           if (!queuevalidref.current) return;
           await handlequeuefailure(entryno);
         }
@@ -460,7 +461,7 @@ function RunningKhataInner() {
       await loadkhata();
       setdepositamount('');
       setshowdeposit(false);
-    } catch (err) {
+    } catch {
       seterror("deposit failed");
       showmessage("error", "check your internet connection");
     } finally {
@@ -494,7 +495,7 @@ function RunningKhataInner() {
       });
       await getData(res);
       await loadkhata();
-    } catch (err) {
+    } catch {
       seterror("Edit failed");
     } finally {
       setloading(false);
@@ -526,7 +527,7 @@ function RunningKhataInner() {
       });
       await getData(res);
       await loadkhata();
-    } catch (err) {
+    } catch {
       seterror("Delete failed");
     } finally {
       setloading(false);
@@ -545,7 +546,7 @@ function RunningKhataInner() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
-      padding: '2rem', paddingBottom: '4rem', background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
+      padding: 'clamp(1rem, 4vw, 2rem)', paddingBottom: '4rem', background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
       position: 'relative',
     }}>
       <NavTransition show={stamping} />
@@ -555,7 +556,7 @@ function RunningKhataInner() {
       <div style={{
         position: 'fixed',
         top: 0, left: 0, right: 0,
-        height: '2rem',
+        height: '1.5rem',
         zIndex: 110,
         background: '#E8DCC0', 
       }} />
@@ -601,21 +602,23 @@ function RunningKhataInner() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
           style={{
-            background: '#DCC999', // REQUIRED: Must be solid, not transparent
+            background: '#DCC999', 
             borderRadius: '12px',
-            padding: '1.25rem 1.5rem',
+            padding: 'clamp(1rem, 3vw, 1.25rem) clamp(1rem, 3vw, 1.5rem)',
             display: 'flex',
+            flexWrap: 'wrap',
             justifyContent: 'space-between',
             alignItems: 'center',
+            gap: '12px',
             marginBottom: '1.5rem',
             boxShadow: '0 8px 30px rgba(35,42,59,0.15)',
             borderLeft: '6px solid var(--color-brass)',
-            position: 'sticky', // This keeps it at the top
-            top: '2.5rem',       // Must match the Gap Cover height
-            zIndex: 100,        // Highest priority
+            position: 'sticky',
+            top: '1.5rem',
+            zIndex: 100,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: '200px' }}>
             <button
               onClick={() => navigateto('/dashboard/malik')}
               style={{
@@ -638,16 +641,16 @@ function RunningKhataInner() {
               {customername ? customername.charAt(0).toUpperCase() : '?'}
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: 'var(--color-ink)' }}>
+              <p style={{ margin: 0, fontSize: 'clamp(16px, 4vw, 18px)', fontWeight: 700, color: 'var(--color-ink)' }}>
                 {customername}
               </p>
-              <p style={{ margin: '2px 0 0', fontSize: '13px', color: 'var(--color-ink)', opacity: 0.7 }}>
+              <p style={{ margin: '2px 0 0', fontSize: 'clamp(11px, 3vw, 13px)', color: 'var(--color-ink)', opacity: 0.7 }}>
                 {customerphone}
               </p>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0, marginLeft: 'auto' }}>
             {entries.length > 0 && (
               <div style={{
                 background: entries[entries.length - 1].total > 0 ? '#fee2e2' : 'rgba(22, 163, 74, 0.1)',
@@ -677,15 +680,22 @@ function RunningKhataInner() {
             background: 'var(--color-paper)',
             borderRadius: '12px',
             boxShadow: '0 8px 32px rgba(35,42,59,0.15)',
-            overflow: 'hidden',
+            overflowX: 'hidden',
           }}
         >
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', tableLayout: 'fixed', boxSizing: 'border-box' }}>
+            <colgroup>
+  <col style={{ width: '8%' }} />
+  <col style={{ width: '17%' }} />
+  <col style={{ width: '35%' }} />
+  <col style={{ width: '20%' }} />
+  <col style={{ width: '20%' }} />
+</colgroup>
             <thead>
               <tr style={{ background: 'rgba(168, 141, 90, 0.1)' }}>
                 {['#', 'Date', 'Item', 'Amount', 'Total'].map((h) => (
                   <th key={h} style={{
-                    padding: '14px 12px',
+                    padding: '14px clamp(8px, 2vw, 12px)',
                     color: 'var(--color-ink)', fontWeight: 700, fontSize: '13px',
                     borderBottom: '2px solid rgba(168, 141, 90, 0.2)',
                     textAlign: h === 'Amount' || h === 'Total' ? 'right' : 'center',
@@ -731,7 +741,7 @@ function RunningKhataInner() {
                           setshowrowmenu(true);
                         }}
                         style={{
-                          padding: '12px 10px', textAlign: 'center',
+                          padding: '12px clamp(6px, 2vw, 10px)', textAlign: 'center',
                           cursor: (islastrow || row.pending || row.awaitingResubmit) ? 'default' : 'pointer',
                           color: (islastrow || row.pending || row.awaitingResubmit) ? 'rgba(35,42,59,0.3)' : 'var(--color-brass)',
                           fontWeight: 700, fontSize: '13px', userSelect: 'none',
@@ -740,35 +750,51 @@ function RunningKhataInner() {
                         {row.entryNo}
                       </td>
 
-                      <td style={{ padding: '12px 10px', textAlign: 'center', fontSize: '13px', color: 'var(--color-ink)', opacity: 0.7, whiteSpace: 'nowrap' }}>
+                      <td style={{ padding: '12px clamp(6px, 2vw, 10px)', textAlign: 'center', fontSize: '13px', color: 'var(--color-ink)', opacity: 0.7, whiteSpace: 'nowrap' }}>
                         {row.date}
                       </td>
 
-                      <td style={{ padding: '8px' }}>
-                        <input
-                          ref={(el) => { iteminputrefs.current[index] = el; }}
-                          value={row.item}
-                          disabled={issubmitting ||
-                            (editingrow !== index && !(editingrow === null && islastrow) && !isearliestawaitingresubmit) ||
-                            isdeposit
+                      <td style={{ padding: '8px' , overflow: 'hidden' }}>
+                        {(() => {
+                          const isEditableNow = editingrow === index || (editingrow === null && islastrow) || isearliestawaitingresubmit;
+                          const inputDisabled = issubmitting || !isEditableNow || isdeposit;
+
+                          if (!inputDisabled) {
+                            // Actively editable row — real input, untouched behavior
+                            return (
+                              <input
+                                ref={(el) => { iteminputrefs.current[index] = el; }}
+                                value={row.item}
+                                onChange={(e) => handlechange(index, 'item', e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    amountinputrefs.current[index]?.focus();
+                                  }
+                                }}
+                                placeholder={islastrow ? 'Type item...' : ''}
+                                style={{
+                                  width: '100%', border: 'none', outline: 'none',
+                                  background: 'transparent', fontSize: '14px',
+                                  color: 'var(--color-ink)', fontWeight: 500,
+                                  padding: '8px', borderRadius: '6px',
+                                  fontFamily: 'inherit'
+                                }}
+                              />
+                            );
                           }
-                          onChange={(e) => handlechange(index, 'item', e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' && (editingrow === index || (editingrow === null && islastrow))) {
-                              e.preventDefault();
-                              amountinputrefs.current[index]?.focus();
-                            }
-                          }}
-                          placeholder={islastrow ? 'Type item...' : ''}
-                          style={{
-                            width: '100%', border: 'none', outline: 'none',
-                            background: 'transparent', fontSize: '14px',
-                            color: isdeposit ? '#16a34a' : 'var(--color-ink)',
-                            fontWeight: isdeposit ? 700 : 500,
-                            padding: '8px', borderRadius: '6px',
-                            fontFamily: 'inherit'
-                          }}
-                        />
+
+                          // Read-only row — render as a looping ticker if the name overflows
+                          return (
+                            <div style={{
+                              padding: '8px', fontSize: '14px',
+                              color: isdeposit ? '#16a34a' : 'var(--color-ink)',
+                              fontWeight: isdeposit ? 700 : 500,
+                            }}>
+                              <MarqueeText text={row.item} />
+                            </div>
+                          );
+                        })()}
                       </td>
 
                       <td style={{ padding: '8px', position: 'relative' }}>
@@ -834,7 +860,7 @@ function RunningKhataInner() {
                       </td>
 
                       <td style={{
-                        padding: '12px 14px', textAlign: 'right',
+                        padding: '12px clamp(8px, 2vw, 14px)', textAlign: 'right',
                         fontWeight: 700, fontSize: '15px',
                         color: row.total > 0 ? 'var(--color-rule-red)' : row.total < 0 ? '#16a34a' : 'var(--color-ink)',
                         whiteSpace: 'nowrap', opacity: (row.total === 0 && islastrow) ? 0.4 : 1
@@ -860,6 +886,7 @@ function RunningKhataInner() {
               position: 'fixed', inset: 0, zIndex: 9999,
               background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '1rem'
             }}
           >
             <motion.div
@@ -867,8 +894,10 @@ function RunningKhataInner() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               style={{
-                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
-                width: '320px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                background: 'var(--color-paper)', borderRadius: '12px', 
+                padding: 'clamp(1.5rem, 5vw, 2rem)',
+                width: 'calc(100% - 2rem)', maxWidth: '340px', 
+                boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
                 borderLeft: '6px solid var(--color-brass)',
               }}
             >
@@ -927,6 +956,7 @@ function RunningKhataInner() {
               position: 'fixed', inset: 0, zIndex: 9999,
               background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '1rem'
             }}
           >
             <motion.div
@@ -934,8 +964,10 @@ function RunningKhataInner() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               style={{
-                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
-                width: '320px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                background: 'var(--color-paper)', borderRadius: '12px', 
+                padding: 'clamp(1.5rem, 5vw, 2rem)',
+                width: 'calc(100% - 2rem)', maxWidth: '320px', 
+                boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
                 borderLeft: '6px solid var(--color-rule-red)',
               }}
             >
@@ -985,6 +1017,7 @@ function RunningKhataInner() {
               position: 'fixed', inset: 0, zIndex: 9999,
               background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '1rem'
             }}
           >
             <motion.div
@@ -992,8 +1025,10 @@ function RunningKhataInner() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               style={{
-                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
-                width: '320px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                background: 'var(--color-paper)', borderRadius: '12px', 
+                padding: 'clamp(1.5rem, 5vw, 2rem)',
+                width: 'calc(100% - 2rem)', maxWidth: '320px', 
+                boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
                 borderLeft: '6px solid var(--color-rule-red)',
               }}
             >

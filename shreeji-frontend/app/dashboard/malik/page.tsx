@@ -97,7 +97,7 @@ export default function MalikDashboardPage() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setdebouncedsearchtext(searchtext);
-    }, 150); // 150ms delay makes typing instant while reducing re-renders
+    }, 150);
 
     return () => clearTimeout(handler);
   }, [searchtext]);
@@ -204,7 +204,7 @@ export default function MalikDashboardPage() {
       setselectedcustomer(null);
       seteditname('');
       setisediting(false);
-    } catch (err) {
+    } catch {
       showmessage("error", "failed to update name");
       setisediting(false);
     }
@@ -237,7 +237,7 @@ export default function MalikDashboardPage() {
       setselectedcustomer(null);
       seteditphone('');
       setisediting(false);
-    } catch (err) {
+    } catch {
       showmessage("error", "failed to update phone number");
       setisediting(false);
     }
@@ -278,7 +278,8 @@ export default function MalikDashboardPage() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
-      alignItems: 'center', padding: '2rem',
+      alignItems: 'center', 
+      padding: 'clamp(1rem, 4vw, 2rem)',
       background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
       position: 'relative', overflow: 'hidden',
     }}>
@@ -293,19 +294,21 @@ export default function MalikDashboardPage() {
           style={{
             background: 'var(--color-paper)',
             borderRadius: '12px',
-            padding: '1.25rem 1.5rem',
+            padding: 'clamp(1rem, 3vw, 1.25rem) clamp(1rem, 3vw, 1.5rem)',
             display: 'flex',
+            flexWrap: 'wrap',
             justifyContent: 'space-between',
             alignItems: 'center',
+            gap: '12px',
             marginBottom: '1.5rem',
             boxShadow: '0 8px 30px rgba(35,42,59,0.15)',
             borderLeft: '6px solid var(--color-rule-red)',
             position: 'sticky',
-            top: '1.5rem',
+            top: '1rem',
             zIndex: 100,
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', minWidth: '220px' }}>
             <div style={{
               width: 52, height: 52, borderRadius: '50%',
               background: '#E8E4D9', border: '2px solid #A88D5A',
@@ -321,33 +324,33 @@ export default function MalikDashboardPage() {
               />
             </div>
             <div>
-              <p style={{ fontSize: '18px', fontWeight: 600, color: 'var(--color-ink)', margin: 0 }}>
+              <p style={{ fontSize: 'clamp(16px, 4vw, 18px)', fontWeight: 600, color: 'var(--color-ink)', margin: 0 }}>
                 {malikdata?.shopName || 'My Shop'}
               </p>
-              <p style={{ fontSize: '13px', color: 'var(--color-ink)', opacity: 0.7, margin: '3px 0 0' }}>
+              <p style={{ fontSize: 'clamp(11px, 3vw, 13px)', color: 'var(--color-ink)', opacity: 0.7, margin: '3px 0 0' }}>
                 {malikdata?.name} &nbsp;·&nbsp; {malikdata?.phone}
               </p>
             </div>
           </div>
 
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ flex: '1 1 100%', order: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '4px 0' }}>
             <p style={{
               fontFamily: 'var(--font-noto-gujarati)',
-              fontSize: '22px', fontWeight: 700, color: 'var(--color-brass)',
+              fontSize: 'clamp(18px, 5vw, 22px)', fontWeight: 700, color: 'var(--color-brass)',
               margin: 0, letterSpacing: '0.5px', textAlign: 'center',
             }}>
               જય શ્રી સ્વામિનારાયણ
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: '8px', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, marginLeft: 'auto' }}>
             <button
               onClick={() => { clearSession("malik"); navigateto('/'); }}
               style={{
-                padding: '8px 16px', background: 'transparent', color: 'var(--color-rule-red)',
+                padding: '8px 14px', background: 'transparent', color: 'var(--color-rule-red)',
                 border: '1.5px solid var(--color-rule-red)', borderRadius: '6px',
                 fontSize: '13px', fontWeight: 600, cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
               }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-rule-red)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -377,15 +380,15 @@ export default function MalikDashboardPage() {
           style={{
             background: 'var(--color-paper)',
             borderRadius: '12px',
-            padding: '1.5rem',
+            padding: 'clamp(1rem, 5vw, 1.5rem)',
             margin: '0 auto',
-            maxWidth: '600px',
+            maxWidth: '640px',
             boxShadow: '0 8px 32px rgba(35,42,59,0.15)',
             borderTop: '4px solid var(--color-brass)'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.2rem' }}>
-            <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--color-ink)', margin: 0 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px', marginBottom: '1.2rem' }}>
+            <h2 style={{ fontSize: 'clamp(16px, 4vw, 18px)', fontWeight: 700, color: 'var(--color-ink)', margin: 0 }}>
               Customer List
             </h2>
             <select
@@ -430,7 +433,7 @@ export default function MalikDashboardPage() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
             <AnimatePresence mode="popLayout">
-              {filteredcustomers.map((c, i) => (
+              {filteredcustomers.map((c) => (
                 <motion.div
                   key={c.phone}
                   initial={{ opacity: 0, y: 10 }}
@@ -441,7 +444,7 @@ export default function MalikDashboardPage() {
                   onClick={() => navigateto(`/dashboard/malik/khata?phone=${c.phone}`)}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    padding: '14px 18px',
+                    padding: 'clamp(10px, 3vw, 14px) clamp(12px, 3vw, 18px)',
                     background: 'rgba(255,255,255,0.4)',
                     border: '1px solid rgba(35,42,59,0.1)',
                     borderRadius: '8px', cursor: 'pointer',
@@ -458,7 +461,7 @@ export default function MalikDashboardPage() {
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <div style={{
                       width: 44, height: 44, borderRadius: '50%',
                       background: 'var(--color-ink)',
@@ -468,14 +471,14 @@ export default function MalikDashboardPage() {
                       {c.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <p style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: 'var(--color-ink)' }}>{c.name}</p>
-                      <p style={{ margin: '2px 0 0', fontSize: '13px', color: 'var(--color-ink)', opacity: 0.7 }}>{c.phone}</p>
+                      <p style={{ margin: 0, fontSize: 'clamp(15px, 3.5vw, 16px)', fontWeight: 600, color: 'var(--color-ink)' }}>{c.name}</p>
+                      <p style={{ margin: '2px 0 0', fontSize: 'clamp(12px, 3vw, 13px)', color: 'var(--color-ink)', opacity: 0.7 }}>{c.phone}</p>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                      <p style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: 'var(--color-rule-red)' }}>
+                      <p style={{ margin: 0, fontSize: 'clamp(15px, 3.5vw, 16px)', fontWeight: 700, color: 'var(--color-rule-red)' }}>
                         ₹{(c.currentBalance ?? 0).toLocaleString('en-IN')}
                       </p>
                       <p style={{ margin: '2px 0 0', fontSize: '12px', color: 'var(--color-ink)', opacity: 0.6 }}>
@@ -513,7 +516,7 @@ export default function MalikDashboardPage() {
         </motion.div>
       </div>
 
-      {/* Popups (Add, Edit Name, Edit Phone, Row Menu) remain optimized and accessible below */}
+      {/* MODALS / POPUPS */}
       <AnimatePresence>
         {showaddcustomer && (
           <motion.div
@@ -524,6 +527,7 @@ export default function MalikDashboardPage() {
               position: 'fixed', inset: 0, zIndex: 9999,
               background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '1rem'
             }}
           >
             <motion.div
@@ -531,8 +535,10 @@ export default function MalikDashboardPage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               style={{
-                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
-                width: '360px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                background: 'var(--color-paper)', borderRadius: '12px', 
+                padding: 'clamp(1.5rem, 5vw, 2rem)',
+                width: 'calc(100% - 2rem)', maxWidth: '380px', 
+                boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
                 borderLeft: '6px solid var(--color-rule-red)',
               }}
             >
@@ -583,6 +589,7 @@ export default function MalikDashboardPage() {
               position: 'fixed', inset: 0, zIndex: 9999,
               background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '1rem'
             }}
           >
             <motion.div
@@ -590,8 +597,10 @@ export default function MalikDashboardPage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               style={{
-                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
-                width: '320px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                background: 'var(--color-paper)', borderRadius: '12px', 
+                padding: 'clamp(1.5rem, 5vw, 2rem)',
+                width: 'calc(100% - 2rem)', maxWidth: '340px', 
+                boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
                 borderLeft: '6px solid var(--color-rule-red)',
               }}
             >
@@ -635,6 +644,7 @@ export default function MalikDashboardPage() {
               position: 'fixed', inset: 0, zIndex: 9999,
               background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '1rem'
             }}
           >
             <motion.div
@@ -642,8 +652,10 @@ export default function MalikDashboardPage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               style={{
-                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
-                width: '360px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                background: 'var(--color-paper)', borderRadius: '12px', 
+                padding: 'clamp(1.5rem, 5vw, 2rem)',
+                width: 'calc(100% - 2rem)', maxWidth: '380px', 
+                boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
                 borderLeft: '6px solid var(--color-rule-red)',
               }}
             >
@@ -688,6 +700,7 @@ export default function MalikDashboardPage() {
               position: 'fixed', inset: 0, zIndex: 9999,
               background: 'rgba(35,42,59,0.6)', backdropFilter: 'blur(4px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '1rem'
             }}
           >
             <motion.div
@@ -695,8 +708,10 @@ export default function MalikDashboardPage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               style={{
-                background: 'var(--color-paper)', borderRadius: '12px', padding: '2rem',
-                width: '360px', boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+                background: 'var(--color-paper)', borderRadius: '12px', 
+                padding: 'clamp(1.5rem, 5vw, 2rem)',
+                width: 'calc(100% - 2rem)', maxWidth: '380px', 
+                boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
                 borderLeft: '6px solid var(--color-rule-red)',
               }}
             >

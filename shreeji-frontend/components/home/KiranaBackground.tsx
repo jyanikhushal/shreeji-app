@@ -15,17 +15,16 @@ function FloatingMotif({
 }: { motif: motiftype; mousex: MotionValue<number>; mousey: MotionValue<number> }) {
   const [hovered, sethovered] = useState(false);
   
-  // Increased multiplier for much larger mouse parallax movement
   const x = useTransform(mousex, (v) => v * (motif.depth * 1.5));
   const y = useTransform(mousey, (v) => v * (motif.depth * 1.5));
 
-  // Dynamic floating ranges based on depth to make them look like they are hanging/drifting in the air
   const floatY = -(25 + Math.abs(motif.depth) * 0.8);
   const driftX = motif.depth > 0 ? 20 : -20;
   const rotateDeg = motif.depth > 0 ? 8 : -8;
 
   return (
     <motion.div
+      className="kirana-motif" // Added class for mobile hiding
       style={{ ...motif.style, position: 'absolute', pointerEvents: 'auto', x, y }}
       onHoverStart={() => sethovered(true)}
       onHoverEnd={() => sethovered(false)}
@@ -38,7 +37,7 @@ function FloatingMotif({
           rotate: [0, rotateDeg, -rotateDeg * 0.5, 0] 
         }}
         transition={{ 
-          duration: 7 + Math.abs(motif.depth) * 0.15, // Slower, wider swings for a "weightless" air-hanging feel
+          duration: 7 + Math.abs(motif.depth) * 0.15, 
           repeat: Infinity, 
           ease: "easeInOut" 
         }}
@@ -92,7 +91,7 @@ export default function KiranaBackground() {
     {
       label: "અનાજ • Grains",
       style: { top: '8%', left: '6%', width: 140, height: 140 },
-      depth: 25, // Increased depth for larger parallax range
+      depth: 25, 
       svg: (
         <svg width="100%" height="100%" viewBox="0 0 90 90">
           <ellipse cx="45" cy="65" rx="35" ry="20" fill="#78350f"/>
@@ -143,7 +142,7 @@ export default function KiranaBackground() {
     {
       label: "ત્રાજવું • Scale",
       style: { top: '45%', right: '5%', width: 150, height: 150 }, 
-      depth: 15, // Increased from 6 so it floats more noticeably
+      depth: 15, 
       svg: (
         <svg width="100%" height="100%" viewBox="0 0 100 100">
           <rect x="48" y="10" width="4" height="60" fill="#78350f"/>
@@ -160,11 +159,22 @@ export default function KiranaBackground() {
   ];
 
   return (
-    <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', background: 'radial-gradient(circle at 50% 50%, rgba(243, 233, 210, 0.4) 0%, rgba(0,0,0,0) 70%)' }}>
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.04, backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")' }} />
-      {motifs.map((m) => (
-        <FloatingMotif key={m.label} motif={m} mousex={mousex} mousey={mousey} />
-      ))}
-    </div>
+    <>
+      {/* Inject CSS to perfectly hide the background motifs on narrow mobile screens */}
+      <style>{`
+        @media (max-width: 768px) {
+          .kirana-motif {
+            display: none !important;
+          }
+        }
+      `}</style>
+
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', background: 'radial-gradient(circle at 50% 50%, rgba(243, 233, 210, 0.4) 0%, rgba(0,0,0,0) 70%)' }}>
+        <div style={{ position: 'absolute', inset: 0, opacity: 0.04, backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E")' }} />
+        {motifs.map((m) => (
+          <FloatingMotif key={m.label} motif={m} mousex={mousex} mousey={mousey} />
+        ))}
+      </div>
+    </>
   );
 }

@@ -27,7 +27,9 @@ export default function HomePage() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', padding: '2rem',
+      alignItems: 'center', justifyContent: 'center', 
+      /* Fluid safe area padding: 1rem on mobile, 2rem on desktop */
+      padding: 'clamp(1rem, 5vw, 2rem)', 
       background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
       position: 'relative', overflow: 'hidden',
     }}>
@@ -42,7 +44,8 @@ export default function HomePage() {
           background: 'var(--color-paper)',
           position: 'relative', zIndex: 1,
           width: '100%', maxWidth: '440px',
-          padding: '2.75rem 2.5rem 2.5rem 3rem',
+          /* Fluid padding inside the card */
+          padding: 'clamp(2rem, 6vw, 2.75rem) clamp(1.5rem, 5vw, 2.5rem)',
           borderRadius: '4px',
           boxShadow: '0 20px 50px rgba(35,42,59,0.25)',
           borderLeft: '6px solid var(--color-rule-red)',
@@ -53,28 +56,35 @@ export default function HomePage() {
           )`,
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.75rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(1.25rem, 4vw, 1.75rem)' }}>
           <LedgerSeal />
 
           <div style={{ textAlign: 'center' }}>
             <h1 style={{
-              fontFamily: 'var(--font-rozha, serif)', fontSize: '32px',
+              fontFamily: 'var(--font-rozha, serif)', 
+              /* Fluid font size for title */
+              fontSize: 'clamp(26px, 6vw, 32px)',
               color: 'var(--color-ink)', margin: 0, fontWeight: 400,
             }}>
               digiKhata
             </h1>
-            <p style={{ fontSize: '14px', color: 'var(--color-ink)', opacity: 0.65, margin: '4px 0 0', letterSpacing: '1px', textTransform: 'uppercase' }}>
+            <p style={{ 
+              fontSize: 'clamp(12px, 3vw, 14px)', 
+              color: 'var(--color-ink)', opacity: 0.65, margin: '4px 0 0', 
+              letterSpacing: '1px', textTransform: 'uppercase' 
+            }}>
               Kirana Stores
             </p>
             <p style={{
-              fontSize: '15px', color: 'var(--color-ink)', opacity: 0.8, margin: '10px 0 0',
+              fontSize: 'clamp(13px, 3.5vw, 15px)', 
+              color: 'var(--color-ink)', opacity: 0.8, margin: '10px 0 0',
               fontFamily: 'var(--font-noto-gujarati)',
             }}>
               તમારો ભરોસો, અમારી જવાબદારી
             </p>
           </div>
 
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '4px' }}>
             {[
               { label: "Malik Login", route: "/login/malik", tone: "ink" as const },
               { label: "Grahak Login", route: "/login/grahak", tone: "green" as const },

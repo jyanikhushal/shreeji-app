@@ -1,7 +1,7 @@
 'use client';
 
 import { db } from '@/app/firebase';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/app/context/ToastContext';
 import { isSessionValid, clearSession } from '@/app/utils/session';
@@ -43,6 +43,9 @@ export default function GrahakKhataClient() {
   const [malikPhone, setMalikPhone] = useState<string | null>(null);
   const [entries, setEntries] = useState<Entry[]>([]);
   const [authChecked, setAuthChecked] = useState(false);
+
+  // ── NEW: REF FOR AUTO-SCROLLING TO BOTTOM OF TABLE ──
+  const lastRowRef = useRef<HTMLTableRowElement | null>(null);
 
   // notification-related state — unchanged
   const [permissionKnown, setPermissionKnown] = useState(false);
@@ -111,6 +114,13 @@ export default function GrahakKhataClient() {
     return () => unsubscribe();
   }, [phone, malikPhone, authChecked]);
 
+  // ── NEW: AUTO SCROLL DOWN WHEN ENTRIES LOAD OR CHANGE ──
+  useEffect(() => {
+    if (entries.length > 0) {
+      lastRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [entries]);
+
   // cross-device granted flag — unchanged
   useEffect(() => {
     if (!phone || !malikPhone || !authChecked) return;
@@ -174,13 +184,15 @@ export default function GrahakKhataClient() {
         minHeight: '100vh',
         background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '1rem',
       }}>
         <div style={{
           background: 'var(--color-paper)', borderRadius: 4,
           borderLeft: '6px solid var(--color-rule-red)',
-          padding: '1.75rem 2.5rem', boxShadow: '0 12px 30px rgba(35,42,59,0.2)',
+          padding: 'clamp(1.25rem, 4vw, 1.75rem) clamp(1.5rem, 5vw, 2.5rem)', 
+          boxShadow: '0 12px 30px rgba(35,42,59,0.2)',
         }}>
-          <p style={{ margin: 0, fontSize: 15, color: 'var(--color-ink)', fontWeight: 500, fontFamily: 'var(--font-rozha, serif)' }}>
+          <p style={{ margin: 0, fontSize: 'clamp(14px, 4vw, 15px)', color: 'var(--color-ink)', fontWeight: 500, fontFamily: 'var(--font-rozha, serif)' }}>
             Opening your khata...
           </p>
         </div>
@@ -190,17 +202,17 @@ export default function GrahakKhataClient() {
 
   return (
     <div style={{
-      height: '100vh', // Changed to fixed height
-      overflow: 'hidden', // Stop entire page from scrolling
+      height: '100vh',
+      overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
       background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
-      padding: '1.25rem', position: 'relative',
+      padding: 'clamp(0.75rem, 3vw, 1.25rem)', 
+      position: 'relative',
     }}>
       <NavTransition show={stamping} />
       <KiranaBackground />
 
-      {/* Main column layout that takes exactly 100% of the screen height */}
       <div style={{ 
         position: 'relative', 
         zIndex: 2, 
@@ -216,11 +228,16 @@ export default function GrahakKhataClient() {
         <motion.div
           initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}
           style={{
-            flexShrink: 0, // Prevents shrinking
+            flexShrink: 0,
             background: 'var(--color-paper)', borderRadius: 4,
             borderLeft: '6px solid var(--color-brass)',
-            padding: '1rem 1.25rem', display: 'flex', justifyContent: 'space-between',
-            alignItems: 'center', marginBottom: '1.25rem',
+            padding: 'clamp(0.75rem, 3vw, 1rem) clamp(1rem, 3vw, 1.25rem)', 
+            display: 'flex', 
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'center', 
+            gap: 12,
+            marginBottom: '1.25rem',
             boxShadow: '0 8px 24px rgba(35,42,59,0.15)',
           }}
         >
@@ -233,12 +250,12 @@ export default function GrahakKhataClient() {
               {(phone || '?').charAt(0)}
             </div>
             <div>
-              <p style={{ margin: 0, fontSize: 17, fontWeight: 600, color: 'var(--color-ink)', fontFamily: 'var(--font-rozha, serif)' }}>My Khata</p>
-              <p style={{ margin: '2px 0 0', fontSize: 12, color: 'var(--color-ink)', opacity: 0.6 }}>{phone}</p>
+              <p style={{ margin: 0, fontSize: 'clamp(16px, 4vw, 17px)', fontWeight: 600, color: 'var(--color-ink)', fontFamily: 'var(--font-rozha, serif)' }}>My Khata</p>
+              <p style={{ margin: '2px 0 0', fontSize: 'clamp(11px, 3vw, 12px)', color: 'var(--color-ink)', opacity: 0.6 }}>{phone}</p>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0, marginLeft: 'auto' }}>
             {entries.length > 0 && (
               <div style={{
                 background: 'transparent',
@@ -251,7 +268,25 @@ export default function GrahakKhataClient() {
             )}
 
             <StampButton tone="brass" onClick={openHistoryPanel} disabled={!localGranted}>
-              🔔
+              <motion.div
+                animate={{
+                  rotate: [0, 18, -18, 12, -12, 6, -6, 0],
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  repeatDelay: 0.5, // Rings briskly, pauses for 1.5s, then rings again
+                  ease: "easeInOut",
+                }}
+                style={{
+                  display: 'inline-block',
+                  fontSize: 30, // ── BIGGER BELL ICON ──
+                  transformOrigin: 'top center', // Swings from the top pivot like a real bell
+                  lineHeight: 1,
+                }}
+              >
+                🔔
+              </motion.div>
             </StampButton>
 
             <StampButton
@@ -267,10 +302,10 @@ export default function GrahakKhataClient() {
         {entries.length > 0 && (
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(3, 1fr)', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
             gap: 12, 
             marginBottom: '1.25rem',
-            flexShrink: 0 // Keep cards intact at the top
+            flexShrink: 0 
           }}>
             {[
               { label: 'ENTRIES', value: entries.length, color: 'var(--color-ink)' },
@@ -288,13 +323,13 @@ export default function GrahakKhataClient() {
               <div key={card.label} style={{
                 background: 'var(--color-paper)', borderRadius: 6,
                 borderTop: '3px solid var(--color-brass)',
-                padding: '1rem', textAlign: 'center',
+                padding: 'clamp(0.75rem, 3vw, 1rem)', textAlign: 'center',
                 boxShadow: '0 4px 12px rgba(35,42,59,0.1)',
               }}>
                 <p style={{ margin: 0, fontSize: 11, color: 'var(--color-ink)', opacity: 0.6, fontWeight: 600, letterSpacing: '0.5px', marginBottom: 4 }}>
                   {card.label}
                 </p>
-                <p style={{ margin: 0, fontSize: 21, fontWeight: 700, color: card.color, fontFamily: 'var(--font-rozha, serif)' }}>
+                <p style={{ margin: 0, fontSize: 'clamp(18px, 5vw, 21px)', fontWeight: 700, color: card.color, fontFamily: 'var(--font-rozha, serif)' }}>
                   {card.value}
                 </p>
               </div>
@@ -303,11 +338,10 @@ export default function GrahakKhataClient() {
         )}
 
         {/* ── KHATA TABLE ── */}
-        {/* Table container takes up the remaining space (flex: 1) and scrolls (overflow: auto) */}
         <div style={{ 
           flex: 1, 
           overflow: 'auto', 
-          minHeight: 0, // Flexbox shrinking fix
+          minHeight: 0, 
           background: 'var(--color-paper)', 
           borderRadius: 6, 
           boxShadow: '0 8px 24px rgba(35,42,59,0.12)' 
@@ -323,10 +357,10 @@ export default function GrahakKhataClient() {
                   {['#', 'Date', 'Item', 'Amount', 'Total'].map((h) => (
                     <th key={h} style={{
                       position: 'sticky', 
-                      top: 0, // Header sticks perfectly to the top of the scrolling table container
+                      top: 0,
                       zIndex: 50,
                       background: '#DED0AC',
-                      padding: '12px 10px', color: 'var(--color-ink)', fontWeight: 600, fontSize: 13,
+                      padding: '12px clamp(6px, 2vw, 10px)', color: 'var(--color-ink)', fontWeight: 600, fontSize: 13,
                       borderBottom: '2px solid var(--color-brass)',
                       textAlign: h === 'Amount' || h === 'Total' ? 'right' : 'center',
                     }}>
@@ -340,24 +374,28 @@ export default function GrahakKhataClient() {
                   const isDeposit = (e.description || '').startsWith('Deposit');
                   const isLast = index === entries.length - 1;
                   return (
-                    <tr key={e.entryNo} style={{
-                      background: isDeposit ? 'rgba(47,107,79,0.07)' : isLast ? 'rgba(184,135,59,0.07)' : 'transparent',
-                      borderBottom: '1px solid rgba(35,42,59,0.08)',
-                    }}>
-                      <td style={{ padding: '10px', textAlign: 'center', fontSize: 13, fontWeight: 600, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-brass)' }}>
+                    <tr 
+                      key={e.entryNo} 
+                      ref={isLast ? lastRowRef : null} // ── ATTACH REF TO LAST ROW ──
+                      style={{
+                        background: isDeposit ? 'rgba(47,107,79,0.07)' : isLast ? 'rgba(184,135,59,0.07)' : 'transparent',
+                        borderBottom: '1px solid rgba(35,42,59,0.08)',
+                      }}
+                    >
+                      <td style={{ padding: '10px clamp(4px, 2vw, 10px)', textAlign: 'center', fontSize: 13, fontWeight: 600, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-brass)' }}>
                         {e.entryNo}
                       </td>
-                      <td style={{ padding: '10px', textAlign: 'center', fontSize: 12, color: 'var(--color-ink)', opacity: 0.55, whiteSpace: 'nowrap' }}>
+                      <td style={{ padding: '10px clamp(4px, 2vw, 10px)', textAlign: 'center', fontSize: 12, color: 'var(--color-ink)', opacity: 0.55, whiteSpace: 'nowrap' }}>
                         {e.date}
                       </td>
-                      <td style={{ padding: '10px', fontSize: 14, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-ink)', fontWeight: isDeposit ? 600 : 400 }}>
+                      <td style={{ padding: '10px clamp(4px, 2vw, 10px)', fontSize: 14, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-ink)', fontWeight: isDeposit ? 600 : 400 }}>
                         {e.description || ''}
                       </td>
-                      <td style={{ padding: '10px 14px', textAlign: 'right', fontSize: 14, fontWeight: 500, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-rule-red)' }}>
+                      <td style={{ padding: '10px clamp(6px, 2vw, 14px)', textAlign: 'right', fontSize: 14, fontWeight: 500, color: isDeposit ? 'var(--color-stamp-green)' : 'var(--color-rule-red)' }}>
                         {isDeposit ? '-' : '+'}₹{Math.abs(e.amount)}
                       </td>
                       <td style={{
-                        padding: '10px 14px', textAlign: 'right', fontWeight: 700, fontSize: 14,
+                        padding: '10px clamp(6px, 2vw, 14px)', textAlign: 'right', fontWeight: 700, fontSize: 14,
                         color: e.total > 0 ? 'var(--color-rule-red)' : e.total < 0 ? 'var(--color-stamp-green)' : 'var(--color-ink)',
                       }}>
                         ₹{e.total}
@@ -369,14 +407,14 @@ export default function GrahakKhataClient() {
               <tfoot>
                 <tr style={{ background: lastTotal > 0 ? 'rgba(180,67,63,0.1)' : 'rgba(47,107,79,0.1)' }}>
                   <td colSpan={4} style={{
-                    padding: '13px 14px', textAlign: 'right', fontWeight: 700, fontSize: 14,
+                    padding: '13px clamp(8px, 2vw, 14px)', textAlign: 'right', fontWeight: 700, fontSize: 14,
                     color: lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)',
                     borderTop: `2px solid ${lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)'}`,
                   }}>
                     {lastTotal > 0 ? 'Amount Due' : 'Credit Balance'}
                   </td>
                   <td style={{
-                    padding: '13px 14px', textAlign: 'right', fontWeight: 800, fontSize: 16,
+                    padding: '13px clamp(8px, 2vw, 14px)', textAlign: 'right', fontWeight: 800, fontSize: 16,
                     color: lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)',
                     borderTop: `2px solid ${lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)'}`,
                   }}>
@@ -400,23 +438,27 @@ export default function GrahakKhataClient() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             style={{
               position: 'fixed', inset: 0, zIndex: 9999,
-              background: 'rgba(35,42,59,0.55)', // <-- Reverted back to normal
+              background: 'rgba(35,42,59,0.55)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              backdropFilter: 'blur(4px)', // Optional: Adds a nice blur to the background text so the popup pops more
+              backdropFilter: 'blur(4px)',
+              padding: '1rem',
             }}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
               style={{
-                background: '#FFFFFF', // <-- Changed to solid white (or you can use #F8F9FA) so text behind it is completely hidden
-                borderRadius: 6, padding: 32, width: 320,
+                background: '#FFFFFF',
+                borderRadius: 6, 
+                padding: 'clamp(1.5rem, 5vw, 2rem)', 
+                width: 'calc(100% - 2rem)', 
+                maxWidth: 340,
                 borderLeft: '6px solid var(--color-brass)',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.5)', // <-- Made the shadow slightly darker to make the popup stand out more
+                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
                 textAlign: 'center',
               }}
             >
               <div style={{ fontSize: 40, marginBottom: 12 }}>🔔</div>
-              <h2 style={{ fontWeight: 600, marginBottom: 8, color: 'var(--color-ink)', fontSize: 19, fontFamily: 'var(--font-rozha, serif)' }}>
+              <h2 style={{ fontWeight: 600, marginBottom: 8, color: 'var(--color-ink)', fontSize: 'clamp(17px, 5vw, 19px)', fontFamily: 'var(--font-rozha, serif)' }}>
                 Enable Notifications?
               </h2>
               <p style={{ color: 'var(--color-ink)', opacity: 0.7, fontSize: 14, marginBottom: 24, lineHeight: 1.5 }}>
@@ -448,6 +490,7 @@ export default function GrahakKhataClient() {
               position: 'fixed', inset: 0, zIndex: 9999,
               background: 'rgba(35,42,59,0.45)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '1rem',
             }}
             onClick={() => setShowHistoryPanel(false)}
           >
@@ -455,7 +498,9 @@ export default function GrahakKhataClient() {
               initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
               onClick={(e) => e.stopPropagation()}
               style={{
-                background: 'var(--color-paper)', borderRadius: 6, padding: 20, width: 340,
+                background: 'var(--color-paper)', borderRadius: 6, padding: 20, 
+                width: 'calc(100% - 2rem)', 
+                maxWidth: 360,
                 borderLeft: '6px solid var(--color-brass)',
                 maxHeight: '70vh', overflowY: 'auto', boxShadow: '0 16px 48px rgba(0,0,0,0.25)',
               }}

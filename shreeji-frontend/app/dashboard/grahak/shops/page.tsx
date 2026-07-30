@@ -1,13 +1,13 @@
 'use client';
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useToast } from "@/app/context/ToastContext";
 import { getData } from "@/app/utils/api";
 import { isSessionValid, clearSession } from "@/app/utils/session";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import KiranaBackground from "@/components/home/KiranaBackground";
 import NavTransition from "@/components/NavTransition";
 import { useNavTransition } from "@/hooks/useNavTransition";
@@ -60,15 +60,20 @@ export default function GrahakShopsPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)' }}>
-        <p style={{ color: 'var(--color-ink)', fontWeight: 600 }}>Loading your shops...</p>
+      <div style={{ 
+        minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', 
+        background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
+        padding: '1rem'
+      }}>
+        <p style={{ color: 'var(--color-ink)', fontWeight: 600, fontSize: '16px' }}>Loading your shops...</p>
       </div>
     );
   }
 
   return (
     <div style={{
-      minHeight: '100vh', padding: '2rem',
+      minHeight: '100vh', 
+      padding: 'clamp(1rem, 5vw, 2rem)',
       background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
       position: 'relative', overflow: 'hidden',
     }}>
@@ -78,25 +83,45 @@ export default function GrahakShopsPage() {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        style={{ maxWidth: '480px', margin: '0 auto', position: 'relative', zIndex: 2 }}
+        style={{ width: '100%', maxWidth: '480px', margin: '0 auto', position: 'relative', zIndex: 2 }}
       >
         {/* Top Header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+        <div style={{ 
+          display: 'flex', flexWrap: 'wrap', alignItems: 'center', 
+          justifyContent: 'space-between', gap: '12px', marginBottom: '2rem' 
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{
               width: 50, height: 50, borderRadius: '50%',
               background: '#E8E4D9', border: '2px solid #A88D5A',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              overflow: 'hidden', position: 'relative'
+              overflow: 'hidden', position: 'relative', flexShrink: 0
             }}>
               <Image src="/digiKhata-logo.png" alt="logo" fill style={{ objectFit: 'cover' }} priority />
             </div>
             <div>
-              <h1 style={{ margin: 0, fontSize: '18px', color: 'var(--color-ink)' }}>Select Shop</h1>
-              <p style={{ margin: 0, fontSize: '12px', opacity: 0.7 }}>{grahakPhone}</p>
+              <h1 style={{ margin: 0, fontSize: 'clamp(18px, 5vw, 20px)', color: 'var(--color-ink)', fontWeight: 700 }}>
+                Select Shop
+              </h1>
+              <p style={{ margin: '2px 0 0', fontSize: 'clamp(12px, 3.5vw, 13px)', opacity: 0.7, color: 'var(--color-ink)' }}>
+                {grahakPhone}
+              </p>
             </div>
           </div>
-          <button onClick={() => { clearSession("grahak"); navigateto('/login/grahak'); }} style={{ background: 'transparent', border: '1px solid var(--color-rule-red)', color: 'var(--color-rule-red)', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>
+          <button 
+            onClick={() => { clearSession("grahak"); navigateto('/login/grahak'); }} 
+            style={{ 
+              background: 'transparent', border: '1.5px solid var(--color-rule-red)', 
+              color: 'var(--color-rule-red)', padding: '8px 14px', borderRadius: '6px', 
+              cursor: 'pointer', fontSize: '13px', fontWeight: 600,
+              display: 'flex', alignItems: 'center', gap: '6px'
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
             Logout
           </button>
         </div>
@@ -104,8 +129,12 @@ export default function GrahakShopsPage() {
         {/* Shop List */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {shops.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '2rem', background: 'var(--color-paper)', borderRadius: '12px' }}>
-              <p>No shops found.</p>
+            <div style={{ 
+              textAlign: 'center', padding: '2.5rem 1rem', 
+              background: 'var(--color-paper)', borderRadius: '12px',
+              boxShadow: '0 8px 30px rgba(35,42,59,0.1)'
+            }}>
+              <p style={{ margin: 0, color: 'var(--color-ink)', opacity: 0.7, fontWeight: 500 }}>No shops found.</p>
             </div>
           ) : (
             shops.map((shop, i) => (
@@ -117,22 +146,42 @@ export default function GrahakShopsPage() {
                 onClick={() => navigateto(`/dashboard/grahak/khata?phone=${grahakPhone}&malikPhone=${shop.malikPhone}`)}
                 style={{
                   background: 'var(--color-paper)',
-                  padding: '1.25rem', borderRadius: '12px',
+                  padding: 'clamp(1rem, 4vw, 1.25rem)', borderRadius: '12px',
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  cursor: 'pointer', boxShadow: '0 4px 12px rgba(35,42,59,0.1)',
-                  borderLeft: '4px solid var(--color-brass)'
+                  cursor: 'pointer', boxShadow: '0 4px 16px rgba(35,42,59,0.1)',
+                  borderLeft: '5px solid var(--color-brass)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(35,42,59,0.15)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(35,42,59,0.1)';
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                  <div style={{ width: 40, height: 40, borderRadius: '8px', background: 'var(--color-ink)', color: 'var(--color-paper)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+                  <div style={{ 
+                    width: 44, height: 44, borderRadius: '8px', 
+                    background: 'var(--color-ink)', color: 'var(--color-paper)', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                    fontWeight: 700, fontSize: '18px', flexShrink: 0
+                  }}>
                     {shop.shopName.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <p style={{ margin: 0, fontWeight: 600 }}>{shop.shopName}</p>
-                    <p style={{ margin: 0, fontSize: '12px', opacity: 0.6 }}>Owner: {shop.malikName}</p>
+                    <p style={{ margin: 0, fontWeight: 600, fontSize: 'clamp(15px, 4vw, 16px)', color: 'var(--color-ink)' }}>
+                      {shop.shopName}
+                    </p>
+                    <p style={{ margin: '3px 0 0', fontSize: 'clamp(12px, 3.5vw, 13px)', opacity: 0.7, color: 'var(--color-ink)' }}>
+                      Owner: {shop.malikName}
+                    </p>
                   </div>
                 </div>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
               </motion.div>
             ))
           )}

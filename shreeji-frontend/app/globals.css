@@ -1,29 +1,25 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Gujarati:wght@600;700&display=swap');
 
 :root {
-  --background: #cb5b5b;
-  --foreground: #171717;
+  --background: #E8DCC0;
+  --foreground: #232A3B;
+  --color-paper: #FDFBF7;
+  --color-ink: #232A3B;
+  --color-brass: #A88D5A;
+  --color-rule-red: #993333;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Explicitly disable dark mode inversion across all elements */
+html {
+  color-scheme: only light !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%) !important;
+  color: var(--color-ink) !important;
   font-family: Arial, Helvetica, sans-serif;
+  color-scheme: only light !important;
+  -webkit-text-size-adjust: 100%;
 }
 
 @keyframes spin {
@@ -31,7 +27,6 @@ body {
     transform: rotate(360deg);
   }
 }
-
 
 input::-ms-reveal,
 input::-ms-clear,
@@ -46,4 +41,3 @@ input::-webkit-credentials-auto-fill-button {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-
