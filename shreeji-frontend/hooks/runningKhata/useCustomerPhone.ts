@@ -1,11 +1,6 @@
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export function useCustomerPhone() {
-  const [customerphone] = useState<string | null>(() => {
-    if (typeof window === "undefined") return null;
-    const sp = new URLSearchParams(window.location.search);
-    return sp.get('phone');
-  });
-
-  return customerphone;
+  const searchParams = useSearchParams();
+  return searchParams.get('phone');
 }
