@@ -65,7 +65,7 @@ function GrahakKhataInner() {
         <KhataTable
           entries={gk.entries}
           lastTotal={gk.lastTotal}
-          setLastRowRef={(el) => { gk.lastRowRef.current = el; }}
+          setLastRowRef={gk.setLastRowRef}
         />
 
         <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--color-ink)', opacity: 0.5, marginTop: 16, flexShrink: 0 }}>

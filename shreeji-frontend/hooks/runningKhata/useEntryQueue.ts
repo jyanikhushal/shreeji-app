@@ -19,6 +19,10 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
   const amountinputrefs = useRef<(HTMLInputElement | null)[]>([]);
   const lastrowref = useRef<HTMLTableRowElement | null>(null);
 
+   const setlastrowref = (el: HTMLTableRowElement | null) => { lastrowref.current = el; };
+  const setitemref = (index: number) => (el: HTMLInputElement | null) => { iteminputrefs.current[index] = el; };
+  const setamountref = (index: number) => (el: HTMLInputElement | null) => { amountinputrefs.current[index] = el; };
+
   const submitqueueitemsref = useRef<queueitem[]>([]);
   const queuerunningref = useRef(false);
   const queuevalidref = useRef(true);
@@ -252,6 +256,7 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
 
   return {
     iteminputrefs, amountinputrefs, lastrowref,
+    setlastrowref, setitemref, setamountref,
     isresyncing,
     handlechange, handleenter, handleresubmit,
   };

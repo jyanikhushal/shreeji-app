@@ -52,10 +52,7 @@ export function useRunningKhata() {
     queue.amountinputrefs.current[index]?.focus();
   };
 
-  const setrowref = (el: HTMLTableRowElement | null) => { queue.lastrowref.current = el; };
-  const setitemref = (index: number) => (el: HTMLInputElement | null) => { queue.iteminputrefs.current[index] = el; };
-  const setamountref = (index: number) => (el: HTMLInputElement | null) => { queue.amountinputrefs.current[index] = el; };
-
+  
   return {
     navigateto, stamping,
     customerphone, customername,
@@ -84,6 +81,8 @@ export function useRunningKhata() {
     handleitementer,
     handleamountenter,
     handleamountblur,
-    setrowref, setitemref, setamountref,
+    setrowref: queue.setlastrowref,
+    setitemref: queue.setitemref,
+    setamountref: queue.setamountref,
   };
 }
