@@ -1,0 +1,8 @@
+{
+  "loadingShops": "Loading your shops...",
+  "selectShop": "Select Shop",
+  "logout": "Logout",
+  "noShopsFound": "No shops found.",
+  "owner": "Owner: {{name}}",
+  "fetchError": "Error in fetching shops"
+}

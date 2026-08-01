@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import LedgerField from "@/components/ui/LedgerField";
 import StampButton from "@/components/ui/StampButton";
-
+import { useTranslation } from 'react-i18next';
 interface EditNameModalProps {
   show: boolean;
   phone?: string;
@@ -13,6 +13,7 @@ interface EditNameModalProps {
 }
 
 export default function EditNameModal({ show, phone, editname, setEditname, isediting, onCancel, onSubmit }: EditNameModalProps) {
+  const { t } = useTranslation(['dashboard', 'common']);
   return (
     <AnimatePresence>
       {show && (
@@ -39,15 +40,15 @@ export default function EditNameModal({ show, phone, editname, setEditname, ised
               borderLeft: '6px solid var(--color-rule-red)',
             }}
           >
-            <h2 style={{ fontWeight: 700, marginBottom: '6px', textAlign: 'center', color: 'var(--color-ink)', fontSize: '20px' }}>Edit Name</h2>
-            <p style={{ textAlign: 'center', color: 'var(--color-ink)', opacity: 0.7, fontSize: '13px', marginBottom: '24px' }}>Change name for {phone}</p>
+            <h2 style={{ fontWeight: 700, marginBottom: '6px', textAlign: 'center', color: 'var(--color-ink)', fontSize: '20px' }}>{t('dashboard:editNameTitle')}</h2>
+            <p style={{ textAlign: 'center', color: 'var(--color-ink)', opacity: 0.7, fontSize: '13px', marginBottom: '24px' }}>{t('dashboard:editNameSubtitle', { phone })}</p>
 
             <div style={{ marginBottom: '24px' }}>
               <LedgerField
-                label="Customer Name"
+                label={t('dashboard:customerNameLabel')}
                 value={editname}
                 onChange={setEditname}
-                placeholder="Enter new name"
+                placeholder={t('dashboard:newNamePlaceholder')}
                 icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
               />
             </div>
@@ -57,11 +58,11 @@ export default function EditNameModal({ show, phone, editname, setEditname, ised
                 onClick={onCancel}
                 style={{ flex: 1, padding: '12px 0', border: '1px dashed rgba(35,42,59,0.3)', borderRadius: '6px', background: 'transparent', color: 'var(--color-ink)', cursor: 'pointer', fontSize: '15px', fontWeight: 500 }}
               >
-                Cancel
+                {t('common:cancel')}
               </button>
               <div style={{ flex: 1 }}>
                 <StampButton tone="ink" onClick={onSubmit}>
-                  {isediting ? 'Saving...' : 'Change'}
+                  {isediting ? t('common:saving') : t('common:change')}
                 </StampButton>
               </div>
             </div>

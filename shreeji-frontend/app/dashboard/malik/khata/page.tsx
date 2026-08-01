@@ -12,7 +12,7 @@ import KhataTable from "@/components/running-khata/KhataTable";
 import DepositModal from "@/components/running-khata/modals/DepositModal";
 import RowOptionsModal from "@/components/running-khata/modals/RowOptionsModal";
 import DeleteConfirmModal from "@/components/running-khata/modals/DeleteConfirmModal";
-
+import { useTranslation } from 'react-i18next';
 function RunningKhataInner() {
   const rk = useRunningKhata();
 
@@ -86,6 +86,7 @@ function RunningKhataInner() {
 }
 
 export default function RunningKhataPage() {
+  const { t } = useTranslation('runningKhata');
   return (
     <Suspense fallback={
       <div style={{
@@ -98,7 +99,7 @@ export default function RunningKhataPage() {
           borderRadius: '12px', padding: '2rem 3rem', textAlign: 'center',
           boxShadow: '0 8px 30px rgba(35,42,59,0.15)', borderLeft: '6px solid var(--color-brass)'
         }}>
-          <p style={{ margin: 0, fontSize: '16px', color: 'var(--color-ink)', fontWeight: 600 }}>Loading Khata...</p>
+          <p style={{ margin: 0, fontSize: '16px', color: 'var(--color-ink)', fontWeight: 600 }}>{t('loadingKhata')}</p>
         </div>
       </div>
     }>

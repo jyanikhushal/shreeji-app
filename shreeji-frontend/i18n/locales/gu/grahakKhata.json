@@ -1,0 +1,29 @@
+{
+  "openingKhata": "તમારો ખાતો ખૂલી રહ્યો છે...",
+  "loadingKhata": "તમારો ખાતો લોડ થઈ રહ્યો છે...",
+  "readOnlyNotice": "ફક્ત જોવા માટે · કોઈપણ ફેરફાર માટે તમારી દુકાનનો સંપર્ક કરો",
+  "tableHeaders": {
+  "no": "#",
+  "date": "તારીખ",
+  "item": "વસ્તુ",
+  "amount": "રકમ",
+  "total": "કુલ"
+},
+"noEntriesFound": "કોઈ એન્ટ્રી મળી નથી",
+"amountDue": "બાકી રકમ",
+"creditBalance": "જમા બેલેન્સ",
+"myKhata": "મારો ખાતો",
+"logout": "લોગઆઉટ",
+"entries": "એન્ટ્રીઓ",
+"purchased": "ખરીદી",
+"deposited": "જમા",
+"notifications": "સૂચનાઓ",
+"loading": "લોડ થઈ રહ્યું છે...",
+"noNotificationsYet": "હજુ સુધી કોઈ સૂચના નથી",
+"close": "બંધ કરો",
+"enableNotificationsTitle": "સૂચનાઓ ચાલુ કરીએ?",
+"enableNotificationsBody": "જ્યારે જમા નોંધાય ત્યારે તરત જ સૂચના મેળવો, અને ચુકવણી બાકી હોય ત્યારે યાદ અપાવે.",
+"notNow": "હમણાં નહીં",
+"enabling": "ચાલુ થઈ રહ્યું છે...",
+"yesEnable": "હા, ચાલુ કરો"
+}

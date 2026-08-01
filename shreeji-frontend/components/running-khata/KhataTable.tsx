@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import EntryRow from "./EntryRow";
 import { entry } from "@/types/runningKhata";
-
+import { useTranslation } from 'react-i18next';
 interface KhataTableProps {
   entries: entry[];
   editingrow: number | null;
@@ -17,13 +17,21 @@ interface KhataTableProps {
   onrownumberclick: (index: number) => void;
 }
 
-const HEADERS = ['#', 'Date', 'Item', 'Amount', 'Total'];
+
 
 export default function KhataTable({
   entries, editingrow, issubmitting,
   setrowref, setitemref, setamountref,
   onitemchange, onamountchange, onitementer, onamountenter, onamountblur, onrownumberclick,
 }: KhataTableProps) {
+    const { t } = useTranslation('runningKhata');
+    const headers = [
+    t('tableHeaders.no'),
+    t('tableHeaders.date'),
+    t('tableHeaders.item'),
+    t('tableHeaders.amount'),
+    t('tableHeaders.total'),
+  ];
   const firstawaitingindex = entries.findIndex(r => r.awaitingResubmit);
 
   return (
@@ -46,12 +54,12 @@ export default function KhataTable({
         </colgroup>
         <thead>
           <tr style={{ background: 'rgba(168, 141, 90, 0.1)' }}>
-            {HEADERS.map((h) => (
+            {headers.map((h, i) => (
               <th key={h} style={{
                 padding: '14px clamp(8px, 2vw, 12px)',
                 color: 'var(--color-ink)', fontWeight: 700, fontSize: '13px',
                 borderBottom: '2px solid rgba(168, 141, 90, 0.2)',
-                textAlign: h === 'Amount' || h === 'Total' ? 'right' : 'center',
+                textAlign: i === 3 || i === 4 ? 'right' : 'center',
                 textTransform: 'uppercase', letterSpacing: '0.5px'
               }}>
                 {h}

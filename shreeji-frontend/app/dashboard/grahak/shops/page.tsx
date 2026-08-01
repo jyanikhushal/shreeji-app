@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import KiranaBackground from "@/components/home/KiranaBackground";
 import NavTransition from "@/components/NavTransition";
 import { useNavTransition } from "@/hooks/useNavTransition";
+import { useTranslation } from 'react-i18next';
 
 type Shop = {
   malikPhone: string;
@@ -22,6 +23,7 @@ export default function GrahakShopsPage() {
   const router = useRouter();
   const { showMessage: showmessage } = useToast();
   const { navigateTo: navigateto, stamping } = useNavTransition();
+  const { t } = useTranslation('shops');
 
   const [shops, setShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +52,7 @@ export default function GrahakShopsPage() {
         setShops(data);
       } catch (err) {
         console.error("Error fetching shops:", err);
-        showmessage("error", "Error in fetching shops");
+        showmessage("error",  t('fetchError'));
       } finally {
         setLoading(false);
       }
@@ -65,7 +67,7 @@ export default function GrahakShopsPage() {
         background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
         padding: '1rem'
       }}>
-        <p style={{ color: 'var(--color-ink)', fontWeight: 600, fontSize: '16px' }}>Loading your shops...</p>
+        <p style={{ color: 'var(--color-ink)', fontWeight: 600, fontSize: '16px' }}>{t('loadingShops')}</p>
       </div>
     );
   }
@@ -101,7 +103,7 @@ export default function GrahakShopsPage() {
             </div>
             <div>
               <h1 style={{ margin: 0, fontSize: 'clamp(18px, 5vw, 20px)', color: 'var(--color-ink)', fontWeight: 700 }}>
-                Select Shop
+                {t('selectShop')}
               </h1>
               <p style={{ margin: '2px 0 0', fontSize: 'clamp(12px, 3.5vw, 13px)', opacity: 0.7, color: 'var(--color-ink)' }}>
                 {grahakPhone}
@@ -122,7 +124,7 @@ export default function GrahakShopsPage() {
               <polyline points="16 17 21 12 16 7"/>
               <line x1="21" y1="12" x2="9" y2="12"/>
             </svg>
-            Logout
+            {t('logout')}
           </button>
         </div>
 
@@ -134,7 +136,7 @@ export default function GrahakShopsPage() {
               background: 'var(--color-paper)', borderRadius: '12px',
               boxShadow: '0 8px 30px rgba(35,42,59,0.1)'
             }}>
-              <p style={{ margin: 0, color: 'var(--color-ink)', opacity: 0.7, fontWeight: 500 }}>No shops found.</p>
+              <p style={{ margin: 0, color: 'var(--color-ink)', opacity: 0.7, fontWeight: 500 }}>{t('noShopsFound')}</p>
             </div>
           ) : (
             shops.map((shop, i) => (
@@ -175,7 +177,7 @@ export default function GrahakShopsPage() {
                       {shop.shopName}
                     </p>
                     <p style={{ margin: '3px 0 0', fontSize: 'clamp(12px, 3.5vw, 13px)', opacity: 0.7, color: 'var(--color-ink)' }}>
-                      Owner: {shop.malikName}
+                      {t('owner', { name: shop.malikName })}
                     </p>
                   </div>
                 </div>

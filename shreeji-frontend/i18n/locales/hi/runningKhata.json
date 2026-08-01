@@ -1,0 +1,28 @@
+{
+  "loadingKhata": "खाता लोड हो रहा है...",
+  "deposit": "जमा",
+  "processing": "प्रक्रिया हो रही है...",
+  "tableHeaders": {
+    "no": "#",
+    "date": "तारीख",
+    "item": "वस्तु",
+    "amount": "राशि",
+    "total": "कुल"
+  },
+  "typeItem": "वस्तु लिखें...",
+  "stillConfirming": "अभी पुष्टि हो रही है — कुछ देर में फिर कोशिश करें",
+  "addDeposit": "जमा जोड़ें",
+  "amountReceivedFrom": "{{name}} से प्राप्त राशि",
+  "depositAmountLabel": "जमा राशि (₹)",
+  "enterAmount": "राशि दर्ज करें",
+  "cancel": "रद्द करें",
+  "confirming": "पुष्टि हो रही है...",
+  "confirm": "पुष्टि करें",
+  "rowOptions": "पंक्ति विकल्प",
+  "entryNumber": "प्रविष्टि #{{no}}",
+  "editRow": "पंक्ति संपादित करें",
+  "deleteRow": "पंक्ति हटाएं",
+  "deleteEntryTitle": "प्रविष्टि हटाएं?",
+  "deleteEntryBody": "यह प्रविष्टि को स्थायी रूप से हटा देगा और सभी कुल की पुनर्गणना करेगा।",
+  "delete": "हटाएं"
+}

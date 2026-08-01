@@ -1,0 +1,30 @@
+{
+  "openingKhata": "Opening your khata...",
+  "loadingKhata": "Loading your Khata...",
+  "readOnlyNotice": "Read-only view · Contact your store for any changes",
+  "tableHeaders": {
+  "no": "#",
+  "date": "Date",
+  "item": "Item",
+  "amount": "Amount",
+  "total": "Total"
+},
+"noEntriesFound": "No entries found",
+"amountDue": "Amount Due",
+"creditBalance": "Credit Balance",
+"myKhata": "My Khata",
+"logout": "Logout",
+"entries": "ENTRIES",
+"purchased": "PURCHASED",
+"deposited": "DEPOSITED",
+"notifications": "Notifications",
+"loading": "Loading...",
+"noNotificationsYet": "No notifications yet",
+"close": "Close",
+"enableNotificationsTitle": "Enable Notifications?",
+"enableNotificationsBody": "Get notified instantly when a deposit is recorded, and reminders when payment is due.",
+"notNow": "Not now",
+"enabling": "Enabling...",
+"yesEnable": "Yes, enable"
+  
+}

@@ -1,26 +1,27 @@
 import { Entry } from "@/types/grahakKhata";
-
+import { useTranslation } from 'react-i18next';
 interface SummaryCardsProps {
   entries: Entry[];
 }
 
 export default function SummaryCards({ entries }: SummaryCardsProps) {
+    const { t } = useTranslation('grahakKhata');
   if (entries.length === 0) return null;
 
   const cards = [
-    { label: 'ENTRIES', value: entries.length, color: 'var(--color-ink)' },
+    { label: t('entries'), value: entries.length, color: 'var(--color-ink)' },
     {
-      label: 'PURCHASED',
+      label: t('purchased'),
       value: `₹${entries.filter(e => !(e.description || '').startsWith('Deposit')).reduce((s, e) => s + Math.abs(e.amount), 0)}`,
       color: 'var(--color-rule-red)',
     },
     {
-      label: 'DEPOSITED',
+      label: t('deposited'),
       value: `₹${entries.filter(e => (e.description || '').startsWith('Deposit')).reduce((s, e) => s + Math.abs(e.amount), 0)}`,
       color: 'var(--color-stamp-green)',
     },
   ];
-
+  
   return (
     <div style={{
       display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',

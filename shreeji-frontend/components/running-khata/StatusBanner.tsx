@@ -1,11 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
-
+import { useTranslation } from 'react-i18next';
 interface StatusBannerProps {
   loading: boolean;
   error: string;
 }
 
 export default function StatusBanner({ loading, error }: StatusBannerProps) {
+    const { t } = useTranslation('runningKhata');
   return (
     <AnimatePresence>
       {loading && (
@@ -19,7 +20,7 @@ export default function StatusBanner({ loading, error }: StatusBannerProps) {
             boxShadow: '0 4px 12px rgba(35,42,59,0.1)'
           }}
         >
-          ⏳ Processing...
+          ⏳ {t('processing')}
         </motion.div>
       )}
       {error && (

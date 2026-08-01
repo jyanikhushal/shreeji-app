@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import StampButton from "@/components/ui/StampButton";
-
+import { useTranslation } from 'react-i18next';
 interface TopBarProps {
   phone: string | null;
   lastTotal: number;
@@ -11,6 +11,7 @@ interface TopBarProps {
 }
 
 export default function TopBar({ phone, lastTotal, hasEntries, localGranted, onOpenHistory, onLogout }: TopBarProps) {
+    const { t } = useTranslation('grahakKhata');
   return (
     <motion.div
       initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}
@@ -33,7 +34,7 @@ export default function TopBar({ phone, lastTotal, hasEntries, localGranted, onO
           {(phone || '?').charAt(0)}
         </div>
         <div>
-          <p style={{ margin: 0, fontSize: 'clamp(16px, 4vw, 17px)', fontWeight: 600, color: 'var(--color-ink)', fontFamily: 'var(--font-rozha, serif)' }}>My Khata</p>
+          <p style={{ margin: 0, fontSize: 'clamp(16px, 4vw, 17px)', fontWeight: 600, color: 'var(--color-ink)', fontFamily: 'var(--font-rozha, serif)' }}>{t('myKhata')}</p>
           <p style={{ margin: '2px 0 0', fontSize: 'clamp(11px, 3vw, 12px)', color: 'var(--color-ink)', opacity: 0.6 }}>{phone}</p>
         </div>
       </div>
@@ -61,7 +62,7 @@ export default function TopBar({ phone, lastTotal, hasEntries, localGranted, onO
         </StampButton>
 
         <StampButton tone="ink" onClick={onLogout}>
-          Logout
+          {t('logout')}
         </StampButton>
       </div>
     </motion.div>

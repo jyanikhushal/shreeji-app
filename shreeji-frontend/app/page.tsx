@@ -10,10 +10,13 @@ import StampButton from "@/components/ui/StampButton";
 import PageLoader from "@/components/ui/PageLoader";
 import NavTransition from "@/components/NavTransition";
 import { useNavTransition } from "@/hooks/useNavTransition";
+import { useTranslation } from 'react-i18next';
+
 
 export default function HomePage() {
   const router = useRouter();
   const { navigateTo, stamping } = useNavTransition();
+  const { t } = useTranslation('home');
   const [isMalik] = useState(
     () => typeof window !== "undefined" && !!localStorage.getItem("malik")
   );
@@ -73,22 +76,22 @@ export default function HomePage() {
               color: 'var(--color-ink)', opacity: 0.65, margin: '4px 0 0', 
               letterSpacing: '1px', textTransform: 'uppercase' 
             }}>
-              Kirana Stores
+              {t('tagline')}
             </p>
             <p style={{
               fontSize: 'clamp(13px, 3.5vw, 15px)', 
               color: 'var(--color-ink)', opacity: 0.8, margin: '10px 0 0',
               fontFamily: 'var(--font-noto-gujarati)',
             }}>
-              તમારો ભરોસો, અમારી જવાબદારી
+               {t('greeting')}
             </p>
           </div>
 
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '4px' }}>
             {[
-              { label: "Malik Login", route: "/login/malik", tone: "ink" as const },
-              { label: "Grahak Login", route: "/login/grahak", tone: "green" as const },
-              { label: "New Malik Signup", route: "/signup/malik", tone: "brass" as const },
+              { label: t('malikLogin'), route: "/login/malik", tone: "ink" as const },
+              { label: t('grahakLogin'), route: "/login/grahak", tone: "green" as const },
+              { label: t('signup'), route: "/signup/malik", tone: "brass" as const },
             ].map((btn, i) => (
               <motion.div
                 key={btn.route}

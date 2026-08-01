@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import StampButton from "@/components/ui/StampButton";
 import { NotificationItem } from "@/types/grahakKhata";
-
+import { useTranslation } from 'react-i18next';
 interface HistoryPanelProps {
   show: boolean;
   history: NotificationItem[];
@@ -10,6 +10,7 @@ interface HistoryPanelProps {
 }
 
 export default function HistoryPanel({ show, history, historyLoading, onClose }: HistoryPanelProps) {
+     const { t } = useTranslation('grahakKhata');
   return (
     <AnimatePresence>
       {show && (
@@ -33,12 +34,12 @@ export default function HistoryPanel({ show, history, historyLoading, onClose }:
             }}
           >
             <h2 style={{ fontWeight: 600, marginBottom: 12, color: 'var(--color-ink)', fontSize: 17, fontFamily: 'var(--font-rozha, serif)' }}>
-              Notifications
+              {t('notifications')}
             </h2>
             {historyLoading ? (
-              <p style={{ color: 'var(--color-ink)', opacity: 0.5, fontSize: 14, textAlign: 'center' }}>Loading...</p>
+              <p style={{ color: 'var(--color-ink)', opacity: 0.5, fontSize: 14, textAlign: 'center' }}>{t('loading')}</p>
             ) : history.length === 0 ? (
-              <p style={{ color: 'var(--color-ink)', opacity: 0.5, fontSize: 14, textAlign: 'center' }}>No notifications yet</p>
+              <p style={{ color: 'var(--color-ink)', opacity: 0.5, fontSize: 14, textAlign: 'center' }}>{t('noNotificationsYet')}</p>
             ) : (
               history.map((item) => (
                 <div key={item.id} style={{ padding: '10px 0', borderBottom: '1px dashed rgba(35,42,59,0.2)' }}>
@@ -52,7 +53,7 @@ export default function HistoryPanel({ show, history, historyLoading, onClose }:
             )}
             <div style={{ marginTop: 14 }}>
               <StampButton tone="brass" onClick={onClose}>
-                Close
+                {t('close')}
               </StampButton>
             </div>
           </motion.div>

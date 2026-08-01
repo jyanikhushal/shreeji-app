@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import StampButton from "@/components/ui/StampButton";
 import { entry } from "@/types/runningKhata";
-
+import { useTranslation } from 'react-i18next';
 interface TopBarProps {
   customername: string;
   customerphone: string | null;
@@ -11,6 +11,7 @@ interface TopBarProps {
 }
 
 export default function TopBar({ customername, customerphone, entries, onback, ondeposit }: TopBarProps) {
+    const { t } = useTranslation('runningKhata');
   const currenttotal = entries.length > 0 ? entries[entries.length - 1].total : 0;
 
   return (
@@ -76,7 +77,7 @@ export default function TopBar({ customername, customerphone, entries, onback, o
             <line x1="12" y1="5" x2="12" y2="19"/>
             <line x1="5" y1="12" x2="19" y2="12"/>
           </svg>
-          Deposit
+          {t('deposit')}
         </StampButton>
       </div>
     </motion.div>

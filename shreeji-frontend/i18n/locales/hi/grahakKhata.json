@@ -1,0 +1,29 @@
+{
+  "openingKhata": "आपका खाता खुल रहा है...",
+  "loadingKhata": "आपका खाता लोड हो रहा है...",
+  "readOnlyNotice": "केवल देखने के लिए · किसी भी बदलाव के लिए अपनी दुकान से संपर्क करें",
+  "tableHeaders": {
+  "no": "#",
+  "date": "तारीख",
+  "item": "वस्तु",
+  "amount": "राशि",
+  "total": "कुल"
+},
+"noEntriesFound": "कोई प्रविष्टि नहीं मिली",
+"amountDue": "बकाया राशि",
+"creditBalance": "जमा शेष",
+"myKhata": "मेरा खाता",
+"logout": "लॉगआउट",
+"entries": "प्रविष्टियां",
+"purchased": "खरीदी",
+"deposited": "जमा",
+"notifications": "सूचनाएं",
+"loading": "लोड हो रहा है...",
+"noNotificationsYet": "अभी तक कोई सूचना नहीं",
+"close": "बंद करें",
+"enableNotificationsTitle": "सूचनाएं चालू करें?",
+"enableNotificationsBody": "जब जमा दर्ज हो तो तुरंत सूचना पाएं, और भुगतान बकाया होने पर याद दिलाया जाएगा।",
+"notNow": "अभी नहीं",
+"enabling": "चालू हो रहा है...",
+"yesEnable": "हां, चालू करें"
+}

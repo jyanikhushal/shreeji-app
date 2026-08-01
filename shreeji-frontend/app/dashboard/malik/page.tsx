@@ -10,14 +10,16 @@ import AddCustomerModal from "@/components/dashboard/modals/AddCustomerModal";
 import RowOptionsModal from "@/components/dashboard/modals/RowOptionsModal";
 import EditNameModal from "@/components/dashboard/modals/EditNameModal";
 import EditPhoneModal from "@/components/dashboard/modals/EditPhoneModal";
+import { useTranslation } from 'react-i18next';
 
 export default function MalikDashboardPage() {
   const d = useMalikDashboard();
+  const { t } = useTranslation('dashboard');
 
   if (!d.malikdata) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px', color: '#6b7280' }}>
-        Loading...
+        {t('loading')}
       </div>
     );
   }

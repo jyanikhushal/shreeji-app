@@ -2,7 +2,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import StampButton from "@/components/ui/StampButton";
 import { malik } from "@/types/dashboard";
-
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 interface DashboardHeaderProps {
   malikdata: malik;
   onLogout: () => void;
@@ -10,6 +11,7 @@ interface DashboardHeaderProps {
 }
 
 export default function DashboardHeader({ malikdata, onLogout, onAddCustomer }: DashboardHeaderProps) {
+  const { t } = useTranslation('dashboard');
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -49,7 +51,7 @@ export default function DashboardHeader({ malikdata, onLogout, onAddCustomer }: 
         </div>
         <div>
           <p style={{ fontSize: 'clamp(16px, 4vw, 18px)', fontWeight: 600, color: 'var(--color-ink)', margin: 0 }}>
-            {malikdata?.shopName || 'My Shop'}
+            {malikdata?.shopName || t('myShop')}
           </p>
           <p style={{ fontSize: 'clamp(11px, 3vw, 13px)', color: 'var(--color-ink)', opacity: 0.7, margin: '3px 0 0' }}>
             {malikdata?.name} &nbsp;·&nbsp; {malikdata?.phone}
@@ -68,6 +70,7 @@ export default function DashboardHeader({ malikdata, onLogout, onAddCustomer }: 
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, marginLeft: 'auto' }}>
+        <LanguageSwitcher userType="malik" phone={malikdata?.phone} />
         <button
           onClick={onLogout}
           style={{
@@ -82,14 +85,14 @@ export default function DashboardHeader({ malikdata, onLogout, onAddCustomer }: 
             <polyline points="16 17 21 12 16 7"/>
             <line x1="21" y1="12" x2="9" y2="12"/>
           </svg>
-          Logout
+          {t('logout')}
         </button>
         <StampButton tone="brass" onClick={onAddCustomer}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}>
             <line x1="12" y1="5" x2="12" y2="19"/>
             <line x1="5" y1="12" x2="19" y2="12"/>
           </svg>
-          New Customer
+          {t('newCustomer')}
         </StampButton>
       </div>
     </motion.div>

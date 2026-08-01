@@ -13,6 +13,7 @@ import LedgerField from "@/components/ui/LedgerField";
 import StampButton from "@/components/ui/StampButton";
 import NavTransition from "@/components/NavTransition";
 import { useNavTransition } from "@/hooks/useNavTransition";
+import { useTranslation } from 'react-i18next';
 
 type grahak = {
   _id: string;
@@ -25,11 +26,12 @@ export default function GrahakLoginPage() {
   const { showMessage: showmessage } = useToast();
   const router = useRouter();
   const { navigateTo: navigateto, stamping } = useNavTransition();
+  const { t } = useTranslation('login');
   const [loading, setloading] = useState(false);
 
   const handlelogin = async () => {
     if (!phone) {
-      showmessage("error", 'please enter phone number');
+      showmessage("error", t('errors.enterPhone'));
       return;
     }
 
@@ -40,7 +42,7 @@ export default function GrahakLoginPage() {
     };
 
     if (!isvalidphone(phone)) {
-      showmessage("error", "enter valid phone number");
+      showmessage("error", t('errors.invalidPhone'));
       return;
     }
     
@@ -55,12 +57,12 @@ export default function GrahakLoginPage() {
       const grahakdata = await getData<grahak>(res);
 
       if (!grahakdata) {
-        showmessage("error", "invalid server response");
+        showmessage("error", t('errors.invalidResponse'));
         setloading(false);
         return;
       }
 
-      showmessage("success", "login successful");
+      showmessage("success", t('loginSuccess'));
       localStorage.setItem("grahak", JSON.stringify(grahakdata));
       saveSession(phone, "grahak");
       navigateto("/dashboard/grahak/shops");
@@ -128,10 +130,10 @@ export default function GrahakLoginPage() {
 
           <div style={{ textAlign: 'center' }}>
             <h1 style={{ fontFamily: 'var(--font-rozha, serif)', fontSize: 'clamp(22px, 6vw, 26px)', color: 'var(--color-ink)', margin: 0, fontWeight: 400 }}>
-              Grahak Login
+              {t('grahakTitle')}
             </h1>
             <p style={{ fontSize: 'clamp(12px, 3.5vw, 14px)', color: 'var(--color-ink)', opacity: 0.7, margin: '6px 0 0', fontFamily: 'var(--font-noto-gujarati)' }}>
-              ગ્રાહક તરીકે લૉગિન કરો
+              {t('grahakSubtitle')}
             </p>
           </div>
 
@@ -139,10 +141,10 @@ export default function GrahakLoginPage() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(10px, 3vw, 14px)', width: '100%' }}>
             <LedgerField
-              label="phone number"
+              label={t('phoneLabel')}
               value={phone}
               onChange={setphone}
-              placeholder="enter phone number"
+              placeholder={t('phonePlaceholder')}
               icon={
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
@@ -165,7 +167,7 @@ export default function GrahakLoginPage() {
                   ) : undefined
                 }
               >
-                {loading ? "logging in..." : "login"}
+                {loading ? t('loggingIn') : t('loginButton')}
               </StampButton>
             </div>
 
@@ -182,7 +184,7 @@ export default function GrahakLoginPage() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-ink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="15 18 9 12 15 6"/>
               </svg>
-              back to home
+              {t('backToHome')}
             </button>
           </div>
         </div>

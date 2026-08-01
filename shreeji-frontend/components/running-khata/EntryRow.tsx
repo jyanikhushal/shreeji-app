@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useToast } from "@/app/context/ToastContext";
 import MarqueeText from "@/components/ui/MarqueeText";
 import { entry } from "@/types/runningKhata";
-
+import { useTranslation } from 'react-i18next';
 interface EntryRowProps {
   row: entry;
   index: number;
@@ -27,6 +27,7 @@ export default function EntryRow({
   onitemchange, onamountchange, onitementer, onamountenter, onamountblur, onrownumberclick,
 }: EntryRowProps) {
   const { showMessage: showmessage } = useToast();
+  const { t } = useTranslation('runningKhata');
 
   const isediting = editingrow === index;
   const isdeposit = (row.item || '').startsWith('Deposit');
@@ -51,7 +52,7 @@ export default function EntryRow({
           if (editingrow !== null) return;
           if (islastrow) return;
           if (row.pending || row.awaitingResubmit) {
-            showmessage("info", "Still confirming — try again in a moment");
+            showmessage("info", t('stillConfirming'));
             return;
           }
           onrownumberclick(index);
@@ -82,7 +83,7 @@ export default function EntryRow({
                 onitementer(index);
               }
             }}
-            placeholder={islastrow ? 'Type item...' : ''}
+            placeholder={islastrow ? t('typeItem') : ''}
             style={{
               width: '100%', border: 'none', outline: 'none',
               background: 'transparent', fontSize: '14px',

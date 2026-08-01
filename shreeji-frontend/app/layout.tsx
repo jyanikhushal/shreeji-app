@@ -1,4 +1,5 @@
 'use client';
+import { I18nProvider } from '@/components/providers/I18nProvider';
 import Toast from "@/components/ui/Toast";
 import { useState } from "react";
 import { Geist, Geist_Mono, Noto_Serif_Gujarati, Rozha_One } from "next/font/google";
@@ -56,7 +57,9 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${notoSerifGujarati.variable} ${rozhaOne.variable} antialiased`}>
         <ToastContext.Provider value={{ showMessage }}>
-          {children}
+          <I18nProvider>
+      {children}
+    </I18nProvider>
         </ToastContext.Provider>
 
         <Toast message={message} type={type} />

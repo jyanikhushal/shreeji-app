@@ -1,5 +1,5 @@
 import { Entry } from "@/types/grahakKhata";
-
+import { useTranslation } from 'react-i18next';
 interface KhataTableProps {
   entries: Entry[];
   lastTotal: number;
@@ -9,6 +9,14 @@ interface KhataTableProps {
 const HEADERS = ['#', 'Date', 'Item', 'Amount', 'Total'];
 
 export default function KhataTable({ entries, lastTotal, setLastRowRef }: KhataTableProps) {
+    const { t } = useTranslation('grahakKhata');
+  const headers = [
+    t('tableHeaders.no'),
+    t('tableHeaders.date'),
+    t('tableHeaders.item'),
+    t('tableHeaders.amount'),
+    t('tableHeaders.total'),
+  ];
   return (
     <div style={{
       flex: 1, overflow: 'auto', minHeight: 0,
@@ -17,19 +25,19 @@ export default function KhataTable({ entries, lastTotal, setLastRowRef }: KhataT
     }}>
       {entries.length === 0 ? (
         <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--color-ink)', opacity: 0.5, fontSize: 15 }}>
-          No entries found
+         {t('noEntriesFound')}
         </div>
       ) : (
         <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, fontSize: 14 }}>
           <thead>
             <tr>
-              {HEADERS.map((h) => (
+              {headers.map((h, i) => (
                 <th key={h} style={{
                   position: 'sticky', top: 0, zIndex: 50,
                   background: '#DED0AC',
                   padding: '12px clamp(6px, 2vw, 10px)', color: 'var(--color-ink)', fontWeight: 600, fontSize: 13,
                   borderBottom: '2px solid var(--color-brass)',
-                  textAlign: h === 'Amount' || h === 'Total' ? 'right' : 'center',
+                  textAlign: i === 3 || i === 4 ? 'right' : 'center',
                 }}>
                   {h}
                 </th>
@@ -78,7 +86,7 @@ export default function KhataTable({ entries, lastTotal, setLastRowRef }: KhataT
                 color: lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)',
                 borderTop: `2px solid ${lastTotal > 0 ? 'var(--color-rule-red)' : 'var(--color-stamp-green)'}`,
               }}>
-                {lastTotal > 0 ? 'Amount Due' : 'Credit Balance'}
+                {lastTotal > 0 ? t('amountDue') : t('creditBalance')}
               </td>
               <td style={{
                 padding: '13px clamp(8px, 2vw, 14px)', textAlign: 'right', fontWeight: 800, fontSize: 16,

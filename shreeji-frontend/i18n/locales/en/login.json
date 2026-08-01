@@ -1,0 +1,21 @@
+{
+  "malikTitle": "Malik Login",
+  "malikSubtitle": "Login as Malik",
+  "grahakTitle": "Grahak Login",
+  "grahakSubtitle": "Login as Grahak",
+  "phoneLabel": "Phone Number",
+  "phonePlaceholder": "Enter phone number",
+  "passwordLabel": "Password",
+  "passwordPlaceholder": "Enter password",
+  "loginButton": "Login",
+  "loggingIn": "Logging in...",
+  "backToHome": "Back to home",
+  "errors": {
+    "fillFields": "Please fill all fields",
+    "invalidPhone": "Enter valid phone number",
+    "invalidResponse": "Invalid server response",
+    "generic": "Something went wrong"
+  },
+  "loginSuccess": "Login successful",
+  "enterPhone": "Please enter phone number"
+}

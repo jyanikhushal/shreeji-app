@@ -1,0 +1,28 @@
+{
+  "loadingKhata": "Loading Khata...",
+  "deposit": "Deposit",
+  "processing": "Processing...",
+  "tableHeaders": {
+    "no": "#",
+    "date": "Date",
+    "item": "Item",
+    "amount": "Amount",
+    "total": "Total"
+  },
+  "typeItem": "Type item...",
+  "stillConfirming": "Still confirming — try again in a moment",
+  "addDeposit": "Add Deposit",
+  "amountReceivedFrom": "Amount received from {{name}}",
+  "depositAmountLabel": "Deposit Amount (₹)",
+  "enterAmount": "Enter amount",
+  "cancel": "Cancel",
+  "confirming": "Confirming...",
+  "confirm": "Confirm",
+  "rowOptions": "Row Options",
+  "entryNumber": "Entry #{{no}}",
+  "editRow": "Edit Row",
+  "deleteRow": "Delete Row",
+  "deleteEntryTitle": "Delete Entry?",
+  "deleteEntryBody": "This will permanently remove the entry and recalculate all totals.",
+  "delete": "Delete"
+}

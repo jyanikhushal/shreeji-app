@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import LedgerField from "@/components/ui/LedgerField";
 import CustomerRow from "./CustomerRow";
 import { customer, sortoption } from "@/types/dashboard";
-
+import { useTranslation } from 'react-i18next';
 interface CustomerListCardProps {
   customers: customer[];
   now: number | null;
@@ -18,6 +18,7 @@ export default function CustomerListCard({
   customers, now, searchtext, setSearchtext, sortoption, setSortoption,
   onOpenCustomer, onOpenMenu,
 }: CustomerListCardProps) {
+  const { t } = useTranslation('dashboard');
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -35,7 +36,7 @@ export default function CustomerListCard({
     >
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px', marginBottom: '1.2rem' }}>
         <h2 style={{ fontSize: 'clamp(16px, 4vw, 18px)', fontWeight: 700, color: 'var(--color-ink)', margin: 0 }}>
-          Customer List
+          {t('customerList')}
         </h2>
         <select
           value={sortoption}
@@ -46,15 +47,15 @@ export default function CustomerListCard({
             borderRadius: '6px', padding: '6px 10px', cursor: 'pointer', outline: 'none',
           }}
         >
-          <option value="name">Name (A-Z)</option>
-          <option value="amount">Udhaar: High to Low</option>
-          <option value="time">Udhaar: Overdue First</option>
+          <option value="name">{t('sortName')}</option>
+          <option value="amount">{t('sortAmountDesc')}</option>
+          <option value="time">{t('sortTimeOverdue')}</option>
         </select>
         <span style={{
           background: 'var(--color-brass)', color: 'var(--color-paper)',
           fontSize: '12px', fontWeight: 600, padding: '4px 12px', borderRadius: '20px',
         }}>
-          {customers.length} total
+          {t('totalCount', { count: customers.length })}
         </span>
       </div>
 
@@ -62,7 +63,7 @@ export default function CustomerListCard({
         label=""
         value={searchtext}
         onChange={setSearchtext}
-        placeholder="Search by name or phone..."
+        placeholder={t('searchPlaceholder')}
         icon={
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8"/>
@@ -73,7 +74,7 @@ export default function CustomerListCard({
 
       {customers.length === 0 && (
         <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-ink)', opacity: 0.6, fontSize: '14px', fontWeight: 500 }}>
-          No customer found
+          {t('noCustomerFound')}
         </div>
       )}
 

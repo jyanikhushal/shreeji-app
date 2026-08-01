@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import StampButton from "@/components/ui/StampButton";
-
+import { useTranslation } from 'react-i18next';
 interface PermissionModalProps {
   show: boolean;
   enabling: boolean;
@@ -9,6 +9,7 @@ interface PermissionModalProps {
 }
 
 export default function PermissionModal({ show, enabling, onDecline, onEnable }: PermissionModalProps) {
+    const { t } = useTranslation('grahakKhata');
   return (
     <AnimatePresence>
       {show && (
@@ -32,20 +33,20 @@ export default function PermissionModal({ show, enabling, onDecline, onEnable }:
           >
             <div style={{ fontSize: 40, marginBottom: 12 }}>🔔</div>
             <h2 style={{ fontWeight: 600, marginBottom: 8, color: 'var(--color-ink)', fontSize: 'clamp(17px, 5vw, 19px)', fontFamily: 'var(--font-rozha, serif)' }}>
-              Enable Notifications?
+              {t('enableNotificationsTitle')}
             </h2>
             <p style={{ color: 'var(--color-ink)', opacity: 0.7, fontSize: 14, marginBottom: 24, lineHeight: 1.5 }}>
-              Get notified instantly when a deposit is recorded, and reminders when payment is due.
+              {t('enableNotificationsBody')}
             </p>
             <div style={{ display: 'flex', gap: 10 }}>
               <div style={{ flex: 1 }}>
                 <StampButton tone="brass" onClick={onDecline} disabled={enabling}>
-                  Not now
+                  {t('notNow')}
                 </StampButton>
               </div>
               <div style={{ flex: 1 }}>
                 <StampButton tone="ink" onClick={onEnable} disabled={enabling}>
-                  {enabling ? 'Enabling...' : 'Yes, enable'}
+                  {enabling ? t('enabling') : t('yesEnable')}
                 </StampButton>
               </div>
             </div>

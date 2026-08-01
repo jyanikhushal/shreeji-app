@@ -1,0 +1,21 @@
+{
+  "malikTitle": "मालिक लॉगिन",
+  "malikSubtitle": "मालिक के रूप में लॉगिन करें",
+  "grahakTitle": "ग्राहक लॉगिन",
+  "grahakSubtitle": "ग्राहक के रूप में लॉगिन करें",
+  "phoneLabel": "फ़ोन नंबर",
+  "phonePlaceholder": "फ़ोन नंबर दर्ज करें",
+  "passwordLabel": "पासवर्ड",
+  "passwordPlaceholder": "पासवर्ड दर्ज करें",
+  "loginButton": "लॉगिन",
+  "loggingIn": "लॉगिन हो रहा है...",
+  "backToHome": "होम पर वापस जाएं",
+  "errors": {
+    "fillFields": "कृपया सभी फ़ील्ड भरें",
+    "invalidPhone": "मान्य फ़ोन नंबर दर्ज करें",
+    "invalidResponse": "अमान्य सर्वर प्रतिक्रिया",
+    "generic": "कुछ गलत हो गया"
+  },
+  "loginSuccess": "लॉगिन सफल",
+  "enterPhone": "कृपया फ़ोन नंबर दर्ज करें"
+}

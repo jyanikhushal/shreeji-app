@@ -26,12 +26,14 @@ const testImport=require("./signupMalik");
 const {startScheduler} =require('./utils/scheduler');
 const { messaging } = require("firebase-admin");
 const notificationRoutes = require('./modules/notifications/notificationRoutes');
+const languageRoutes = require('./modules/language/languageRoutes');
 
 console.log("IMPORT CHECK:",testImport);
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/api/push', notificationRoutes);
+app.use('/language', languageRoutes);
 
 
 app.use((req,res,next)=>{

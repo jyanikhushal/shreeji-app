@@ -12,9 +12,10 @@ import SummaryCards from "@/components/grahak-khata/SummaryCards";
 import KhataTable from "@/components/grahak-khata/KhataTable";
 import PermissionModal from "@/components/grahak-khata/modals/PermissionModal";
 import HistoryPanel from "@/components/grahak-khata/modals/HistoryPanel";
-
+import { useTranslation } from 'react-i18next';
 function GrahakKhataInner() {
   const gk = useGrahakKhata();
+  const { t } = useTranslation('grahakKhata');
 
   if (gk.loading) {
     return (
@@ -31,7 +32,7 @@ function GrahakKhataInner() {
           boxShadow: '0 12px 30px rgba(35,42,59,0.2)',
         }}>
           <p style={{ margin: 0, fontSize: 'clamp(14px, 4vw, 15px)', color: 'var(--color-ink)', fontWeight: 500, fontFamily: 'var(--font-rozha, serif)' }}>
-            Opening your khata...
+            {t('openingKhata')}
           </p>
         </div>
       </div>
@@ -69,7 +70,7 @@ function GrahakKhataInner() {
         />
 
         <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--color-ink)', opacity: 0.5, marginTop: 16, flexShrink: 0 }}>
-          Read-only view · Contact your store for any changes
+          {t('readOnlyNotice')}
         </p>
       </div>
 
@@ -91,6 +92,7 @@ function GrahakKhataInner() {
 }
 
 export default function Page() {
+  const { t } = useTranslation('grahakKhata');
   return (
     <Suspense fallback={
       <div style={{
@@ -98,7 +100,7 @@ export default function Page() {
         background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
         color: 'var(--color-ink)', fontSize: '16px', fontWeight: 500
       }}>
-        Loading your Khata...
+       {t('loadingKhata')}
       </div>
     }>
       <GrahakKhataInner />

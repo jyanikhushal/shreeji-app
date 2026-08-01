@@ -1,0 +1,21 @@
+{
+  "malikTitle": "માલિક લોગિન",
+  "malikSubtitle": "માલિક તરીકે લૉગિન કરો",
+  "grahakTitle": "ગ્રાહક લોગિન",
+  "grahakSubtitle": "ગ્રાહક તરીકે લૉગિન કરો",
+  "phoneLabel": "ફોન નંબર",
+  "phonePlaceholder": "ફોન નંબર દાખલ કરો",
+  "passwordLabel": "પાસવર્ડ",
+  "passwordPlaceholder": "પાસવર્ડ દાખલ કરો",
+  "loginButton": "લોગિન",
+  "loggingIn": "લોગિન થઈ રહ્યું છે...",
+  "backToHome": "હોમ પર પાછા જાઓ",
+  "errors": {
+    "fillFields": "કૃપા કરી બધા ફિલ્ડ ભરો",
+    "invalidPhone": "માન્ય ફોન નંબર દાખલ કરો",
+    "invalidResponse": "અમાન્ય સર્વર જવાબ",
+    "generic": "કંઈક ખોટું થયું"
+  },
+  "loginSuccess": "લોગિન સફળ",
+  "enterPhone": "કૃપા કરી ફોન નંબર દાખલ કરો"
+}

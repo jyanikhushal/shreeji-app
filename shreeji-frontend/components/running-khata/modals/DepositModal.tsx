@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import LedgerField from "@/components/ui/LedgerField";
 import StampButton from "@/components/ui/StampButton";
-
+import { useTranslation } from 'react-i18next';
 interface DepositModalProps {
   show: boolean;
   customername: string;
@@ -13,6 +13,7 @@ interface DepositModalProps {
 }
 
 export default function DepositModal({ show, customername, depositamount, setDepositamount, issubmitting, onCancel, onConfirm }: DepositModalProps) {
+    const { t } = useTranslation('runningKhata');
   return (
     <AnimatePresence>
       {show && (
@@ -32,15 +33,15 @@ export default function DepositModal({ show, customername, depositamount, setDep
               boxShadow: '0 20px 50px rgba(0,0,0,0.3)', borderLeft: '6px solid var(--color-brass)',
             }}
           >
-            <h2 style={{ fontWeight: 700, marginBottom: '4px', textAlign: 'center', color: 'var(--color-ink)', fontSize: '20px' }}>Add Deposit</h2>
-            <p style={{ textAlign: 'center', color: 'var(--color-ink)', opacity: 0.7, fontSize: '13px', marginBottom: '24px' }}>Amount received from {customername}</p>
+            <h2 style={{ fontWeight: 700, marginBottom: '4px', textAlign: 'center', color: 'var(--color-ink)', fontSize: '20px' }}>{t('addDeposit')}</h2>
+            <p style={{ textAlign: 'center', color: 'var(--color-ink)', opacity: 0.7, fontSize: '13px', marginBottom: '24px' }}>{t('amountReceivedFrom', { name: customername })}</p>
 
             <div style={{ marginBottom: '24px' }}>
               <LedgerField
-                label="Deposit Amount (₹)"
+                label={t('depositAmountLabel')}
                 value={depositamount}
                 onChange={(val) => setDepositamount(val)}
-                placeholder="Enter amount"
+                placeholder={t('enterAmount')}
                 type="number"
                 icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>}
               />
@@ -51,7 +52,7 @@ export default function DepositModal({ show, customername, depositamount, setDep
                 onClick={onCancel}
                 style={{ flex: 1, padding: '12px 0', border: '1px dashed rgba(35,42,59,0.3)', borderRadius: '6px', background: 'transparent', color: 'var(--color-ink)', cursor: 'pointer', fontSize: '15px', fontWeight: 500 }}
               >
-                Cancel
+                {t('cancel')}
               </button>
               <div style={{ flex: 1 }}>
                 <StampButton
@@ -68,7 +69,7 @@ export default function DepositModal({ show, customername, depositamount, setDep
                     ) : undefined
                   }
                 >
-                  {issubmitting ? "Confirming..." : "Confirm"}
+                  {issubmitting ? t('confirming') : t('confirm')}
                 </StampButton>
               </div>
             </div>

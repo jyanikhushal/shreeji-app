@@ -1,0 +1,28 @@
+{
+  "loadingKhata": "ખાતો લોડ થઈ રહ્યો છે...",
+  "deposit": "જમા",
+  "processing": "પ્રક્રિયા થઈ રહી છે...",
+  "tableHeaders": {
+    "no": "#",
+    "date": "તારીખ",
+    "item": "વસ્તુ",
+    "amount": "રકમ",
+    "total": "કુલ"
+  },
+  "typeItem": "વસ્તુ લખો...",
+  "stillConfirming": "હજુ પુષ્ટિ થઈ રહી છે — થોડી વારમાં ફરી પ્રયત્ન કરો",
+  "addDeposit": "જમા ઉમેરો",
+  "amountReceivedFrom": "{{name}} પાસેથી મળેલી રકમ",
+  "depositAmountLabel": "જમા રકમ (₹)",
+  "enterAmount": "રકમ દાખલ કરો",
+  "cancel": "રદ કરો",
+  "confirming": "પુષ્ટિ થઈ રહી છે...",
+  "confirm": "પુષ્ટિ કરો",
+  "rowOptions": "પંક્તિ વિકલ્પો",
+  "entryNumber": "એન્ટ્રી #{{no}}",
+  "editRow": "પંક્તિ સંપાદિત કરો",
+  "deleteRow": "પંક્તિ કાઢી નાખો",
+  "deleteEntryTitle": "એન્ટ્રી કાઢી નાખવી છે?",
+  "deleteEntryBody": "આ એન્ટ્રીને કાયમ માટે દૂર કરશે અને બધા કુલ ફરીથી ગણશે.",
+  "delete": "કાઢી નાખો"
+}
