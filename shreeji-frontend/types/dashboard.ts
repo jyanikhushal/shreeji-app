@@ -11,6 +11,7 @@ export type malik = {
   name: string;
   phone: string;
   shopName: string;
+  preferredLanguage?: 'gu' | 'hi' | 'en';
 };
 
 export type sortoption = 'name' | 'amount' | 'time';
