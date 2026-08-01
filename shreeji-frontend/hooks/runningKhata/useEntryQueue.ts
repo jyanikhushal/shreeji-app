@@ -4,7 +4,7 @@ import { getData } from "@/app/utils/api";
 import { entry, queueitem, confirmedentry } from "@/types/runningKhata";
 import { isvalidamount } from "@/lib/runningKhata/validators";
 import { formattoday, formatconfirmeddate } from "@/lib/runningKhata/dateFormat";
-
+import { generateTranslations } from "@/lib/transliteration/transliterate";
 interface UseEntryQueueParams {
   entries: entry[];
   setentries: React.Dispatch<React.SetStateAction<entry[]>>;
@@ -155,7 +155,7 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
     setTimeout(() => {
       iteminputrefs.current[index + 1]?.focus();
     }, 0);
-
+    const itemTranslations = generateTranslations(itemname);
     submitqueueitemsref.current.push({
       id: provisionalentryno,
       run: async () => {
@@ -164,11 +164,13 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              malikPhone: localStorage.getItem("malikPhone"),
-              phone: customerphone,
-              item: itemname,
-              amount: amountnum,
-            }),
+                  malikPhone: localStorage.getItem("malikPhone"),
+                  phone: customerphone,
+                  item: itemname,
+                  item_gu: itemTranslations.gu,
+                  item_hi: itemTranslations.hi,
+                  amount: amountnum,
+                }),
           });
           const confirmed = await getData<confirmedentry>(res);
           if (!queuevalidref.current) return;
@@ -176,7 +178,7 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
           const confirmeddate = formatconfirmeddate(confirmed.date, todaystr);
           setentries(prev => prev.map(row =>
             row.entryNo === provisionalentryno && row.pending
-              ? { entryNo: confirmed.entryNo, date: confirmeddate, item: confirmed.description, amount: String(confirmed.amount), total: confirmed.total }
+              ? { entryNo: confirmed.entryNo, date: confirmeddate, item: confirmed.description, item_gu: confirmed.description_gu, item_hi: confirmed.description_hi, amount: String(confirmed.amount), total: confirmed.total}
               : row
           ));
         } catch {
@@ -220,7 +222,7 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
         amountinputrefs.current[nextawaiting]?.focus();
       }
     }, 0);
-
+     const itemTranslations = generateTranslations(itemname);
     submitqueueitemsref.current.push({
       id: entryno,
       run: async () => {
@@ -229,11 +231,13 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              malikPhone: localStorage.getItem("malikPhone"),
-              phone: customerphone,
-              item: itemname,
-              amount: amountnum,
-            }),
+                 malikPhone: localStorage.getItem("malikPhone"),
+                 phone: customerphone,
+                 item: itemname,
+                 item_gu: itemTranslations.gu,
+                 item_hi: itemTranslations.hi,
+                 amount: amountnum,
+               }),
           });
           const confirmed = await getData<confirmedentry>(res);
           if (!queuevalidref.current) return;
@@ -241,7 +245,7 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
           const confirmeddate = formatconfirmeddate(confirmed.date, todaystr);
           setentries(prev => prev.map(row =>
             row.entryNo === entryno && row.pending
-              ? { entryNo: confirmed.entryNo, date: confirmeddate, item: confirmed.description, amount: String(confirmed.amount), total: confirmed.total }
+              ? { entryNo: confirmed.entryNo, date: confirmeddate, item: confirmed.description, item_gu: confirmed.description_gu, item_hi: confirmed.description_hi, amount: String(confirmed.amount), total: confirmed.total }
               : row
           ));
         } catch {

@@ -1,6 +1,6 @@
 const {db}=require('./firebase');
 
-async function addPurchaseEntry(malikPhone,customerPhone,itemName,price) {
+async function addPurchaseEntry(malikPhone,customerPhone,itemName,price,itemName_gu,itemName_hi) {
 
     if(price<=0){
         throw new Error('Purchase should always be positive.');
@@ -27,6 +27,8 @@ async function addPurchaseEntry(malikPhone,customerPhone,itemName,price) {
         date:entryDate,
         type:'purchase',
         description:itemName,
+        description_gu: itemName_gu || itemName,
+        description_hi: itemName_hi || itemName,
         amount:price,
         total:newTotal,
     });
@@ -41,6 +43,8 @@ async function addPurchaseEntry(malikPhone,customerPhone,itemName,price) {
         entryNo: nextEntryNo,
         date: entryDate,
         description: itemName,
+        description_gu: itemName_gu || itemName,
+        description_hi: itemName_hi || itemName,
         amount: price,
         total: newTotal,
     };

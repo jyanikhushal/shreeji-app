@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { customer } from "@/types/dashboard";
 import { formatdaysago } from "@/lib/dashboard/formatters";
-
+import { useTranslation } from 'react-i18next';
+import { getLocalizedName } from '@/lib/transliteration/getLocalizedField';
 interface CustomerRowProps {
   customer: customer;
   now: number | null;
@@ -10,6 +11,8 @@ interface CustomerRowProps {
 }
 
 export default function CustomerRow({ customer: c, now, onOpen, onMenuOpen }: CustomerRowProps) {
+  const { i18n } = useTranslation();
+  const displayName = getLocalizedName(c, i18n.language as 'gu' | 'hi' | 'en');
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -44,10 +47,10 @@ export default function CustomerRow({ customer: c, now, onOpen, onMenuOpen }: Cu
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: '16px', fontWeight: 700, color: 'var(--color-paper)', flexShrink: 0,
         }}>
-          {c.name.charAt(0).toUpperCase()}
+          {displayName.charAt(0).toUpperCase()}
         </div>
         <div>
-          <p style={{ margin: 0, fontSize: 'clamp(15px, 3.5vw, 16px)', fontWeight: 600, color: 'var(--color-ink)' }}>{c.name}</p>
+          <p style={{ margin: 0, fontSize: 'clamp(15px, 3.5vw, 16px)', fontWeight: 600, color: 'var(--color-ink)' }}>{displayName}</p>
           <p style={{ margin: '2px 0 0', fontSize: 'clamp(12px, 3vw, 13px)', color: 'var(--color-ink)', opacity: 0.7 }}>{c.phone}</p>
         </div>
       </div>

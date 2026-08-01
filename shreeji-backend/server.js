@@ -81,7 +81,7 @@ app.get("/khata/:phone",validatePhone,async(req,res)=>{
 // API : add purchase --> i will change the handle enter function in the running khata page and so that on pressing enter -->post /khata/addPurchase-->backend calculates entryNo+total-->firestore updated-->frontend reloads ledger
 app.post("/khata/addPurchase",validatePhone,validateAmount,async(req,res)=>{
     try{
-        const{malikPhone,phone,item,amount}=req.body; // extract data from frontend and calls the business logic file addPurchaseEntry
+        const{malikPhone,phone,item,item_gu,item_hi,amount}=req.body;
 
         if(!malikPhone || !phone){
             return res.status(400).json({
@@ -89,9 +89,7 @@ app.post("/khata/addPurchase",validatePhone,validateAmount,async(req,res)=>{
                 message:"Missing malikPhone or customerPhone"
             });
         }
-       const result= await addPurchaseEntry(malikPhone,phone,item,amount);
-
-        // res.json({message:"Purchase added",entry:result});
+       const result= await addPurchaseEntry(malikPhone,phone,item,amount,item_gu,item_hi);
 
         return res.status(200).json({
             success:true,
@@ -102,7 +100,6 @@ app.post("/khata/addPurchase",validatePhone,validateAmount,async(req,res)=>{
     }
     catch(err){
         console.error("purchase entry addition error",err);
-        // res.status(500).json({error:err.message});
         return res.status(500).json({
             success:false,
             message:"Internal server error"

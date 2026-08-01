@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useToast } from "@/app/context/ToastContext";
 import { getData } from "@/app/utils/api";
 import { customer } from "@/types/runningKhata";
-
+import { useTranslation } from 'react-i18next';
+import { getLocalizedName } from '@/lib/transliteration/getLocalizedField';
 export function useCustomerInfo(customerphone: string | null) {
   const { showMessage: showmessage } = useToast();
+  const { i18n } = useTranslation();
   const [customername, setcustomername] = useState('');
 
   useEffect(() => {
@@ -17,7 +19,7 @@ export function useCustomerInfo(customerphone: string | null) {
         const data = await getData<customer[]>(res, { expectArray: true });
         const matched = data.find((c) => c.phone === customerphone);
         if (matched) {
-          setcustomername(matched.name);
+          setcustomername(getLocalizedName(matched, i18n.language as 'gu' | 'hi' | 'en'));
         } else {
           showmessage("error", "Customer not found");
         }
@@ -30,7 +32,7 @@ export function useCustomerInfo(customerphone: string | null) {
       }
     };
     if (customerphone) fetchcustomer();
-  }, [customerphone, showmessage]);
+  }, [customerphone, showmessage,i18n.language]);
 
   return customername;
 }

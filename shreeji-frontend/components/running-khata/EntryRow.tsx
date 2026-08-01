@@ -3,6 +3,7 @@ import { useToast } from "@/app/context/ToastContext";
 import MarqueeText from "@/components/ui/MarqueeText";
 import { entry } from "@/types/runningKhata";
 import { useTranslation } from 'react-i18next';
+
 interface EntryRowProps {
   row: entry;
   index: number;
@@ -27,6 +28,10 @@ export default function EntryRow({
   onitemchange, onamountchange, onitementer, onamountenter, onamountblur, onrownumberclick,
 }: EntryRowProps) {
   const { showMessage: showmessage } = useToast();
+  const { i18n } = useTranslation();
+const displayitem = i18n.language === 'gu' && row.item_gu ? row.item_gu
+  : i18n.language === 'hi' && row.item_hi ? row.item_hi
+  : row.item;
   const { t } = useTranslation('runningKhata');
 
   const isediting = editingrow === index;
@@ -97,7 +102,7 @@ export default function EntryRow({
             color: isdeposit ? '#16a34a' : 'var(--color-ink)',
             fontWeight: isdeposit ? 700 : 500,
           }}>
-            <MarqueeText text={row.item} />
+            <MarqueeText text={displayitem} />
           </div>
         )}
       </td>
