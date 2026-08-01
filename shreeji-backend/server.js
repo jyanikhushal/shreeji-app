@@ -27,14 +27,14 @@ const {startScheduler} =require('./utils/scheduler');
 const { messaging } = require("firebase-admin");
 const notificationRoutes = require('./modules/notifications/notificationRoutes');
 const languageRoutes = require('./modules/language/languageRoutes');
-
+const productLanguageRoutes = require('./modules/productLanguage/productLanguageRoutes');
 console.log("IMPORT CHECK:",testImport);
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/api/push', notificationRoutes);
 app.use('/language', languageRoutes);
-
+app.use('/productLanguage', productLanguageRoutes);
 
 app.use((req,res,next)=>{
   console.log("REQUEST:", req.method, req.url);
