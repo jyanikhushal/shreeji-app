@@ -21,6 +21,8 @@ export type ledgerentry = {
   entryNo: number;
   date: string | { _seconds: number };
   description: string;
+  description_gu?: string;
+  description_hi?: string;
   amount: number | string;
   total: number;
 };

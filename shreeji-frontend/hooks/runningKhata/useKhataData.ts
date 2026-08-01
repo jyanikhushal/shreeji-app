@@ -22,12 +22,14 @@ export function useKhataData(customerphone: string | null) {
 
       if (data.length > 0) {
         const formatted: entry[] = data.map((e: ledgerentry) => ({
-          entryNo: e.entryNo,
-          date: formatledgerdate(e.date, ""),
-          item: e.description || "",
-          amount: String(e.amount ?? ""),
-          total: e.total
-        }));
+                          entryNo: e.entryNo,
+                        date: formatledgerdate(e.date, ""),
+                        item: e.description || "",
+                        item_gu: e.description_gu,
+                        item_hi: e.description_hi,
+                        amount: String(e.amount ?? ""),
+                        total: e.total
+                      }));
 
         const last = formatted[formatted.length - 1];
         formatted.push({
