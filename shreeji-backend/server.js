@@ -237,21 +237,20 @@ app.get("/grahak",validatePhone,async(req,res)=>{
 // API: add grahak
 app.post("/grahak/add",validatePhone,async(req,res)=>{
     try{
-       const {malikPhone,name,phone}=req.body;
+       const {malikPhone,name,phone,name_gu,name_hi}=req.body;
        console.log("REQ body: ",req.body);
        if (!malikPhone||!phone) {
             return res.status(400).json({success:false, message: "Missing malikPhone" });
         }
-       await addGrahak(malikPhone,name,phone);
+       await addGrahak(malikPhone,name,phone,name_gu,name_hi);
 
-       return res.status(200).json({success:true,message:"Customer added",data:{phone,name}});
+       return res.status(200).json({success:true,message:"Customer added",data:{phone,name,name_gu,name_hi}});
     }
     catch(err){
         console.error("Grahak addition error",err);
            return res.status(500).json({success:false,message:"Internal server error"});
     }
 });
-
 //API:editCustomerName
 app.put("/grahak/editName",validatePhone,async(req,res)=>{
     try{
