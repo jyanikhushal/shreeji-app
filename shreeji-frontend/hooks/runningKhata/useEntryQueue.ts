@@ -5,6 +5,7 @@ import { entry, queueitem, confirmedentry } from "@/types/runningKhata";
 import { isvalidamount } from "@/lib/runningKhata/validators";
 import { formattoday, formatconfirmeddate } from "@/lib/runningKhata/dateFormat";
 import { generateTranslations } from "@/lib/transliteration/transliterate";
+import { lookupProduct, learnProduct } from "@/lib/productLanguage/cache";
 interface UseEntryQueueParams {
   entries: entry[];
   setentries: React.Dispatch<React.SetStateAction<entry[]>>;
@@ -155,7 +156,14 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
     setTimeout(() => {
       iteminputrefs.current[index + 1]?.focus();
     }, 0);
-    const itemTranslations = generateTranslations(itemname);
+                     const cached = lookupProduct(itemname);
+                 const itemTranslations = cached
+                   ? { en: cached.canonical_en, gu: cached.canonical_gu, hi: cached.canonical_hi }
+                   : generateTranslations(itemname);
+                 
+                 if (!cached) {
+                   learnProduct(itemname, itemTranslations.gu, itemTranslations.hi, itemTranslations.en);
+                 }
     submitqueueitemsref.current.push({
       id: provisionalentryno,
       run: async () => {
@@ -222,7 +230,14 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
         amountinputrefs.current[nextawaiting]?.focus();
       }
     }, 0);
-     const itemTranslations = generateTranslations(itemname);
+     const cached = lookupProduct(itemname);
+               const itemTranslations = cached
+                 ? { en: cached.canonical_en, gu: cached.canonical_gu, hi: cached.canonical_hi }
+                 : generateTranslations(itemname);
+               
+               if (!cached) {
+                 learnProduct(itemname, itemTranslations.gu, itemTranslations.hi, itemTranslations.en);
+               }
     submitqueueitemsref.current.push({
       id: entryno,
       run: async () => {

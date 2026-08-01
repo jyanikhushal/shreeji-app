@@ -1,0 +1,2122 @@
+{
+  "entries": [
+    {
+      "key": "ghau",
+      "canonical_gu": "ઘઉં",
+      "canonical_hi": "गेहूं",
+      "canonical_en": "wheat"
+    },
+    {
+      "key": "ghaun",
+      "canonical_gu": "ઘઉં",
+      "canonical_hi": "गेहूं",
+      "canonical_en": "wheat"
+    },
+    {
+      "key": "ghavu",
+      "canonical_gu": "ઘઉં",
+      "canonical_hi": "गेहूं",
+      "canonical_en": "wheat"
+    },
+    {
+      "key": "wheat",
+      "canonical_gu": "ઘઉં",
+      "canonical_hi": "गेहूं",
+      "canonical_en": "wheat"
+    },
+    {
+      "key": "chokha",
+      "canonical_gu": "ચોખા",
+      "canonical_hi": "चावल",
+      "canonical_en": "rice"
+    },
+    {
+      "key": "chokka",
+      "canonical_gu": "ચોખા",
+      "canonical_hi": "चावल",
+      "canonical_en": "rice"
+    },
+    {
+      "key": "rice",
+      "canonical_gu": "ચોખા",
+      "canonical_hi": "चावल",
+      "canonical_en": "rice"
+    },
+    {
+      "key": "chawal",
+      "canonical_gu": "ચોખા",
+      "canonical_hi": "चावल",
+      "canonical_en": "rice"
+    },
+    {
+      "key": "basmati",
+      "canonical_gu": "બાસમતી ચોખા",
+      "canonical_hi": "बासमती चावल",
+      "canonical_en": "basmati rice"
+    },
+    {
+      "key": "basmati chokha",
+      "canonical_gu": "બાસમતી ચોખા",
+      "canonical_hi": "बासमती चावल",
+      "canonical_en": "basmati rice"
+    },
+    {
+      "key": "basmati rice",
+      "canonical_gu": "બાસમતી ચોખા",
+      "canonical_hi": "बासमती चावल",
+      "canonical_en": "basmati rice"
+    },
+    {
+      "key": "kolam",
+      "canonical_gu": "કોલમ ચોખા",
+      "canonical_hi": "कोलम चावल",
+      "canonical_en": "kolam rice"
+    },
+    {
+      "key": "kolam chokha",
+      "canonical_gu": "કોલમ ચોખા",
+      "canonical_hi": "कोलम चावल",
+      "canonical_en": "kolam rice"
+    },
+    {
+      "key": "kolam rice",
+      "canonical_gu": "કોલમ ચોખા",
+      "canonical_hi": "कोलम चावल",
+      "canonical_en": "kolam rice"
+    },
+    {
+      "key": "jawar",
+      "canonical_gu": "જવાર",
+      "canonical_hi": "ज्वार",
+      "canonical_en": "jowar"
+    },
+    {
+      "key": "jowar",
+      "canonical_gu": "જવાર",
+      "canonical_hi": "ज्वार",
+      "canonical_en": "jowar"
+    },
+    {
+      "key": "juvar",
+      "canonical_gu": "જવાર",
+      "canonical_hi": "ज्वार",
+      "canonical_en": "jowar"
+    },
+    {
+      "key": "bajri",
+      "canonical_gu": "બાજરી",
+      "canonical_hi": "बाजरा",
+      "canonical_en": "bajra"
+    },
+    {
+      "key": "bajra",
+      "canonical_gu": "બાજરી",
+      "canonical_hi": "बाजरा",
+      "canonical_en": "bajra"
+    },
+    {
+      "key": "makai",
+      "canonical_gu": "મકાઈ",
+      "canonical_hi": "मक्का",
+      "canonical_en": "corn"
+    },
+    {
+      "key": "makkai",
+      "canonical_gu": "મકાઈ",
+      "canonical_hi": "मक्का",
+      "canonical_en": "corn"
+    },
+    {
+      "key": "corn",
+      "canonical_gu": "મકાઈ",
+      "canonical_hi": "मक्का",
+      "canonical_en": "corn"
+    },
+    {
+      "key": "maize",
+      "canonical_gu": "મકાઈ",
+      "canonical_hi": "मक्का",
+      "canonical_en": "corn"
+    },
+    {
+      "key": "moraiyo",
+      "canonical_gu": "મોરૈયો",
+      "canonical_hi": "मोरैया",
+      "canonical_en": "moraiyo"
+    },
+    {
+      "key": "morayo",
+      "canonical_gu": "મોરૈયો",
+      "canonical_hi": "मोरैया",
+      "canonical_en": "moraiyo"
+    },
+    {
+      "key": "samo",
+      "canonical_gu": "મોરૈયો",
+      "canonical_hi": "मोरैया",
+      "canonical_en": "moraiyo"
+    },
+    {
+      "key": "sama",
+      "canonical_gu": "મોરૈયો",
+      "canonical_hi": "मोरैया",
+      "canonical_en": "moraiyo"
+    },
+    {
+      "key": "sabudana",
+      "canonical_gu": "સાબુદાણા",
+      "canonical_hi": "साबूदाना",
+      "canonical_en": "sabudana"
+    },
+    {
+      "key": "sabudanaa",
+      "canonical_gu": "સાબુદાણા",
+      "canonical_hi": "साबूदाना",
+      "canonical_en": "sabudana"
+    },
+    {
+      "key": "sago",
+      "canonical_gu": "સાબુદાણા",
+      "canonical_hi": "साबूदाना",
+      "canonical_en": "sabudana"
+    },
+    {
+      "key": "poha",
+      "canonical_gu": "પોહા",
+      "canonical_hi": "पोहा",
+      "canonical_en": "poha"
+    },
+    {
+      "key": "pova",
+      "canonical_gu": "પોહા",
+      "canonical_hi": "पोहा",
+      "canonical_en": "poha"
+    },
+    {
+      "key": "poa",
+      "canonical_gu": "પોહા",
+      "canonical_hi": "पोहा",
+      "canonical_en": "poha"
+    },
+    {
+      "key": "daliya",
+      "canonical_gu": "દળિયા",
+      "canonical_hi": "दलिया",
+      "canonical_en": "daliya"
+    },
+    {
+      "key": "daliyaa",
+      "canonical_gu": "દળિયા",
+      "canonical_hi": "दलिया",
+      "canonical_en": "daliya"
+    },
+    {
+      "key": "dalia",
+      "canonical_gu": "દળિયા",
+      "canonical_hi": "दलिया",
+      "canonical_en": "daliya"
+    },
+    {
+      "key": "ghau no lot",
+      "canonical_gu": "ઘઉંનો લોટ",
+      "canonical_hi": "गेहूं का आटा",
+      "canonical_en": "wheat flour"
+    },
+    {
+      "key": "ghaun lot",
+      "canonical_gu": "ઘઉંનો લોટ",
+      "canonical_hi": "गेहूं का आटा",
+      "canonical_en": "wheat flour"
+    },
+    {
+      "key": "wheat flour",
+      "canonical_gu": "ઘઉંનો લોટ",
+      "canonical_hi": "गेहूं का आटा",
+      "canonical_en": "wheat flour"
+    },
+    {
+      "key": "atta",
+      "canonical_gu": "ઘઉંનો લોટ",
+      "canonical_hi": "गेहूं का आटा",
+      "canonical_en": "wheat flour"
+    },
+    {
+      "key": "maido",
+      "canonical_gu": "મૈદો",
+      "canonical_hi": "मैदा",
+      "canonical_en": "maida"
+    },
+    {
+      "key": "maida",
+      "canonical_gu": "મૈદો",
+      "canonical_hi": "मैदा",
+      "canonical_en": "maida"
+    },
+    {
+      "key": "besan",
+      "canonical_gu": "બેસન",
+      "canonical_hi": "बेसन",
+      "canonical_en": "besan"
+    },
+    {
+      "key": "chana flour",
+      "canonical_gu": "બેસન",
+      "canonical_hi": "बेसन",
+      "canonical_en": "besan"
+    },
+    {
+      "key": "ravo",
+      "canonical_gu": "રવો",
+      "canonical_hi": "रवा",
+      "canonical_en": "rava"
+    },
+    {
+      "key": "rava",
+      "canonical_gu": "રવો",
+      "canonical_hi": "रवा",
+      "canonical_en": "rava"
+    },
+    {
+      "key": "sooji",
+      "canonical_gu": "રવો",
+      "canonical_hi": "रवा",
+      "canonical_en": "rava"
+    },
+    {
+      "key": "suji",
+      "canonical_gu": "રવો",
+      "canonical_hi": "रवा",
+      "canonical_en": "rava"
+    },
+    {
+      "key": "bajri no lot",
+      "canonical_gu": "બાજરીનો લોટ",
+      "canonical_hi": "बाजरे का आटा",
+      "canonical_en": "bajra flour"
+    },
+    {
+      "key": "bajra flour",
+      "canonical_gu": "બાજરીનો લોટ",
+      "canonical_hi": "बाजरे का आटा",
+      "canonical_en": "bajra flour"
+    },
+    {
+      "key": "rajgara no lot",
+      "canonical_gu": "રાજગરાનો લોટ",
+      "canonical_hi": "राजगिरा आटा",
+      "canonical_en": "rajgira flour"
+    },
+    {
+      "key": "rajgira flour",
+      "canonical_gu": "રાજગરાનો લોટ",
+      "canonical_hi": "राजगिरा आटा",
+      "canonical_en": "rajgira flour"
+    },
+    {
+      "key": "tuver dal",
+      "canonical_gu": "તુવેર દાળ",
+      "canonical_hi": "तूर दाल",
+      "canonical_en": "tuver dal"
+    },
+    {
+      "key": "tuvar dal",
+      "canonical_gu": "તુવેર દાળ",
+      "canonical_hi": "तूर दाल",
+      "canonical_en": "tuver dal"
+    },
+    {
+      "key": "toor dal",
+      "canonical_gu": "તુવેર દાળ",
+      "canonical_hi": "तूर दाल",
+      "canonical_en": "tuver dal"
+    },
+    {
+      "key": "mag dal",
+      "canonical_gu": "મગ દાળ",
+      "canonical_hi": "मूंग दाल",
+      "canonical_en": "moong dal"
+    },
+    {
+      "key": "moong dal",
+      "canonical_gu": "મગ દાળ",
+      "canonical_hi": "मूंग दाल",
+      "canonical_en": "moong dal"
+    },
+    {
+      "key": "mung dal",
+      "canonical_gu": "મગ દાળ",
+      "canonical_hi": "मूंग दाल",
+      "canonical_en": "moong dal"
+    },
+    {
+      "key": "adad dal",
+      "canonical_gu": "અડદ દાળ",
+      "canonical_hi": "उड़द दाल",
+      "canonical_en": "urad dal"
+    },
+    {
+      "key": "urad dal",
+      "canonical_gu": "અડદ દાળ",
+      "canonical_hi": "उड़द दाल",
+      "canonical_en": "urad dal"
+    },
+    {
+      "key": "chana dal",
+      "canonical_gu": "ચણાની દાળ",
+      "canonical_hi": "चना दाल",
+      "canonical_en": "chana dal"
+    },
+    {
+      "key": "chanani dal",
+      "canonical_gu": "ચણાની દાળ",
+      "canonical_hi": "चना दाल",
+      "canonical_en": "chana dal"
+    },
+    {
+      "key": "masoor dal",
+      "canonical_gu": "મસૂર દાળ",
+      "canonical_hi": "मसूर दाल",
+      "canonical_en": "masoor dal"
+    },
+    {
+      "key": "masur dal",
+      "canonical_gu": "મસૂર દાળ",
+      "canonical_hi": "मसूर दाल",
+      "canonical_en": "masoor dal"
+    },
+    {
+      "key": "chana",
+      "canonical_gu": "ચણા",
+      "canonical_hi": "चना",
+      "canonical_en": "chana"
+    },
+    {
+      "key": "chna",
+      "canonical_gu": "ચણા",
+      "canonical_hi": "चना",
+      "canonical_en": "chana"
+    },
+    {
+      "key": "chickpea",
+      "canonical_gu": "ચણા",
+      "canonical_hi": "चना",
+      "canonical_en": "chana"
+    },
+    {
+      "key": "kabuli chana",
+      "canonical_gu": "કાબુલી ચણા",
+      "canonical_hi": "काबुली चना",
+      "canonical_en": "kabuli chana"
+    },
+    {
+      "key": "kabuli chna",
+      "canonical_gu": "કાબુલી ચણા",
+      "canonical_hi": "काबुली चना",
+      "canonical_en": "kabuli chana"
+    },
+    {
+      "key": "white chana",
+      "canonical_gu": "કાબુલી ચણા",
+      "canonical_hi": "काबुली चना",
+      "canonical_en": "kabuli chana"
+    },
+    {
+      "key": "lila mag",
+      "canonical_gu": "લીલા મગ",
+      "canonical_hi": "हरी मूंग",
+      "canonical_en": "green moong"
+    },
+    {
+      "key": "green moong",
+      "canonical_gu": "લીલા મગ",
+      "canonical_hi": "हरी मूंग",
+      "canonical_en": "green moong"
+    },
+    {
+      "key": "lila moong",
+      "canonical_gu": "લીલા મગ",
+      "canonical_hi": "हरी मूंग",
+      "canonical_en": "green moong"
+    },
+    {
+      "key": "adad",
+      "canonical_gu": "અડદ",
+      "canonical_hi": "उड़द",
+      "canonical_en": "urad"
+    },
+    {
+      "key": "urad",
+      "canonical_gu": "અડદ",
+      "canonical_hi": "उड़द",
+      "canonical_en": "urad"
+    },
+    {
+      "key": "adad whole",
+      "canonical_gu": "અડદ",
+      "canonical_hi": "उड़द",
+      "canonical_en": "urad"
+    },
+    {
+      "key": "val",
+      "canonical_gu": "વાલ",
+      "canonical_hi": "वाल",
+      "canonical_en": "val"
+    },
+    {
+      "key": "vaal",
+      "canonical_gu": "વાલ",
+      "canonical_hi": "वाल",
+      "canonical_en": "val"
+    },
+    {
+      "key": "rajma",
+      "canonical_gu": "રાજમા",
+      "canonical_hi": "राजमा",
+      "canonical_en": "rajma"
+    },
+    {
+      "key": "rajmaa",
+      "canonical_gu": "રાજમા",
+      "canonical_hi": "राजमा",
+      "canonical_en": "rajma"
+    },
+    {
+      "key": "choli",
+      "canonical_gu": "ચોળી",
+      "canonical_hi": "चवली",
+      "canonical_en": "chori"
+    },
+    {
+      "key": "chori",
+      "canonical_gu": "ચોળી",
+      "canonical_hi": "चवली",
+      "canonical_en": "chori"
+    },
+    {
+      "key": "chawli",
+      "canonical_gu": "ચોળી",
+      "canonical_hi": "चवली",
+      "canonical_en": "chori"
+    },
+    {
+      "key": "vatana",
+      "canonical_gu": "વટાણા",
+      "canonical_hi": "मटर",
+      "canonical_en": "peas"
+    },
+    {
+      "key": "vatanaa",
+      "canonical_gu": "વટાણા",
+      "canonical_hi": "मटर",
+      "canonical_en": "peas"
+    },
+    {
+      "key": "matar",
+      "canonical_gu": "વટાણા",
+      "canonical_hi": "मटर",
+      "canonical_en": "peas"
+    },
+    {
+      "key": "peas",
+      "canonical_gu": "વટાણા",
+      "canonical_hi": "मटर",
+      "canonical_en": "peas"
+    },
+    {
+      "key": "haldar",
+      "canonical_gu": "હળદર",
+      "canonical_hi": "हल्दी",
+      "canonical_en": "turmeric"
+    },
+    {
+      "key": "haldar powder",
+      "canonical_gu": "હળદર",
+      "canonical_hi": "हल्दी",
+      "canonical_en": "turmeric"
+    },
+    {
+      "key": "turmeric",
+      "canonical_gu": "હળદર",
+      "canonical_hi": "हल्दी",
+      "canonical_en": "turmeric"
+    },
+    {
+      "key": "marchu",
+      "canonical_gu": "મરચું",
+      "canonical_hi": "मिर्च",
+      "canonical_en": "chilli powder"
+    },
+    {
+      "key": "marchu powder",
+      "canonical_gu": "મરચું",
+      "canonical_hi": "मिर्च",
+      "canonical_en": "chilli powder"
+    },
+    {
+      "key": "mirch",
+      "canonical_gu": "મરચું",
+      "canonical_hi": "मिर्च",
+      "canonical_en": "chilli powder"
+    },
+    {
+      "key": "chilli",
+      "canonical_gu": "મરચું",
+      "canonical_hi": "मिर्च",
+      "canonical_en": "chilli powder"
+    },
+    {
+      "key": "dhana",
+      "canonical_gu": "ધાણા",
+      "canonical_hi": "धनिया",
+      "canonical_en": "coriander"
+    },
+    {
+      "key": "dhaniya",
+      "canonical_gu": "ધાણા",
+      "canonical_hi": "धनिया",
+      "canonical_en": "coriander"
+    },
+    {
+      "key": "coriander",
+      "canonical_gu": "ધાણા",
+      "canonical_hi": "धनिया",
+      "canonical_en": "coriander"
+    },
+    {
+      "key": "jiru",
+      "canonical_gu": "જીરુ",
+      "canonical_hi": "जीरा",
+      "canonical_en": "cumin"
+    },
+    {
+      "key": "jeeru",
+      "canonical_gu": "જીરુ",
+      "canonical_hi": "जीरा",
+      "canonical_en": "cumin"
+    },
+    {
+      "key": "jeera",
+      "canonical_gu": "જીરુ",
+      "canonical_hi": "जीरा",
+      "canonical_en": "cumin"
+    },
+    {
+      "key": "cumin",
+      "canonical_gu": "જીરુ",
+      "canonical_hi": "जीरा",
+      "canonical_en": "cumin"
+    },
+    {
+      "key": "jiru dhana",
+      "canonical_gu": "જીરુ ધાણા",
+      "canonical_hi": "जीरा धनिया",
+      "canonical_en": "jeeru dhana"
+    },
+    {
+      "key": "jeeru dhana",
+      "canonical_gu": "જીરુ ધાણા",
+      "canonical_hi": "जीरा धनिया",
+      "canonical_en": "jeeru dhana"
+    },
+    {
+      "key": "rai",
+      "canonical_gu": "રાઈ",
+      "canonical_hi": "राई",
+      "canonical_en": "mustard seeds"
+    },
+    {
+      "key": "raai",
+      "canonical_gu": "રાઈ",
+      "canonical_hi": "राई",
+      "canonical_en": "mustard seeds"
+    },
+    {
+      "key": "mustard seeds",
+      "canonical_gu": "રાઈ",
+      "canonical_hi": "राई",
+      "canonical_en": "mustard seeds"
+    },
+    {
+      "key": "methi",
+      "canonical_gu": "મેથી",
+      "canonical_hi": "मेथी",
+      "canonical_en": "fenugreek"
+    },
+    {
+      "key": "methi dana",
+      "canonical_gu": "મેથી",
+      "canonical_hi": "मेथी",
+      "canonical_en": "fenugreek"
+    },
+    {
+      "key": "variyali",
+      "canonical_gu": "વરિયાળી",
+      "canonical_hi": "सौंफ",
+      "canonical_en": "fennel"
+    },
+    {
+      "key": "variyari",
+      "canonical_gu": "વરિયાળી",
+      "canonical_hi": "सौंफ",
+      "canonical_en": "fennel"
+    },
+    {
+      "key": "saunf",
+      "canonical_gu": "વરિયાળી",
+      "canonical_hi": "सौंफ",
+      "canonical_en": "fennel"
+    },
+    {
+      "key": "fennel",
+      "canonical_gu": "વરિયાળી",
+      "canonical_hi": "सौंफ",
+      "canonical_en": "fennel"
+    },
+    {
+      "key": "ajmo",
+      "canonical_gu": "અજમો",
+      "canonical_hi": "अजवाइन",
+      "canonical_en": "carom seeds"
+    },
+    {
+      "key": "ajwain",
+      "canonical_gu": "અજમો",
+      "canonical_hi": "अजवाइन",
+      "canonical_en": "carom seeds"
+    },
+    {
+      "key": "carom seeds",
+      "canonical_gu": "અજમો",
+      "canonical_hi": "अजवाइन",
+      "canonical_en": "carom seeds"
+    },
+    {
+      "key": "hing",
+      "canonical_gu": "હીંગ",
+      "canonical_hi": "हींग",
+      "canonical_en": "asafoetida"
+    },
+    {
+      "key": "heeng",
+      "canonical_gu": "હીંગ",
+      "canonical_hi": "हींग",
+      "canonical_en": "asafoetida"
+    },
+    {
+      "key": "asafoetida",
+      "canonical_gu": "હીંગ",
+      "canonical_hi": "हींग",
+      "canonical_en": "asafoetida"
+    },
+    {
+      "key": "laving",
+      "canonical_gu": "લવિંગ",
+      "canonical_hi": "लौंग",
+      "canonical_en": "clove"
+    },
+    {
+      "key": "laung",
+      "canonical_gu": "લવિંગ",
+      "canonical_hi": "लौंग",
+      "canonical_en": "clove"
+    },
+    {
+      "key": "clove",
+      "canonical_gu": "લવિંગ",
+      "canonical_hi": "लौंग",
+      "canonical_en": "clove"
+    },
+    {
+      "key": "taj",
+      "canonical_gu": "તજ",
+      "canonical_hi": "दालचीनी",
+      "canonical_en": "cinnamon"
+    },
+    {
+      "key": "dalchini",
+      "canonical_gu": "તજ",
+      "canonical_hi": "दालचीनी",
+      "canonical_en": "cinnamon"
+    },
+    {
+      "key": "cinnamon",
+      "canonical_gu": "તજ",
+      "canonical_hi": "दालचीनी",
+      "canonical_en": "cinnamon"
+    },
+    {
+      "key": "elchi",
+      "canonical_gu": "એલચી",
+      "canonical_hi": "इलायची",
+      "canonical_en": "cardamom"
+    },
+    {
+      "key": "elaichi",
+      "canonical_gu": "એલચી",
+      "canonical_hi": "इलायची",
+      "canonical_en": "cardamom"
+    },
+    {
+      "key": "cardamom",
+      "canonical_gu": "એલચી",
+      "canonical_hi": "इलायची",
+      "canonical_en": "cardamom"
+    },
+    {
+      "key": "mari",
+      "canonical_gu": "મરી",
+      "canonical_hi": "काली मिर्च",
+      "canonical_en": "black pepper"
+    },
+    {
+      "key": "kali mari",
+      "canonical_gu": "મરી",
+      "canonical_hi": "काली मिर्च",
+      "canonical_en": "black pepper"
+    },
+    {
+      "key": "pepper",
+      "canonical_gu": "મરી",
+      "canonical_hi": "काली मिर्च",
+      "canonical_en": "black pepper"
+    },
+    {
+      "key": "tamalpatra",
+      "canonical_gu": "તમાલપત્ર",
+      "canonical_hi": "तेजपत्ता",
+      "canonical_en": "bay leaf"
+    },
+    {
+      "key": "tejpatta",
+      "canonical_gu": "તમાલપત્ર",
+      "canonical_hi": "तेजपत्ता",
+      "canonical_en": "bay leaf"
+    },
+    {
+      "key": "bay leaf",
+      "canonical_gu": "તમાલપત્ર",
+      "canonical_hi": "तेजपत्ता",
+      "canonical_en": "bay leaf"
+    },
+    {
+      "key": "jaifad",
+      "canonical_gu": "જાયફળ",
+      "canonical_hi": "जायफल",
+      "canonical_en": "nutmeg"
+    },
+    {
+      "key": "jaiphal",
+      "canonical_gu": "જાયફળ",
+      "canonical_hi": "जायफल",
+      "canonical_en": "nutmeg"
+    },
+    {
+      "key": "nutmeg",
+      "canonical_gu": "જાયફળ",
+      "canonical_hi": "जायफल",
+      "canonical_en": "nutmeg"
+    },
+    {
+      "key": "javantri",
+      "canonical_gu": "જાવંત્રી",
+      "canonical_hi": "जावित्री",
+      "canonical_en": "mace"
+    },
+    {
+      "key": "javitri",
+      "canonical_gu": "જાવંત્રી",
+      "canonical_hi": "जावित्री",
+      "canonical_en": "mace"
+    },
+    {
+      "key": "mace",
+      "canonical_gu": "જાવંત્રી",
+      "canonical_hi": "जावित्री",
+      "canonical_en": "mace"
+    },
+    {
+      "key": "til",
+      "canonical_gu": "તલ",
+      "canonical_hi": "तिल",
+      "canonical_en": "sesame seeds"
+    },
+    {
+      "key": "tal",
+      "canonical_gu": "તલ",
+      "canonical_hi": "तिल",
+      "canonical_en": "sesame seeds"
+    },
+    {
+      "key": "sesame",
+      "canonical_gu": "તલ",
+      "canonical_hi": "तिल",
+      "canonical_en": "sesame seeds"
+    },
+    {
+      "key": "khaskhas",
+      "canonical_gu": "ખસખસ",
+      "canonical_hi": "खसखस",
+      "canonical_en": "poppy seeds"
+    },
+    {
+      "key": "khus khus",
+      "canonical_gu": "ખસખસ",
+      "canonical_hi": "खसखस",
+      "canonical_en": "poppy seeds"
+    },
+    {
+      "key": "poppy seeds",
+      "canonical_gu": "ખસખસ",
+      "canonical_hi": "खसखस",
+      "canonical_en": "poppy seeds"
+    },
+    {
+      "key": "garam masalo",
+      "canonical_gu": "ગરમ મસાલો",
+      "canonical_hi": "गरम मसाला",
+      "canonical_en": "garam masala"
+    },
+    {
+      "key": "garam masala",
+      "canonical_gu": "ગરમ મસાલો",
+      "canonical_hi": "गरम मसाला",
+      "canonical_en": "garam masala"
+    },
+    {
+      "key": "pavbhaji masalo",
+      "canonical_gu": "પાવભાજી મસાલો",
+      "canonical_hi": "पावभाजी मसाला",
+      "canonical_en": "pav bhaji masala"
+    },
+    {
+      "key": "pav bhaji masala",
+      "canonical_gu": "પાવભાજી મસાલો",
+      "canonical_hi": "पावभाजी मसाला",
+      "canonical_en": "pav bhaji masala"
+    },
+    {
+      "key": "pulav masalo",
+      "canonical_gu": "પુલાવ મસાલો",
+      "canonical_hi": "पुलाव मसाला",
+      "canonical_en": "pulav masala"
+    },
+    {
+      "key": "pulao masala",
+      "canonical_gu": "પુલાવ મસાલો",
+      "canonical_hi": "पुलाव मसाला",
+      "canonical_en": "pulav masala"
+    },
+    {
+      "key": "punjabi masalo",
+      "canonical_gu": "પંજાબી મસાલો",
+      "canonical_hi": "पंजाबी मसाला",
+      "canonical_en": "punjabi masala"
+    },
+    {
+      "key": "punjabi masala",
+      "canonical_gu": "પંજાબી મસાલો",
+      "canonical_hi": "पंजाबी मसाला",
+      "canonical_en": "punjabi masala"
+    },
+    {
+      "key": "chole masalo",
+      "canonical_gu": "છોલે મસાલો",
+      "canonical_hi": "छोले मसाला",
+      "canonical_en": "chole masala"
+    },
+    {
+      "key": "chhole masala",
+      "canonical_gu": "છોલે મસાલો",
+      "canonical_hi": "छोले मसाला",
+      "canonical_en": "chole masala"
+    },
+    {
+      "key": "sambhar masalo",
+      "canonical_gu": "સાંભાર મસાલો",
+      "canonical_hi": "सांभर मसाला",
+      "canonical_en": "sambhar masala"
+    },
+    {
+      "key": "sambar masala",
+      "canonical_gu": "સાંભાર મસાલો",
+      "canonical_hi": "सांभर मसाला",
+      "canonical_en": "sambhar masala"
+    },
+    {
+      "key": "cha masalo",
+      "canonical_gu": "ચા મસાલો",
+      "canonical_hi": "चाय मसाला",
+      "canonical_en": "chai masala"
+    },
+    {
+      "key": "chai masala",
+      "canonical_gu": "ચા મસાલો",
+      "canonical_hi": "चाय मसाला",
+      "canonical_en": "chai masala"
+    },
+    {
+      "key": "tea masala",
+      "canonical_gu": "ચા મસાલો",
+      "canonical_hi": "चाय मसाला",
+      "canonical_en": "chai masala"
+    },
+    {
+      "key": "kitchen king",
+      "canonical_gu": "કિચન કિંગ",
+      "canonical_hi": "किचन किंग",
+      "canonical_en": "kitchen king"
+    },
+    {
+      "key": "kichan king",
+      "canonical_gu": "કિચન કિંગ",
+      "canonical_hi": "किचन किंग",
+      "canonical_en": "kitchen king"
+    },
+    {
+      "key": "magfali tel",
+      "canonical_gu": "મગફળી તેલ",
+      "canonical_hi": "मूंगफली तेल",
+      "canonical_en": "groundnut oil"
+    },
+    {
+      "key": "mgfli tel",
+      "canonical_gu": "મગફળી તેલ",
+      "canonical_hi": "मूंगफली तेल",
+      "canonical_en": "groundnut oil"
+    },
+    {
+      "key": "peanut oil",
+      "canonical_gu": "મગફળી તેલ",
+      "canonical_hi": "मूंगफली तेल",
+      "canonical_en": "groundnut oil"
+    },
+    {
+      "key": "groundnut oil",
+      "canonical_gu": "મગફળી તેલ",
+      "canonical_hi": "मूंगफली तेल",
+      "canonical_en": "groundnut oil"
+    },
+    {
+      "key": "kapasiya tel",
+      "canonical_gu": "કપાસિયા તેલ",
+      "canonical_hi": "कपासिया तेल",
+      "canonical_en": "cottonseed oil"
+    },
+    {
+      "key": "cottonseed oil",
+      "canonical_gu": "કપાસિયા તેલ",
+      "canonical_hi": "कपासिया तेल",
+      "canonical_en": "cottonseed oil"
+    },
+    {
+      "key": "suryamukhi tel",
+      "canonical_gu": "સૂર્યમુખી તેલ",
+      "canonical_hi": "सूरजमुखी तेल",
+      "canonical_en": "sunflower oil"
+    },
+    {
+      "key": "sunflower oil",
+      "canonical_gu": "સૂર્યમુખી તેલ",
+      "canonical_hi": "सूरजमुखी तेल",
+      "canonical_en": "sunflower oil"
+    },
+    {
+      "key": "sarso tel",
+      "canonical_gu": "સરસવ તેલ",
+      "canonical_hi": "सरसों तेल",
+      "canonical_en": "mustard oil"
+    },
+    {
+      "key": "sarsav tel",
+      "canonical_gu": "સરસવ તેલ",
+      "canonical_hi": "सरसों तेल",
+      "canonical_en": "mustard oil"
+    },
+    {
+      "key": "mustard oil",
+      "canonical_gu": "સરસવ તેલ",
+      "canonical_hi": "सरसों तेल",
+      "canonical_en": "mustard oil"
+    },
+    {
+      "key": "ghee",
+      "canonical_gu": "ઘી",
+      "canonical_hi": "घी",
+      "canonical_en": "ghee"
+    },
+    {
+      "key": "ghi",
+      "canonical_gu": "ઘી",
+      "canonical_hi": "घी",
+      "canonical_en": "ghee"
+    },
+    {
+      "key": "vanaspati",
+      "canonical_gu": "વનસ્પતિ",
+      "canonical_hi": "वनस्पति",
+      "canonical_en": "vanaspati"
+    },
+    {
+      "key": "dalda",
+      "canonical_gu": "વનસ્પતિ",
+      "canonical_hi": "वनस्पति",
+      "canonical_en": "vanaspati"
+    },
+    {
+      "key": "mithu",
+      "canonical_gu": "મીઠું",
+      "canonical_hi": "नमक",
+      "canonical_en": "salt"
+    },
+    {
+      "key": "meethu",
+      "canonical_gu": "મીઠું",
+      "canonical_hi": "नमक",
+      "canonical_en": "salt"
+    },
+    {
+      "key": "namak",
+      "canonical_gu": "મીઠું",
+      "canonical_hi": "नमक",
+      "canonical_en": "salt"
+    },
+    {
+      "key": "salt",
+      "canonical_gu": "મીઠું",
+      "canonical_hi": "नमक",
+      "canonical_en": "salt"
+    },
+    {
+      "key": "sendha mithu",
+      "canonical_gu": "સેંધા મીઠું",
+      "canonical_hi": "सेंधा नमक",
+      "canonical_en": "rock salt"
+    },
+    {
+      "key": "sendha namak",
+      "canonical_gu": "સેંધા મીઠું",
+      "canonical_hi": "सेंधा नमक",
+      "canonical_en": "rock salt"
+    },
+    {
+      "key": "rock salt",
+      "canonical_gu": "સેંધા મીઠું",
+      "canonical_hi": "सेंधा नमक",
+      "canonical_en": "rock salt"
+    },
+    {
+      "key": "kalu mithu",
+      "canonical_gu": "કાળું મીઠું",
+      "canonical_hi": "काला नमक",
+      "canonical_en": "black salt"
+    },
+    {
+      "key": "kala namak",
+      "canonical_gu": "કાળું મીઠું",
+      "canonical_hi": "काला नमक",
+      "canonical_en": "black salt"
+    },
+    {
+      "key": "black salt",
+      "canonical_gu": "કાળું મીઠું",
+      "canonical_hi": "काला नमक",
+      "canonical_en": "black salt"
+    },
+    {
+      "key": "khand",
+      "canonical_gu": "ખાંડ",
+      "canonical_hi": "चीनी",
+      "canonical_en": "sugar"
+    },
+    {
+      "key": "khnd",
+      "canonical_gu": "ખાંડ",
+      "canonical_hi": "चीनी",
+      "canonical_en": "sugar"
+    },
+    {
+      "key": "sugar",
+      "canonical_gu": "ખાંડ",
+      "canonical_hi": "चीनी",
+      "canonical_en": "sugar"
+    },
+    {
+      "key": "sakar",
+      "canonical_gu": "ખાંડ",
+      "canonical_hi": "चीनी",
+      "canonical_en": "sugar"
+    },
+    {
+      "key": "buro",
+      "canonical_gu": "બુરો",
+      "canonical_hi": "बूरा",
+      "canonical_en": "bura sugar"
+    },
+    {
+      "key": "bura sugar",
+      "canonical_gu": "બુરો",
+      "canonical_hi": "बूरा",
+      "canonical_en": "bura sugar"
+    },
+    {
+      "key": "sakar",
+      "canonical_gu": "સાકર",
+      "canonical_hi": "मिश्री",
+      "canonical_en": "sugar candy"
+    },
+    {
+      "key": "sugar candy",
+      "canonical_gu": "સાકર",
+      "canonical_hi": "मिश्री",
+      "canonical_en": "sugar candy"
+    },
+    {
+      "key": "misri",
+      "canonical_gu": "સાકર",
+      "canonical_hi": "मिश्री",
+      "canonical_en": "sugar candy"
+    },
+    {
+      "key": "gol",
+      "canonical_gu": "ગોળ",
+      "canonical_hi": "गुड़",
+      "canonical_en": "jaggery"
+    },
+    {
+      "key": "gud",
+      "canonical_gu": "ગોળ",
+      "canonical_hi": "गुड़",
+      "canonical_en": "jaggery"
+    },
+    {
+      "key": "jaggery",
+      "canonical_gu": "ગોળ",
+      "canonical_hi": "गुड़",
+      "canonical_en": "jaggery"
+    },
+    {
+      "key": "maggi",
+      "canonical_gu": "મેગી",
+      "canonical_hi": "मैगी",
+      "canonical_en": "maggi"
+    },
+    {
+      "key": "magi",
+      "canonical_gu": "મેગી",
+      "canonical_hi": "मैगी",
+      "canonical_en": "maggi"
+    },
+    {
+      "key": "sevaiya",
+      "canonical_gu": "સેવૈયા",
+      "canonical_hi": "सेवइयां",
+      "canonical_en": "vermicelli"
+    },
+    {
+      "key": "seviya",
+      "canonical_gu": "સેવૈયા",
+      "canonical_hi": "सेवइयां",
+      "canonical_en": "vermicelli"
+    },
+    {
+      "key": "vermicelli",
+      "canonical_gu": "સેવૈયા",
+      "canonical_hi": "सेवइयां",
+      "canonical_en": "vermicelli"
+    },
+    {
+      "key": "pasta",
+      "canonical_gu": "પાસ્તા",
+      "canonical_hi": "पास्ता",
+      "canonical_en": "pasta"
+    },
+    {
+      "key": "parle g",
+      "canonical_gu": "પારલે જી",
+      "canonical_hi": "पारले जी",
+      "canonical_en": "parle-g"
+    },
+    {
+      "key": "parlegi",
+      "canonical_gu": "પારલે જી",
+      "canonical_hi": "पारले जी",
+      "canonical_en": "parle-g"
+    },
+    {
+      "key": "parle-g",
+      "canonical_gu": "પારલે જી",
+      "canonical_hi": "पारले जी",
+      "canonical_en": "parle-g"
+    },
+    {
+      "key": "mari biscuit",
+      "canonical_gu": "મેરી",
+      "canonical_hi": "मैरी",
+      "canonical_en": "marie biscuit"
+    },
+    {
+      "key": "marie",
+      "canonical_gu": "મેરી",
+      "canonical_hi": "मैरी",
+      "canonical_en": "marie biscuit"
+    },
+    {
+      "key": "gud day",
+      "canonical_gu": "ગુડ ડે",
+      "canonical_hi": "गुड डे",
+      "canonical_en": "good day"
+    },
+    {
+      "key": "good day",
+      "canonical_gu": "ગુડ ડે",
+      "canonical_hi": "गुड डे",
+      "canonical_en": "good day"
+    },
+    {
+      "key": "50 50",
+      "canonical_gu": "50-50",
+      "canonical_hi": "50-50",
+      "canonical_en": "50-50"
+    },
+    {
+      "key": "5050",
+      "canonical_gu": "50-50",
+      "canonical_hi": "50-50",
+      "canonical_en": "50-50"
+    },
+    {
+      "key": "monaco",
+      "canonical_gu": "મોનાકો",
+      "canonical_hi": "मोनाको",
+      "canonical_en": "monaco"
+    },
+    {
+      "key": "krackjack",
+      "canonical_gu": "ક્રેકજેક",
+      "canonical_hi": "क्रैकजैक",
+      "canonical_en": "krackjack"
+    },
+    {
+      "key": "crack jack",
+      "canonical_gu": "ક્રેકજેક",
+      "canonical_hi": "क्रैकजैक",
+      "canonical_en": "krackjack"
+    },
+    {
+      "key": "bourbon",
+      "canonical_gu": "બોર્બન",
+      "canonical_hi": "बोरबॉन",
+      "canonical_en": "bourbon"
+    },
+    {
+      "key": "borban",
+      "canonical_gu": "બોર્બન",
+      "canonical_hi": "बोरबॉन",
+      "canonical_en": "bourbon"
+    },
+    {
+      "key": "oreo",
+      "canonical_gu": "ઓરિયો",
+      "canonical_hi": "ओरियो",
+      "canonical_en": "oreo"
+    },
+    {
+      "key": "sev",
+      "canonical_gu": "સેવ",
+      "canonical_hi": "सेव",
+      "canonical_en": "sev"
+    },
+    {
+      "key": "gathiya",
+      "canonical_gu": "ગાંઠિયા",
+      "canonical_hi": "गठिया",
+      "canonical_en": "gathiya"
+    },
+    {
+      "key": "gathia",
+      "canonical_gu": "ગાંઠિયા",
+      "canonical_hi": "गठिया",
+      "canonical_en": "gathiya"
+    },
+    {
+      "key": "bhujiya",
+      "canonical_gu": "ભુજિયા",
+      "canonical_hi": "भुजिया",
+      "canonical_en": "bhujiya"
+    },
+    {
+      "key": "bhujia",
+      "canonical_gu": "ભુજિયા",
+      "canonical_hi": "भुजिया",
+      "canonical_en": "bhujiya"
+    },
+    {
+      "key": "chivdo",
+      "canonical_gu": "ચીવડો",
+      "canonical_hi": "चिवड़ा",
+      "canonical_en": "chivda"
+    },
+    {
+      "key": "chivda",
+      "canonical_gu": "ચીવડો",
+      "canonical_hi": "चिवड़ा",
+      "canonical_en": "chivda"
+    },
+    {
+      "key": "mixture",
+      "canonical_gu": "મિક્સચર",
+      "canonical_hi": "मिक्सचर",
+      "canonical_en": "mixture"
+    },
+    {
+      "key": "chana sing",
+      "canonical_gu": "ચણા સિંગ",
+      "canonical_hi": "चना सिंग",
+      "canonical_en": "chana sing"
+    },
+    {
+      "key": "chana singh",
+      "canonical_gu": "ચણા સિંગ",
+      "canonical_hi": "चना सिंग",
+      "canonical_en": "chana sing"
+    },
+    {
+      "key": "chana peanut",
+      "canonical_gu": "ચણા સિંગ",
+      "canonical_hi": "चना सिंग",
+      "canonical_en": "chana sing"
+    },
+    {
+      "key": "papdi",
+      "canonical_gu": "પાપડી",
+      "canonical_hi": "पापड़ी",
+      "canonical_en": "papdi"
+    },
+    {
+      "key": "chips",
+      "canonical_gu": "ચિપ્સ",
+      "canonical_hi": "चिप्स",
+      "canonical_en": "chips"
+    },
+    {
+      "key": "kurkure",
+      "canonical_gu": "કુરકુરે",
+      "canonical_hi": "कुरकुरे",
+      "canonical_en": "kurkure"
+    },
+    {
+      "key": "lays",
+      "canonical_gu": "લેઝ",
+      "canonical_hi": "लेज़",
+      "canonical_en": "lays"
+    },
+    {
+      "key": "lehs",
+      "canonical_gu": "લેઝ",
+      "canonical_hi": "लेज़",
+      "canonical_en": "lays"
+    },
+    {
+      "key": "badam",
+      "canonical_gu": "બદામ",
+      "canonical_hi": "बादाम",
+      "canonical_en": "almonds"
+    },
+    {
+      "key": "badaam",
+      "canonical_gu": "બદામ",
+      "canonical_hi": "बादाम",
+      "canonical_en": "almonds"
+    },
+    {
+      "key": "almond",
+      "canonical_gu": "બદામ",
+      "canonical_hi": "बादाम",
+      "canonical_en": "almonds"
+    },
+    {
+      "key": "kaju",
+      "canonical_gu": "કાજુ",
+      "canonical_hi": "काजू",
+      "canonical_en": "cashew"
+    },
+    {
+      "key": "cashew",
+      "canonical_gu": "કાજુ",
+      "canonical_hi": "काजू",
+      "canonical_en": "cashew"
+    },
+    {
+      "key": "kismis",
+      "canonical_gu": "કિસમિસ",
+      "canonical_hi": "किशमिश",
+      "canonical_en": "raisins"
+    },
+    {
+      "key": "kishmish",
+      "canonical_gu": "કિસમિસ",
+      "canonical_hi": "किशमिश",
+      "canonical_en": "raisins"
+    },
+    {
+      "key": "raisins",
+      "canonical_gu": "કિસમિસ",
+      "canonical_hi": "किशमिश",
+      "canonical_en": "raisins"
+    },
+    {
+      "key": "akhrot",
+      "canonical_gu": "અખરોટ",
+      "canonical_hi": "अखरोट",
+      "canonical_en": "walnut"
+    },
+    {
+      "key": "walnut",
+      "canonical_gu": "અખરોટ",
+      "canonical_hi": "अखरोट",
+      "canonical_en": "walnut"
+    },
+    {
+      "key": "pista",
+      "canonical_gu": "પિસ્તા",
+      "canonical_hi": "पिस्ता",
+      "canonical_en": "pista"
+    },
+    {
+      "key": "pistaa",
+      "canonical_gu": "પિસ્તા",
+      "canonical_hi": "पिस्ता",
+      "canonical_en": "pista"
+    },
+    {
+      "key": "anjir",
+      "canonical_gu": "અંજીર",
+      "canonical_hi": "अंजीर",
+      "canonical_en": "fig"
+    },
+    {
+      "key": "fig",
+      "canonical_gu": "અંજીર",
+      "canonical_hi": "अंजीर",
+      "canonical_en": "fig"
+    },
+    {
+      "key": "kharek",
+      "canonical_gu": "ખારેક",
+      "canonical_hi": "खारक",
+      "canonical_en": "dry dates"
+    },
+    {
+      "key": "dry dates",
+      "canonical_gu": "ખારેક",
+      "canonical_hi": "खारक",
+      "canonical_en": "dry dates"
+    },
+    {
+      "key": "udad papad",
+      "canonical_gu": "ઉડદ પાપડ",
+      "canonical_hi": "उड़द पापड़",
+      "canonical_en": "udad papad"
+    },
+    {
+      "key": "urad papad",
+      "canonical_gu": "ઉડદ પાપડ",
+      "canonical_hi": "उड़द पापड़",
+      "canonical_en": "udad papad"
+    },
+    {
+      "key": "chokha na papad",
+      "canonical_gu": "ચોખાના પાપડ",
+      "canonical_hi": "चावल पापड़",
+      "canonical_en": "rice papad"
+    },
+    {
+      "key": "rice papad",
+      "canonical_gu": "ચોખાના પાપડ",
+      "canonical_hi": "चावल पापड़",
+      "canonical_en": "rice papad"
+    },
+    {
+      "key": "khichiya",
+      "canonical_gu": "ખીચિયા",
+      "canonical_hi": "खिचिया",
+      "canonical_en": "khichiya"
+    },
+    {
+      "key": "khichia",
+      "canonical_gu": "ખીચિયા",
+      "canonical_hi": "खिचिया",
+      "canonical_en": "khichiya"
+    },
+    {
+      "key": "tamata sauce",
+      "canonical_gu": "ટમેટા સોસ",
+      "canonical_hi": "टमाटर सॉस",
+      "canonical_en": "tomato sauce"
+    },
+    {
+      "key": "tomato sauce",
+      "canonical_gu": "ટમેટા સોસ",
+      "canonical_hi": "टमाटर सॉस",
+      "canonical_en": "tomato sauce"
+    },
+    {
+      "key": "chilli sauce",
+      "canonical_gu": "ચિલી સોસ",
+      "canonical_hi": "चिली सॉस",
+      "canonical_en": "chilli sauce"
+    },
+    {
+      "key": "chili sauce",
+      "canonical_gu": "ચિલી સોસ",
+      "canonical_hi": "चिली सॉस",
+      "canonical_en": "chilli sauce"
+    },
+    {
+      "key": "soya sauce",
+      "canonical_gu": "સોયા સોસ",
+      "canonical_hi": "सोया सॉस",
+      "canonical_en": "soy sauce"
+    },
+    {
+      "key": "soy sauce",
+      "canonical_gu": "સોયા સોસ",
+      "canonical_hi": "सोया सॉस",
+      "canonical_en": "soy sauce"
+    },
+    {
+      "key": "vinegar",
+      "canonical_gu": "વિનેગર",
+      "canonical_hi": "सिरका",
+      "canonical_en": "vinegar"
+    },
+    {
+      "key": "sarko",
+      "canonical_gu": "વિનેગર",
+      "canonical_hi": "सिरका",
+      "canonical_en": "vinegar"
+    },
+    {
+      "key": "jam",
+      "canonical_gu": "જામ",
+      "canonical_hi": "जैम",
+      "canonical_en": "jam"
+    },
+    {
+      "key": "madh",
+      "canonical_gu": "મધ",
+      "canonical_hi": "शहद",
+      "canonical_en": "honey"
+    },
+    {
+      "key": "honey",
+      "canonical_gu": "મધ",
+      "canonical_hi": "शहद",
+      "canonical_en": "honey"
+    },
+    {
+      "key": "baking powder",
+      "canonical_gu": "બેકિંગ પાવડર",
+      "canonical_hi": "बेकिंग पाउडर",
+      "canonical_en": "baking powder"
+    },
+    {
+      "key": "baking soda",
+      "canonical_gu": "બેકિંગ સોડા",
+      "canonical_hi": "बेकिंग सोडा",
+      "canonical_en": "baking soda"
+    },
+    {
+      "key": "yeast",
+      "canonical_gu": "ઈસ્ટ",
+      "canonical_hi": "यीस्ट",
+      "canonical_en": "yeast"
+    },
+    {
+      "key": "east",
+      "canonical_gu": "ઈસ્ટ",
+      "canonical_hi": "यीस्ट",
+      "canonical_en": "yeast"
+    },
+    {
+      "key": "corn flour",
+      "canonical_gu": "કોર્ન ફ્લોર",
+      "canonical_hi": "कॉर्न फ्लोर",
+      "canonical_en": "corn flour"
+    },
+    {
+      "key": "cornflour",
+      "canonical_gu": "કોર્ન ફ્લોર",
+      "canonical_hi": "कॉर्न फ्लोर",
+      "canonical_en": "corn flour"
+    },
+    {
+      "key": "custard powder",
+      "canonical_gu": "કસ્ટર્ડ પાવડર",
+      "canonical_hi": "कस्टर्ड पाउडर",
+      "canonical_en": "custard powder"
+    },
+    {
+      "key": "surf",
+      "canonical_gu": "સર્ફ",
+      "canonical_hi": "सर्फ",
+      "canonical_en": "surf"
+    },
+    {
+      "key": "surf excel",
+      "canonical_gu": "સર્ફ",
+      "canonical_hi": "सर्फ",
+      "canonical_en": "surf"
+    },
+    {
+      "key": "ariel",
+      "canonical_gu": "એરિયલ",
+      "canonical_hi": "एरियल",
+      "canonical_en": "ariel"
+    },
+    {
+      "key": "wheel",
+      "canonical_gu": "વ્હીલ",
+      "canonical_hi": "व्हील",
+      "canonical_en": "wheel"
+    },
+    {
+      "key": "nirma",
+      "canonical_gu": "નિર્મા",
+      "canonical_hi": "निरमा",
+      "canonical_en": "nirma"
+    },
+    {
+      "key": "tide",
+      "canonical_gu": "ટાઈડ",
+      "canonical_hi": "टाइड",
+      "canonical_en": "tide"
+    },
+    {
+      "key": "rin",
+      "canonical_gu": "રિન",
+      "canonical_hi": "रिन",
+      "canonical_en": "rin"
+    },
+    {
+      "key": "soap bar",
+      "canonical_gu": "સોપ બાર",
+      "canonical_hi": "साबुन बार",
+      "canonical_en": "soap bar"
+    },
+    {
+      "key": "detergent soap",
+      "canonical_gu": "સોપ બાર",
+      "canonical_hi": "साबुन बार",
+      "canonical_en": "soap bar"
+    },
+    {
+      "key": "sabu",
+      "canonical_gu": "સાબુ",
+      "canonical_hi": "साबुन",
+      "canonical_en": "soap"
+    },
+    {
+      "key": "sabun",
+      "canonical_gu": "સાબુ",
+      "canonical_hi": "साबुन",
+      "canonical_en": "soap"
+    },
+    {
+      "key": "soap",
+      "canonical_gu": "સાબુ",
+      "canonical_hi": "साबुन",
+      "canonical_en": "soap"
+    },
+    {
+      "key": "toothpaste",
+      "canonical_gu": "ટૂથપેસ્ટ",
+      "canonical_hi": "टूथपेस्ट",
+      "canonical_en": "toothpaste"
+    },
+    {
+      "key": "paste",
+      "canonical_gu": "ટૂથપેસ્ટ",
+      "canonical_hi": "टूथपेस्ट",
+      "canonical_en": "toothpaste"
+    },
+    {
+      "key": "toothbrush",
+      "canonical_gu": "ટૂથબ્રશ",
+      "canonical_hi": "टूथब्रश",
+      "canonical_en": "toothbrush"
+    },
+    {
+      "key": "brush",
+      "canonical_gu": "ટૂથબ્રશ",
+      "canonical_hi": "टूथब्रश",
+      "canonical_en": "toothbrush"
+    },
+    {
+      "key": "shampoo",
+      "canonical_gu": "શેમ્પૂ",
+      "canonical_hi": "शैम्पू",
+      "canonical_en": "shampoo"
+    },
+    {
+      "key": "shempu",
+      "canonical_gu": "શેમ્પૂ",
+      "canonical_hi": "शैम्पू",
+      "canonical_en": "shampoo"
+    },
+    {
+      "key": "vad nu tel",
+      "canonical_gu": "વાળનું તેલ",
+      "canonical_hi": "बालों का तेल",
+      "canonical_en": "hair oil"
+    },
+    {
+      "key": "hair oil",
+      "canonical_gu": "વાળનું તેલ",
+      "canonical_hi": "बालों का तेल",
+      "canonical_en": "hair oil"
+    },
+    {
+      "key": "talcum powder",
+      "canonical_gu": "ટેલકમ પાવડર",
+      "canonical_hi": "टैल्कम पाउडर",
+      "canonical_en": "talcum powder"
+    },
+    {
+      "key": "talc",
+      "canonical_gu": "ટેલકમ પાવડર",
+      "canonical_hi": "टैल्कम पाउडर",
+      "canonical_en": "talcum powder"
+    },
+    {
+      "key": "cream",
+      "canonical_gu": "ક્રીમ",
+      "canonical_hi": "क्रीम",
+      "canonical_en": "cream"
+    },
+    {
+      "key": "lip balm",
+      "canonical_gu": "લિપ બામ",
+      "canonical_hi": "लिप बाम",
+      "canonical_en": "lip balm"
+    },
+    {
+      "key": "vaseline",
+      "canonical_gu": "વેસેલિન",
+      "canonical_hi": "वैसलीन",
+      "canonical_en": "vaseline"
+    },
+    {
+      "key": "dadhi blade",
+      "canonical_gu": "દાઢી બ્લેડ",
+      "canonical_hi": "दाढ़ी ब्लेड",
+      "canonical_en": "razor blade"
+    },
+    {
+      "key": "razor blade",
+      "canonical_gu": "દાઢી બ્લેડ",
+      "canonical_hi": "दाढ़ी ब्लेड",
+      "canonical_en": "razor blade"
+    },
+    {
+      "key": "blade",
+      "canonical_gu": "દાઢી બ્લેડ",
+      "canonical_hi": "दाढ़ी ब्लेड",
+      "canonical_en": "razor blade"
+    },
+    {
+      "key": "shaving cream",
+      "canonical_gu": "શેવિંગ ક્રીમ",
+      "canonical_hi": "शेविंग क्रीम",
+      "canonical_en": "shaving cream"
+    },
+    {
+      "key": "agarbatti",
+      "canonical_gu": "અગરબત્તી",
+      "canonical_hi": "अगरबत्ती",
+      "canonical_en": "agarbatti"
+    },
+    {
+      "key": "agarbatii",
+      "canonical_gu": "અગરબત્તી",
+      "canonical_hi": "अगरबत्ती",
+      "canonical_en": "agarbatti"
+    },
+    {
+      "key": "dhoop",
+      "canonical_gu": "ધૂપ",
+      "canonical_hi": "धूप",
+      "canonical_en": "dhoop"
+    },
+    {
+      "key": "kapur",
+      "canonical_gu": "કપૂર",
+      "canonical_hi": "कपूर",
+      "canonical_en": "camphor"
+    },
+    {
+      "key": "camphor",
+      "canonical_gu": "કપૂર",
+      "canonical_hi": "कपूर",
+      "canonical_en": "camphor"
+    },
+    {
+      "key": "ru",
+      "canonical_gu": "રૂ",
+      "canonical_hi": "रुई",
+      "canonical_en": "cotton"
+    },
+    {
+      "key": "cotton",
+      "canonical_gu": "રૂ",
+      "canonical_hi": "रुई",
+      "canonical_en": "cotton"
+    },
+    {
+      "key": "kanku",
+      "canonical_gu": "કંકુ",
+      "canonical_hi": "कुमकुम",
+      "canonical_en": "kumkum"
+    },
+    {
+      "key": "kumkum",
+      "canonical_gu": "કંકુ",
+      "canonical_hi": "कुमकुम",
+      "canonical_en": "kumkum"
+    },
+    {
+      "key": "nalier",
+      "canonical_gu": "નાળિયેર",
+      "canonical_hi": "नारियल",
+      "canonical_en": "coconut"
+    },
+    {
+      "key": "naliyer",
+      "canonical_gu": "નાળિયેર",
+      "canonical_hi": "नारियल",
+      "canonical_en": "coconut"
+    },
+    {
+      "key": "coconut",
+      "canonical_gu": "નાળિયેર",
+      "canonical_hi": "नारियल",
+      "canonical_en": "coconut"
+    },
+    {
+      "key": "vaat",
+      "canonical_gu": "વાટ",
+      "canonical_hi": "बाती",
+      "canonical_en": "wick"
+    },
+    {
+      "key": "wick",
+      "canonical_gu": "વાટ",
+      "canonical_hi": "बाती",
+      "canonical_en": "wick"
+    },
+    {
+      "key": "diyasadi",
+      "canonical_gu": "દીવાસળી",
+      "canonical_hi": "माचिस",
+      "canonical_en": "matchstick"
+    },
+    {
+      "key": "matchstick",
+      "canonical_gu": "દીવાસળી",
+      "canonical_hi": "माचिस",
+      "canonical_en": "matchstick"
+    },
+    {
+      "key": "machis",
+      "canonical_gu": "દીવાસળી",
+      "canonical_hi": "माचिस",
+      "canonical_en": "matchstick"
+    },
+    {
+      "key": "lighter",
+      "canonical_gu": "લાઈટર",
+      "canonical_hi": "लाइटर",
+      "canonical_en": "lighter"
+    },
+    {
+      "key": "minbatti",
+      "canonical_gu": "મીણબત્તી",
+      "canonical_hi": "मोमबत्ती",
+      "canonical_en": "candle"
+    },
+    {
+      "key": "candle",
+      "canonical_gu": "મીણબત્તી",
+      "canonical_hi": "मोमबत्ती",
+      "canonical_en": "candle"
+    },
+    {
+      "key": "aluminium foil",
+      "canonical_gu": "એલ્યુમિનિયમ ફોઇલ",
+      "canonical_hi": "एल्युमिनियम फॉयल",
+      "canonical_en": "aluminium foil"
+    },
+    {
+      "key": "foil",
+      "canonical_gu": "એલ્યુમિનિયમ ફોઇલ",
+      "canonical_hi": "एल्युमिनियम फॉयल",
+      "canonical_en": "aluminium foil"
+    },
+    {
+      "key": "pen",
+      "canonical_gu": "પેન",
+      "canonical_hi": "पेन",
+      "canonical_en": "pen"
+    },
+    {
+      "key": "pencil",
+      "canonical_gu": "પેન્સિલ",
+      "canonical_hi": "पेंसिल",
+      "canonical_en": "pencil"
+    },
+    {
+      "key": "rubber",
+      "canonical_gu": "રબર",
+      "canonical_hi": "रबर",
+      "canonical_en": "eraser"
+    },
+    {
+      "key": "eraser",
+      "canonical_gu": "રબર",
+      "canonical_hi": "रबर",
+      "canonical_en": "eraser"
+    },
+    {
+      "key": "sharpener",
+      "canonical_gu": "શાર્પનર",
+      "canonical_hi": "शार्पनर",
+      "canonical_en": "sharpener"
+    },
+    {
+      "key": "notebook",
+      "canonical_gu": "નોટબુક",
+      "canonical_hi": "नोटबुक",
+      "canonical_en": "notebook"
+    },
+    {
+      "key": "marker",
+      "canonical_gu": "માર્કર",
+      "canonical_hi": "मार्कर",
+      "canonical_en": "marker"
+    },
+    {
+      "key": "tape",
+      "canonical_gu": "ટેપ",
+      "canonical_hi": "टेप",
+      "canonical_en": "tape"
+    },
+    {
+      "key": "fevicol",
+      "canonical_gu": "ફેવીકોલ",
+      "canonical_hi": "फेविकोल",
+      "canonical_en": "fevicol"
+    },
+    {
+      "key": "goodnight",
+      "canonical_gu": "ગુડનાઈટ",
+      "canonical_hi": "गुडनाइट",
+      "canonical_en": "goodnight"
+    },
+    {
+      "key": "gudnight",
+      "canonical_gu": "ગુડનાઈટ",
+      "canonical_hi": "गुडनाइट",
+      "canonical_en": "goodnight"
+    },
+    {
+      "key": "odomos",
+      "canonical_gu": "ઓડોમોસ",
+      "canonical_hi": "ओडोमोस",
+      "canonical_en": "odomos"
+    },
+    {
+      "key": "all out",
+      "canonical_gu": "ઓલઆઉટ",
+      "canonical_hi": "ऑल आउट",
+      "canonical_en": "all out"
+    },
+    {
+      "key": "allout",
+      "canonical_gu": "ઓલઆઉટ",
+      "canonical_hi": "ऑल आउट",
+      "canonical_en": "all out"
+    },
+    {
+      "key": "mortein",
+      "canonical_gu": "મોર્ટીન",
+      "canonical_hi": "मॉर्टिन",
+      "canonical_en": "mortein"
+    },
+    {
+      "key": "coil",
+      "canonical_gu": "કોઇલ",
+      "canonical_hi": "कॉइल",
+      "canonical_en": "mosquito coil"
+    },
+    {
+      "key": "mosquito coil",
+      "canonical_gu": "કોઇલ",
+      "canonical_hi": "कॉइल",
+      "canonical_en": "mosquito coil"
+    },
+    {
+      "key": "bidi",
+      "canonical_gu": "બીડી",
+      "canonical_hi": "बीड़ी",
+      "canonical_en": "bidi"
+    },
+    {
+      "key": "beedi",
+      "canonical_gu": "બીડી",
+      "canonical_hi": "बीड़ी",
+      "canonical_en": "bidi"
+    },
+    {
+      "key": "cigarette",
+      "canonical_gu": "સિગારેટ",
+      "canonical_hi": "सिगरेट",
+      "canonical_en": "cigarette"
+    },
+    {
+      "key": "cigrate",
+      "canonical_gu": "સિગારેટ",
+      "canonical_hi": "सिगरेट",
+      "canonical_en": "cigarette"
+    },
+    {
+      "key": "gutkha",
+      "canonical_gu": "ગુટખા",
+      "canonical_hi": "गुटखा",
+      "canonical_en": "gutkha"
+    },
+    {
+      "key": "gutka",
+      "canonical_gu": "ગુટખા",
+      "canonical_hi": "गुटखा",
+      "canonical_en": "gutkha"
+    },
+    {
+      "key": "paan masala",
+      "canonical_gu": "પાન મસાલા",
+      "canonical_hi": "पान मसाला",
+      "canonical_en": "paan masala"
+    },
+    {
+      "key": "pan masala",
+      "canonical_gu": "પાન મસાલા",
+      "canonical_hi": "पान मसाला",
+      "canonical_en": "paan masala"
+    },
+    {
+      "key": "supari",
+      "canonical_gu": "સુપારી",
+      "canonical_hi": "सुपारी",
+      "canonical_en": "supari"
+    }
+  ]
+}
