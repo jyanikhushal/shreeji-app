@@ -6,6 +6,7 @@ import { isvalidamount } from "@/lib/runningKhata/validators";
 import { formattoday, formatconfirmeddate } from "@/lib/runningKhata/dateFormat";
 import { generateTranslations } from "@/lib/transliteration/transliterate";
 import { lookupProduct, learnProduct } from "@/lib/productLanguage/cache";
+import { sanitizeItemInput } from "@/lib/transliteration/sanitizeInput";
 interface UseEntryQueueParams {
   entries: entry[];
   setentries: React.Dispatch<React.SetStateAction<entry[]>>;
@@ -131,7 +132,7 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
     const previewtotal = (prevrow ? prevrow.total : 0) + amountnum;
     const provisionalentryno = current.entryNo;
     const todaystr = formattoday();
-    const itemname = current.item;
+    const itemname = sanitizeItemInput(current.item);
 
     setentries(prev => {
       const updated = [...prev];
@@ -216,7 +217,7 @@ export function useEntryQueue({ entries, setentries, loadkhata, customerphone }:
     const previewtotal = (prevrow ? prevrow.total : 0) + amountnum;
     const entryno = current.entryNo;
     const todaystr = formattoday();
-    const itemname = current.item;
+    const itemname = sanitizeItemInput(current.item);
 
     setentries(prev => prev.map((row, i) =>
       i === index

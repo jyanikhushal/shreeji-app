@@ -1,0 +1,4527 @@
+[
+  {
+    "key": ",bn,z",
+    "original": ",bn,z",
+    "gu": null
+  },
+  {
+    "key": ".kn",
+    "original": ".kn",
+    "gu": null
+  },
+  {
+    "key": "0la out",
+    "original": "0LA OUT",
+    "gu": "ઓલઆઉટ રિફિલ"
+  },
+  {
+    "key": "100 kg",
+    "original": "100 KG",
+    "gu": null
+  },
+  {
+    "key": "105 kg",
+    "original": "105 KG",
+    "gu": null
+  },
+  {
+    "key": "120 kg",
+    "original": "120 KG",
+    "gu": null
+  },
+  {
+    "key": "140 kg",
+    "original": "140 KG",
+    "gu": null
+  },
+  {
+    "key": "170 kg",
+    "original": "170 KG",
+    "gu": null
+  },
+  {
+    "key": "240 kg",
+    "original": "240 KG",
+    "gu": null
+  },
+  {
+    "key": "250 kg",
+    "original": "250 KG",
+    "gu": null
+  },
+  {
+    "key": "255 kg",
+    "original": "255 KG",
+    "gu": null
+  },
+  {
+    "key": "280 kg",
+    "original": "280 KG",
+    "gu": null
+  },
+  {
+    "key": "325  kg",
+    "original": "325  KG",
+    "gu": null
+  },
+  {
+    "key": "390 kg",
+    "original": "390 KG",
+    "gu": null
+  },
+  {
+    "key": "400 kg",
+    "original": "400 KG",
+    "gu": null
+  },
+  {
+    "key": "440 kg",
+    "original": "440 KG",
+    "gu": null
+  },
+  {
+    "key": "60kg",
+    "original": "60KG",
+    "gu": null
+  },
+  {
+    "key": "70kg",
+    "original": "70KG",
+    "gu": null
+  },
+  {
+    "key": "80 kg",
+    "original": "80 kg",
+    "gu": null
+  },
+  {
+    "key": "a.nf",
+    "original": "a.nf",
+    "gu": null
+  },
+  {
+    "key": "aachar",
+    "original": "AACHAR",
+    "gu": "અથાણું"
+  },
+  {
+    "key": "aachar  masalo",
+    "original": "AACHAR  MASALO",
+    "gu": "અથાણાંનો મસાલો"
+  },
+  {
+    "key": "aachar masalo",
+    "original": "AACHAR MASALO",
+    "gu": "અથાણાંનો મસાલો"
+  },
+  {
+    "key": "aaj nu bil",
+    "original": "AAJ NU BIL",
+    "gu": "આજનું બિલ"
+  },
+  {
+    "key": "aajnu",
+    "original": "AAJNU",
+    "gu": "આજનું હિસાબ"
+  },
+  {
+    "key": "aajnu  bill",
+    "original": "AAJNU  BILL",
+    "gu": "આજનું બિલ"
+  },
+  {
+    "key": "aajnu bil",
+    "original": "AAJNU BIL",
+    "gu": null
+  },
+  {
+    "key": "aajnu bill",
+    "original": "AAJNU BILL",
+    "gu": "આજનું બિલ"
+  },
+  {
+    "key": "aajnubill",
+    "original": "AAJNUBILL",
+    "gu": "આજનું બિલ"
+  },
+  {
+    "key": "aalu sev",
+    "original": "aalu sev",
+    "gu": "આલુ સેવ"
+  },
+  {
+    "key": "aambli",
+    "original": "AAMBLI",
+    "gu": "આંબલી"
+  },
+  {
+    "key": "aamla tel",
+    "original": "AAMLA TEL",
+    "gu": "આમળા તેલ"
+  },
+  {
+    "key": "aamla tel botal",
+    "original": "AAMLA TEL BOTAL",
+    "gu": "આમળા તેલ બોટલ"
+  },
+  {
+    "key": "aamla telni botal",
+    "original": "aamla telni botal",
+    "gu": "આમળા તેલની બોટલ"
+  },
+  {
+    "key": "aamla teni botal",
+    "original": "AAMLA TENI BOTAL",
+    "gu": "આમળા તેલની બોટલ"
+  },
+  {
+    "key": "aamlatel botal",
+    "original": "AAMLATEL BOTAL",
+    "gu": "આમળા તેલ બોટલ"
+  },
+  {
+    "key": "aamli",
+    "original": "AAMLI",
+    "gu": "આંબલી"
+  },
+  {
+    "key": "aasar masalo",
+    "original": "AASAR MASALO",
+    "gu": "અથાણાંનો મસાલો"
+  },
+  {
+    "key": "aasar masholo",
+    "original": "aasar masholo",
+    "gu": "અથાણાંનો મસાલો"
+  },
+  {
+    "key": "abil galal",
+    "original": "ABIL GALAL",
+    "gu": "અબીલ ગુલાલ"
+  },
+  {
+    "key": "abil galal sutardado",
+    "original": "ABIL GALAL SUTARDADO",
+    "gu": "અબીલ ગુલાલ સૂતરનો દડો"
+  },
+  {
+    "key": "abil gulal",
+    "original": "abil gulal",
+    "gu": "અબીલ ગુલાલ"
+  },
+  {
+    "key": "ached botal",
+    "original": "ached botal",
+    "gu": "એસિડ બોટલ"
+  },
+  {
+    "key": "achid",
+    "original": "achid",
+    "gu": "એસિડ"
+  },
+  {
+    "key": "achid botal",
+    "original": "ACHID BOTAL",
+    "gu": "એસિડ બોટલ"
+  },
+  {
+    "key": "acid",
+    "original": "acid",
+    "gu": "એસિડ"
+  },
+  {
+    "key": "acid botal",
+    "original": "ACID BOTAL",
+    "gu": "એસિડ બોટલ"
+  },
+  {
+    "key": "adad",
+    "original": "ADAD",
+    "gu": "અડદ"
+  },
+  {
+    "key": "adad dal",
+    "original": "ADAD DAL",
+    "gu": "અડદ દાળ"
+  },
+  {
+    "key": "adaddal",
+    "original": "ADADDAL",
+    "gu": "અડદ દાળ"
+  },
+  {
+    "key": "adadni dal",
+    "original": "ADADNI DAL",
+    "gu": "અડદ દાળ"
+  },
+  {
+    "key": "adef",
+    "original": "adef",
+    "gu": null
+  },
+  {
+    "key": "aelci",
+    "original": "AELCI",
+    "gu": "એલચી"
+  },
+  {
+    "key": "agarbati",
+    "original": "Agarbati",
+    "gu": "અગરબત્તી"
+  },
+  {
+    "key": "agarbti",
+    "original": "AGARBTI",
+    "gu": "અગરબત્તી"
+  },
+  {
+    "key": "agav na baki",
+    "original": "AGAV NA BAKI",
+    "gu": "અગાઉના બાકી"
+  },
+  {
+    "key": "agav na bil baki",
+    "original": "AGAV NA BIL BAKI",
+    "gu": "અગાઉના બિલ બાકી"
+  },
+  {
+    "key": "agav na bil na baki",
+    "original": "AGAV NA BIL NA BAKI",
+    "gu": "અગાઉના બિલના બાકી"
+  },
+  {
+    "key": "agav na bill na baki",
+    "original": "AGAV NA BILL NA BAKI",
+    "gu": "અગાઉના બિલના બાકી"
+  },
+  {
+    "key": "agav nu bil",
+    "original": "AGAV NU BIL",
+    "gu": "અગાઉનું બિલ"
+  },
+  {
+    "key": "agav nu kul bil",
+    "original": "AGAV NU KUL BIL",
+    "gu": "અગાઉનું કુલ બિલ"
+  },
+  {
+    "key": "agav nu kul bill",
+    "original": "AGAV NU KUL BILL",
+    "gu": "અગાઉનું કુલ બિલ"
+  },
+  {
+    "key": "agavna  bill na baki",
+    "original": "agavna  bill na baki",
+    "gu": "અગાઉના બિલના બાકી"
+  },
+  {
+    "key": "agavna baki",
+    "original": "Agavna baki",
+    "gu": "અગાઉના બાકી"
+  },
+  {
+    "key": "agavna bill  na  baki",
+    "original": "agavna bill  na  baki",
+    "gu": null
+  },
+  {
+    "key": "agavna bilna baki",
+    "original": "Agavna bilna baki",
+    "gu": "અગાઉના બિલના બાકી"
+  },
+  {
+    "key": "agavna na bil na baki",
+    "original": "agavna na bil na baki",
+    "gu": "અગાઉના બિલના બાકી"
+  },
+  {
+    "key": "agavnabaki",
+    "original": "Agavnabaki",
+    "gu": "અગાઉના બાકી"
+  },
+  {
+    "key": "agavnabil  na  baki",
+    "original": "agavnabil  na  baki",
+    "gu": "અગાઉના બિલના બાકી"
+  },
+  {
+    "key": "agavnabill na baki",
+    "original": "AGAVNABILL NA BAKI",
+    "gu": "અગાઉના બિલના બાકી"
+  },
+  {
+    "key": "agavnabilnabaki",
+    "original": "Agavnabilnabaki",
+    "gu": "અગાઉના બિલના બાકી"
+  },
+  {
+    "key": "agavnu  cool bill",
+    "original": "AGAVNU  COOL BILL",
+    "gu": null
+  },
+  {
+    "key": "agavnu  koolbill",
+    "original": "AGAVNU  KOOLBILL",
+    "gu": "અગાઉનું કુલ બિલ"
+  },
+  {
+    "key": "agrbati",
+    "original": "AGRBATI",
+    "gu": "અગરબત્તી"
+  },
+  {
+    "key": "agrbti",
+    "original": "AGRBTI",
+    "gu": "અગરબત્તી"
+  },
+  {
+    "key": "ajma",
+    "original": "AJMA",
+    "gu": "અજમો"
+  },
+  {
+    "key": "ajmaa",
+    "original": "AJMAA",
+    "gu": "અજમો"
+  },
+  {
+    "key": "ajnu",
+    "original": "AJNU",
+    "gu": "આજનું હિસાબ"
+  },
+  {
+    "key": "ajnu bill25",
+    "original": "ajnu bill25",
+    "gu": null
+  },
+  {
+    "key": "akugef",
+    "original": "akugef",
+    "gu": null
+  },
+  {
+    "key": "alchi",
+    "original": "ALCHI",
+    "gu": "એલચી"
+  },
+  {
+    "key": "amla tel",
+    "original": "AMLA TEL",
+    "gu": "આમળા તેલ"
+  },
+  {
+    "key": "amlatel botal",
+    "original": "AMLATEL BOTAL",
+    "gu": "આમળા તેલ બોટલ"
+  },
+  {
+    "key": "amli",
+    "original": "AMLI",
+    "gu": "આંબલી"
+  },
+  {
+    "key": "amul",
+    "original": "amul",
+    "gu": "અમૂલ ઉત્પાદન"
+  },
+  {
+    "key": "amul ghee",
+    "original": "AMUL GHEE",
+    "gu": "અમૂલ ઘી"
+  },
+  {
+    "key": "ariel powder",
+    "original": "Ariel powder",
+    "gu": "એરિયલ પાવડર"
+  },
+  {
+    "key": "babla  wefar",
+    "original": "BABLA  WEFAR",
+    "gu": "બબલા વેફર"
+  },
+  {
+    "key": "badam",
+    "original": "BADAM",
+    "gu": "બદામ"
+  },
+  {
+    "key": "badam  kaju",
+    "original": "BADAM  KAJU",
+    "gu": "બદામ કાજુ"
+  },
+  {
+    "key": "badiya",
+    "original": "BADIYA",
+    "gu": "બાદિયા"
+  },
+  {
+    "key": "badsha masalo",
+    "original": "BADSHA MASALO",
+    "gu": "બાદશાહ મસાલો"
+  },
+  {
+    "key": "bajarano kato",
+    "original": "bajarano kato",
+    "gu": "બાજરીનો કટ્ટો"
+  },
+  {
+    "key": "bajarano lot",
+    "original": "BAJARANO LOT",
+    "gu": "બાજરીનો લોટ"
+  },
+  {
+    "key": "bajari",
+    "original": "bajari",
+    "gu": "બાજરી"
+  },
+  {
+    "key": "bajaro",
+    "original": "BAJARO",
+    "gu": "બાજરો"
+  },
+  {
+    "key": "bajra lot",
+    "original": "BAJRA LOT",
+    "gu": "બાજરીનો લોટ"
+  },
+  {
+    "key": "bajra no lot",
+    "original": "BAJRA NO LOT",
+    "gu": "બાજરીનો લોટ"
+  },
+  {
+    "key": "bajralot",
+    "original": "BAJRALOT",
+    "gu": "બાજરીનો લોટ"
+  },
+  {
+    "key": "bajrano lot",
+    "original": "BAJRANO LOT",
+    "gu": "બાજરીનો લોટ"
+  },
+  {
+    "key": "bajranolot",
+    "original": "BAJRANOLOT",
+    "gu": "બાજરીનો લોટ"
+  },
+  {
+    "key": "bajro",
+    "original": "bajro",
+    "gu": "બાજરો"
+  },
+  {
+    "key": "bajro  kato 1",
+    "original": "bajro  kato 1",
+    "gu": "બાજરો ૧ કટ્ટો"
+  },
+  {
+    "key": "bajro 5kg",
+    "original": "BAJRO 5KG",
+    "gu": "૫ કિલો બાજરો"
+  },
+  {
+    "key": "bajro kato",
+    "original": "BAJRO KATO",
+    "gu": "બાજરીનો કટ્ટો"
+  },
+  {
+    "key": "bajro34",
+    "original": "bajro34",
+    "gu": null
+  },
+  {
+    "key": "bakas",
+    "original": "BAKAS",
+    "gu": "બાકસ"
+  },
+  {
+    "key": "bakas  jayfal",
+    "original": "bakas  jayfal",
+    "gu": "બાકસ અને જાયફળ"
+  },
+  {
+    "key": "bakas bandho",
+    "original": "BAKAS BANDHO",
+    "gu": "બાકસનો બાંધો"
+  },
+  {
+    "key": "bakasno bandho",
+    "original": "BAKASNO BANDHO",
+    "gu": null
+  },
+  {
+    "key": "baks",
+    "original": "BAKS",
+    "gu": "બાકસ"
+  },
+  {
+    "key": "bam",
+    "original": "BAM",
+    "gu": "બામ"
+  },
+  {
+    "key": "barush",
+    "original": "BARUSH",
+    "gu": "બ્રશ"
+  },
+  {
+    "key": "basmati",
+    "original": "BASMATI",
+    "gu": "બાસમતી ચોખા"
+  },
+  {
+    "key": "basmati chokha",
+    "original": "BASMATI CHOKHA",
+    "gu": "બાસમતી ચોખા"
+  },
+  {
+    "key": "basmti",
+    "original": "BASMTI",
+    "gu": "બાસમતી ચોખા"
+  },
+  {
+    "key": "bdam",
+    "original": "BDAM",
+    "gu": "બદામ"
+  },
+  {
+    "key": "besan",
+    "original": "BESAN",
+    "gu": "બેસન"
+  },
+  {
+    "key": "bhag",
+    "original": "BHAG",
+    "gu": "ભાગ / હિસ્સો"
+  },
+  {
+    "key": "bhaji mashalo",
+    "original": "BHAJI MASHALO",
+    "gu": "પાંવભાજી મસાલો"
+  },
+  {
+    "key": "bhajino masalo",
+    "original": "BHAJINO MASALO",
+    "gu": "પાંવભાજી મસાલો"
+  },
+  {
+    "key": "bhngala",
+    "original": "BHNGALA",
+    "gu": "ભૂંગળી"
+  },
+  {
+    "key": "bhngla",
+    "original": "BHNGLA",
+    "gu": "ભૂંગળી"
+  },
+  {
+    "key": "bhngli",
+    "original": "BHNGLI",
+    "gu": null
+  },
+  {
+    "key": "bhugali",
+    "original": "BHUGALI",
+    "gu": "ભૂંગળી"
+  },
+  {
+    "key": "bhugla",
+    "original": "BHUGLA",
+    "gu": "ભૂંગળા"
+  },
+  {
+    "key": "bhugli",
+    "original": "BHUGLI",
+    "gu": "ભૂંગળી"
+  },
+  {
+    "key": "bhungala",
+    "original": "BHUNGALA",
+    "gu": null
+  },
+  {
+    "key": "bhungali",
+    "original": "BHUNGALI",
+    "gu": "ભૂંગળી"
+  },
+  {
+    "key": "bhungi",
+    "original": "BHUNGI",
+    "gu": "ભૂંગળી"
+  },
+  {
+    "key": "bhungla",
+    "original": "BHUNGLA",
+    "gu": "ભૂંગળા"
+  },
+  {
+    "key": "bhungli",
+    "original": "BHUNGLI",
+    "gu": "ભૂંગળી"
+  },
+  {
+    "key": "bhuugla",
+    "original": "Bhuugla",
+    "gu": "ભૂંગળા"
+  },
+  {
+    "key": "bill  mujabna",
+    "original": "BILL  MUJABNA",
+    "gu": "બિલ મુજબના"
+  },
+  {
+    "key": "bill  pete baaki",
+    "original": "bill  pete baaki",
+    "gu": "બિલ પેટે બાકી"
+  },
+  {
+    "key": "bill mujab",
+    "original": "BILL MUJAB",
+    "gu": "બિલ મુજબ"
+  },
+  {
+    "key": "bisket",
+    "original": "bisket",
+    "gu": "બિસ્કિટ"
+  },
+  {
+    "key": "biskit",
+    "original": "BISKIT",
+    "gu": "બિસ્કિટ"
+  },
+  {
+    "key": "bled",
+    "original": "BLED",
+    "gu": "બ્લેડ"
+  },
+  {
+    "key": "blet",
+    "original": "BLET",
+    "gu": "બ્લેડ"
+  },
+  {
+    "key": "blet peket",
+    "original": "BLET PEKET",
+    "gu": "બ્લેડ પેકેટ"
+  },
+  {
+    "key": "bonvita",
+    "original": "BONVITA",
+    "gu": "બોનવિટા"
+  },
+  {
+    "key": "book no hishab",
+    "original": "BOOK NO HISHAB",
+    "gu": "ચોપડાનો હિસાબ"
+  },
+  {
+    "key": "book no kool heesab",
+    "original": "book no kool heesab",
+    "gu": "ચોપડાનો કુલ હિસાબ"
+  },
+  {
+    "key": "brash",
+    "original": "BRASH",
+    "gu": "બ્રશ"
+  },
+  {
+    "key": "brush",
+    "original": "BRUSH",
+    "gu": "બ્રશ"
+  },
+  {
+    "key": "bujb",
+    "original": "bujb",
+    "gu": null
+  },
+  {
+    "key": "buru",
+    "original": "BURU",
+    "gu": "બૂરું ખાંડ"
+  },
+  {
+    "key": "cake",
+    "original": "CAKE",
+    "gu": "કેક"
+  },
+  {
+    "key": "cana no lot",
+    "original": "CANA NO LOT",
+    "gu": "ચણાનો લોટ"
+  },
+  {
+    "key": "canadal",
+    "original": "CANADAL",
+    "gu": "ચણા દાળ"
+  },
+  {
+    "key": "candan dabi",
+    "original": "CANDAN DABI",
+    "gu": "ચંદન દાબડી"
+  },
+  {
+    "key": "cap",
+    "original": "CAP",
+    "gu": "કપ"
+  },
+  {
+    "key": "cell",
+    "original": "cell",
+    "gu": "સેલ"
+  },
+  {
+    "key": "cev",
+    "original": "CEV",
+    "gu": "સેવ"
+  },
+  {
+    "key": "cevdano masalo",
+    "original": "CEVDANO MASALO",
+    "gu": "ચેવડાનો મસાલો"
+  },
+  {
+    "key": "cha",
+    "original": "CHA",
+    "gu": "ચા"
+  },
+  {
+    "key": "cha cap 1peket",
+    "original": "CHA CAP 1PEKET",
+    "gu": "ચાના કપ ૧ પેકેટ"
+  },
+  {
+    "key": "cha kap",
+    "original": "CHA KAP",
+    "gu": "ચાના કપ"
+  },
+  {
+    "key": "cha masalo",
+    "original": "CHA MASALO",
+    "gu": "ચા મસાલો"
+  },
+  {
+    "key": "cha mashalo",
+    "original": "CHA MASHALO",
+    "gu": "ચા મસાલો"
+  },
+  {
+    "key": "champoo",
+    "original": "champoo",
+    "gu": "શેમ્પૂ"
+  },
+  {
+    "key": "champu",
+    "original": "CHAMPU",
+    "gu": "શેમ્પૂ"
+  },
+  {
+    "key": "chana",
+    "original": "chana",
+    "gu": "ચણા"
+  },
+  {
+    "key": "chana cap",
+    "original": "CHANA CAP",
+    "gu": "ચણા અને કપ"
+  },
+  {
+    "key": "chana dal",
+    "original": "CHANA DAL",
+    "gu": "ચણા દાળ"
+  },
+  {
+    "key": "chana no lot",
+    "original": "CHANA NO LOT",
+    "gu": "ચણાનો લોટ"
+  },
+  {
+    "key": "chanadal",
+    "original": "CHANADAL",
+    "gu": "ચણા દાળ"
+  },
+  {
+    "key": "chanadal 5peket",
+    "original": "chanadal 5peket",
+    "gu": "ચણાદાળ ૫ પેકેટ"
+  },
+  {
+    "key": "chanano lot",
+    "original": "CHANANO LOT",
+    "gu": "બેસન"
+  },
+  {
+    "key": "chapu",
+    "original": "CHAPU",
+    "gu": "ચાપુ / ચપ્પુ"
+  },
+  {
+    "key": "chas masalo",
+    "original": "CHAS MASALO",
+    "gu": "છાશનો મસાલો"
+  },
+  {
+    "key": "chat masalo",
+    "original": "CHAT MASALO",
+    "gu": "ચાટ મસાલો"
+  },
+  {
+    "key": "chavanu",
+    "original": "CHAVANU",
+    "gu": "ચવાણું"
+  },
+  {
+    "key": "chavdo",
+    "original": "CHAVDO",
+    "gu": "ચેવડો"
+  },
+  {
+    "key": "chdf",
+    "original": "chdf",
+    "gu": null
+  },
+  {
+    "key": "chedo",
+    "original": "CHEDO",
+    "gu": "ચેવડો"
+  },
+  {
+    "key": "chehar",
+    "original": "CHEHAR",
+    "gu": "ચેહર"
+  },
+  {
+    "key": "chempu",
+    "original": "CHEMPU",
+    "gu": "શેમ્પૂ"
+  },
+  {
+    "key": "chevado",
+    "original": "CHEVADO",
+    "gu": "ચેવડો"
+  },
+  {
+    "key": "chevdano saman",
+    "original": "CHEVDANO SAMAN",
+    "gu": "ચેવડાનો સામાન"
+  },
+  {
+    "key": "chevdo",
+    "original": "CHEVDO",
+    "gu": "ચેવડો"
+  },
+  {
+    "key": "chevdo 2peket",
+    "original": "CHEVDO 2PEKET",
+    "gu": "ચેવડો ૨ પેકેટ"
+  },
+  {
+    "key": "chindor",
+    "original": "CHINDOR",
+    "gu": "સિંદૂર"
+  },
+  {
+    "key": "ching",
+    "original": "CHING",
+    "gu": "સિંગ"
+  },
+  {
+    "key": "chkha pahuva",
+    "original": "CHKHA PAHUVA",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "chkha pahva",
+    "original": "CHKHA PAHVA",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "chklet",
+    "original": "CHKLET",
+    "gu": "ચોકલેટ"
+  },
+  {
+    "key": "chmpu",
+    "original": "CHMPU",
+    "gu": "શેમ્પૂ"
+  },
+  {
+    "key": "chna",
+    "original": "CHNA",
+    "gu": "ચણા"
+  },
+  {
+    "key": "chna no lot",
+    "original": "CHNA NO LOT",
+    "gu": "ચણાનો લોટ"
+  },
+  {
+    "key": "chnadal",
+    "original": "CHNADAL",
+    "gu": "ચણા દાળ"
+  },
+  {
+    "key": "chnano lot",
+    "original": "CHNANO LOT",
+    "gu": "ચણાનો લોટ"
+  },
+  {
+    "key": "choco pai",
+    "original": "CHOCO PAI",
+    "gu": "ચોકો પાઈ"
+  },
+  {
+    "key": "chofee",
+    "original": "CHOFEE",
+    "gu": "કોફી"
+  },
+  {
+    "key": "chofhi",
+    "original": "CHOFHI",
+    "gu": "કોફી"
+  },
+  {
+    "key": "chok",
+    "original": "CHOK",
+    "gu": "ચોક"
+  },
+  {
+    "key": "chokh pauva",
+    "original": "CHOKH PAUVA",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "chokha",
+    "original": "CHOKHA",
+    "gu": "ચોખા"
+  },
+  {
+    "key": "chokha  basmati",
+    "original": "CHOKHA  BASMATI",
+    "gu": "બાસમતી ચોખા"
+  },
+  {
+    "key": "chokha pahuva",
+    "original": "CHOKHA PAHUVA",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "chokha pauva",
+    "original": "CHOKHA PAUVA",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "chokha pava",
+    "original": "chokha pava",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "chokha pavuva",
+    "original": "CHOKHA PAVUVA",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "chokha pawa",
+    "original": "CHOKHA PAWA",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "chokha140",
+    "original": "CHOKHA140",
+    "gu": null
+  },
+  {
+    "key": "chokhpava",
+    "original": "CHOKHPAVA",
+    "gu": "ચોખાના પૌંઆ"
+  },
+  {
+    "key": "choklet",
+    "original": "CHOKLET",
+    "gu": "ચોકલેટ"
+  },
+  {
+    "key": "choklet bakas champu",
+    "original": "CHOKLET BAKAS CHAMPU",
+    "gu": "ચોકલેટ બાકસ શેમ્પૂ"
+  },
+  {
+    "key": "choko",
+    "original": "CHOKO",
+    "gu": "ચોકો"
+  },
+  {
+    "key": "chokopai",
+    "original": "CHOKOPAI",
+    "gu": "ચોકો પાઈ"
+  },
+  {
+    "key": "chola",
+    "original": "CHOLA",
+    "gu": "ચોળા"
+  },
+  {
+    "key": "cholay cana",
+    "original": "CHOLAY CANA",
+    "gu": "છોલે ચણા"
+  },
+  {
+    "key": "choli",
+    "original": "choli",
+    "gu": "ચોળી"
+  },
+  {
+    "key": "chopada no  hisab",
+    "original": "CHOPADA NO  HISAB",
+    "gu": "ચોપડાનો હિસાબ"
+  },
+  {
+    "key": "chopda",
+    "original": "CHOPDA",
+    "gu": null
+  },
+  {
+    "key": "chopda  no  hisab",
+    "original": "CHOPDA  NO  HISAB",
+    "gu": "ચોપડાનો હિસાબ"
+  },
+  {
+    "key": "chopda no hisab",
+    "original": "CHOPDA NO HISAB",
+    "gu": "ચોપડાનો હિસાબ"
+  },
+  {
+    "key": "chopda no hishab",
+    "original": "chopda no hishab",
+    "gu": null
+  },
+  {
+    "key": "chopda no hishab4",
+    "original": "chopda no hishab4",
+    "gu": "ચોપડાનો હિસાબ ૪"
+  },
+  {
+    "key": "chopdano hisab",
+    "original": "CHOPDANO HISAB",
+    "gu": "ચોપડાનો હિસાબ"
+  },
+  {
+    "key": "chopdo",
+    "original": "CHOPDO",
+    "gu": "ચોપડાનો હિસાબ"
+  },
+  {
+    "key": "chval",
+    "original": "chval",
+    "gu": "ચોખા"
+  },
+  {
+    "key": "chvda masalo",
+    "original": "CHVDA MASALO",
+    "gu": "ચેવડાનો મસાલો"
+  },
+  {
+    "key": "chvdo",
+    "original": "CHVDO",
+    "gu": "ચેવડો"
+  },
+  {
+    "key": "cindhv namak",
+    "original": "CINDHV NAMAK",
+    "gu": "સિંધવ મીઠું"
+  },
+  {
+    "key": "cofe",
+    "original": "COFE",
+    "gu": "કોફી"
+  },
+  {
+    "key": "col gate",
+    "original": "COL GATE",
+    "gu": "કોલગેટ"
+  },
+  {
+    "key": "colgat",
+    "original": "COLGAT",
+    "gu": "કોલગેટ"
+  },
+  {
+    "key": "colgate",
+    "original": "COLGATE",
+    "gu": "કોલગેટ"
+  },
+  {
+    "key": "colget",
+    "original": "COLGET",
+    "gu": "કોલગેટ"
+  },
+  {
+    "key": "copda no hisab",
+    "original": "COPDA NO HISAB",
+    "gu": null
+  },
+  {
+    "key": "copda no hishab",
+    "original": "COPDA NO HISHAB",
+    "gu": "ચોપડાનો હિસાબ"
+  },
+  {
+    "key": "cranchi vefar",
+    "original": "cranchi vefar",
+    "gu": "ક્રન્ચી વેફર"
+  },
+  {
+    "key": "daba pete baki",
+    "original": "DABA PETE BAKI",
+    "gu": "ડબ્બા પેટે બાકી"
+  },
+  {
+    "key": "dabar aamla tel",
+    "original": "DABAR AAMLA TEL",
+    "gu": "ડાબર આમળા તેલ"
+  },
+  {
+    "key": "dabela",
+    "original": "DABELA",
+    "gu": "દાબેલીનો સામાન"
+  },
+  {
+    "key": "dabeli no masalo",
+    "original": "DABELI NO MASALO",
+    "gu": "દાબેલીનો મસાલો"
+  },
+  {
+    "key": "dabelino masalo",
+    "original": "DABELINO MASALO",
+    "gu": "દાબેલીનો મસાલો"
+  },
+  {
+    "key": "dabo",
+    "original": "DABO",
+    "gu": "ડબ્બો"
+  },
+  {
+    "key": "daina sabu",
+    "original": "DAINA SABU",
+    "gu": "ડાયના સાબુ"
+  },
+  {
+    "key": "daliya",
+    "original": "DALIYA",
+    "gu": "દળિયા"
+  },
+  {
+    "key": "dalno masalo",
+    "original": "DALNO MASALO",
+    "gu": "દાળનો મસાલો"
+  },
+  {
+    "key": "dalya",
+    "original": "dalya",
+    "gu": "દળિયા"
+  },
+  {
+    "key": "danadal",
+    "original": "DANADAL",
+    "gu": "ધાણા દાળ"
+  },
+  {
+    "key": "dant kanti pest",
+    "original": "DANT KANTI PEST",
+    "gu": "દંત કાંતિ પેસ્ટ"
+  },
+  {
+    "key": "dayna sabu",
+    "original": "DAYNA SABU",
+    "gu": "ડાયના સાબુ"
+  },
+  {
+    "key": "dazg",
+    "original": "dazg",
+    "gu": null
+  },
+  {
+    "key": "deep sabu",
+    "original": "DEEP SABU",
+    "gu": "ડિપ / ડીપ સાબુ"
+  },
+  {
+    "key": "dep sabu",
+    "original": "DEP SABU",
+    "gu": "ડિપ / ડીપ સાબુ"
+  },
+  {
+    "key": "detrol sabu",
+    "original": "detrol sabu",
+    "gu": "ડેટોલ સાબુ"
+  },
+  {
+    "key": "devel",
+    "original": "DEVEL",
+    "gu": "દિવેલ"
+  },
+  {
+    "key": "devel320",
+    "original": "devel320",
+    "gu": null
+  },
+  {
+    "key": "devlel",
+    "original": "devlel",
+    "gu": "દિવેલ"
+  },
+  {
+    "key": "dg",
+    "original": "dg",
+    "gu": null
+  },
+  {
+    "key": "dh",
+    "original": "dh",
+    "gu": null
+  },
+  {
+    "key": "dhana",
+    "original": "DHANA",
+    "gu": "ધાણા"
+  },
+  {
+    "key": "dhana  na kuriya",
+    "original": "DHANA  NA KURIYA",
+    "gu": null
+  },
+  {
+    "key": "dhana dal",
+    "original": "DHANA DAL",
+    "gu": "ધાણા દાળ"
+  },
+  {
+    "key": "dhana jeeru",
+    "original": "DHANA JEERU",
+    "gu": "ધાણાજીરું"
+  },
+  {
+    "key": "dhana kuriya",
+    "original": "dhana kuriya",
+    "gu": "ધાણાના કુરિયા"
+  },
+  {
+    "key": "dhana na kuriya",
+    "original": "DHANA NA KURIYA",
+    "gu": "ધાણાના કુરિયા"
+  },
+  {
+    "key": "dhanadal",
+    "original": "DHANADAL",
+    "gu": "ધાણા દાળ"
+  },
+  {
+    "key": "dhanageru",
+    "original": "DHANAGERU",
+    "gu": null
+  },
+  {
+    "key": "dhanagiru",
+    "original": "DHANAGIRU",
+    "gu": "ધાણાજીરું"
+  },
+  {
+    "key": "dhanajiru",
+    "original": "DHANAJIRU",
+    "gu": "ધાણાજીરું"
+  },
+  {
+    "key": "dhanana kuriya",
+    "original": "dhanana kuriya",
+    "gu": "ધાણાના કુરિયા"
+  },
+  {
+    "key": "dhananakuriya",
+    "original": "DHANANAKURIYA",
+    "gu": "ધાણાના કુરિયા"
+  },
+  {
+    "key": "dhani",
+    "original": "DHANI",
+    "gu": "ધાણી"
+  },
+  {
+    "key": "dhovana sabu",
+    "original": "DHOVANA SABU",
+    "gu": "ધોવાનો સાબુ"
+  },
+  {
+    "key": "dhovano sabu",
+    "original": "DHOVANO SABU",
+    "gu": "ધોવાનો સાબુ"
+  },
+  {
+    "key": "dip sabu",
+    "original": "DIP SABU",
+    "gu": "ડિપ / ડીપ સાબુ"
+  },
+  {
+    "key": "dis nu peket",
+    "original": "DIS NU PEKET",
+    "gu": "ડિશનું પેકેટ"
+  },
+  {
+    "key": "divel",
+    "original": "DIVEL",
+    "gu": "દિવેલ"
+  },
+  {
+    "key": "dlae 2780 kg",
+    "original": "DLAE 2780 KG",
+    "gu": "દળાઈ ૨૭૮૦ કિલો"
+  },
+  {
+    "key": "doctor",
+    "original": "DOCTOR",
+    "gu": "ડોક્ટર સાબુ"
+  },
+  {
+    "key": "doctor  sabu",
+    "original": "DOCTOR  SABU",
+    "gu": "ડોક્ટર સાબુ"
+  },
+  {
+    "key": "doctor sabu",
+    "original": "DOCTOR SABU",
+    "gu": "ડોક્ટર સાબુ"
+  },
+  {
+    "key": "dora dado &sakar",
+    "original": "DORA DADO &SAKAR",
+    "gu": "દોરાનો દડો અને સાકર"
+  },
+  {
+    "key": "draks",
+    "original": "DRAKS",
+    "gu": "દ્રાક્ષ"
+  },
+  {
+    "key": "drax",
+    "original": "drax",
+    "gu": "દ્રાક્ષ"
+  },
+  {
+    "key": "dsb45",
+    "original": "dsb45",
+    "gu": null
+  },
+  {
+    "key": "dsg",
+    "original": "dsg",
+    "gu": null
+  },
+  {
+    "key": "dzg",
+    "original": "dzg",
+    "gu": null
+  },
+  {
+    "key": "elche",
+    "original": "elche",
+    "gu": "એલચી"
+  },
+  {
+    "key": "elchi",
+    "original": "ELCHI",
+    "gu": "એલચી"
+  },
+  {
+    "key": "elchi  jaifal",
+    "original": "ELCHI  JAIFAL",
+    "gu": "એલચી જાયફળ"
+  },
+  {
+    "key": "esid botal",
+    "original": "ESID BOTAL",
+    "gu": "એસિડ બોટલ"
+  },
+  {
+    "key": "farali bhgla",
+    "original": "farali bhgla",
+    "gu": null
+  },
+  {
+    "key": "farali bhngla",
+    "original": "FARALI BHNGLA",
+    "gu": "ફરાળી ભૂંગળા"
+  },
+  {
+    "key": "farali bhungla",
+    "original": "FARALI BHUNGLA",
+    "gu": "ફરાળી ભૂંગળા"
+  },
+  {
+    "key": "feesrv",
+    "original": "feesrv",
+    "gu": null
+  },
+  {
+    "key": "fenayal",
+    "original": "FENAYAL",
+    "gu": "ફિનાઈલ"
+  },
+  {
+    "key": "finael",
+    "original": "FINAEL",
+    "gu": "ફિનાઈલ"
+  },
+  {
+    "key": "finaiel",
+    "original": "FINAIEL",
+    "gu": "ફિનાઈલ"
+  },
+  {
+    "key": "finayal",
+    "original": "FINAYAL",
+    "gu": null
+  },
+  {
+    "key": "finnaynibotel",
+    "original": "finnaynibotel",
+    "gu": "ફિનાઈલની બોટલ"
+  },
+  {
+    "key": "folva",
+    "original": "FOLVA",
+    "gu": "ફોલવા"
+  },
+  {
+    "key": "fsjgb",
+    "original": "fsjgb",
+    "gu": null
+  },
+  {
+    "key": "g",
+    "original": "g",
+    "gu": null
+  },
+  {
+    "key": "galas 1peket",
+    "original": "GALAS 1PEKET",
+    "gu": "ગ્લાસ ૧ પેકેટ"
+  },
+  {
+    "key": "gali",
+    "original": "Gali",
+    "gu": "ગળી"
+  },
+  {
+    "key": "ganesh choth",
+    "original": "GANESH CHOTH",
+    "gu": "ગણેશ ચોથ પૂજા સામાન"
+  },
+  {
+    "key": "ganthiya",
+    "original": "GANTHIYA",
+    "gu": "ગાંઠિયા"
+  },
+  {
+    "key": "garam masalo",
+    "original": "GARAM MASALO",
+    "gu": "ગરમ મસાલો"
+  },
+  {
+    "key": "garm masalo",
+    "original": "GARM MASALO",
+    "gu": "ગરમ મસાલો"
+  },
+  {
+    "key": "garmmasalo",
+    "original": "GARMMASALO",
+    "gu": "ગરમ મસાલો"
+  },
+  {
+    "key": "gathiya",
+    "original": "GATHIYA",
+    "gu": "ગાંઠિયા"
+  },
+  {
+    "key": "geeru",
+    "original": "geeru",
+    "gu": "ગેરુ"
+  },
+  {
+    "key": "geru",
+    "original": "GERU",
+    "gu": "ગેરુ"
+  },
+  {
+    "key": "ghadi powder",
+    "original": "GHADI POWDER",
+    "gu": "ઘડી પાવડર"
+  },
+  {
+    "key": "ghah",
+    "original": "GHAH",
+    "gu": "ઘઉં"
+  },
+  {
+    "key": "ghau",
+    "original": "GHAU",
+    "gu": "ઘઉં"
+  },
+  {
+    "key": "ghau 20kg",
+    "original": "GHAU 20KG",
+    "gu": "૨૦ કિલો ઘઉં"
+  },
+  {
+    "key": "ghau 40 kg",
+    "original": "ghau 40 kg",
+    "gu": "૪૦ કિલો ઘઉં"
+  },
+  {
+    "key": "ghau bajro",
+    "original": "GHAU BAJRO",
+    "gu": "ઘઉં બાજરો"
+  },
+  {
+    "key": "ghauno kato",
+    "original": "ghauno kato",
+    "gu": "ઘઉંનો કટ્ટો"
+  },
+  {
+    "key": "ghauno lot",
+    "original": "GHAUNO LOT",
+    "gu": "ઘઉંનો લોટ"
+  },
+  {
+    "key": "ghaunolot",
+    "original": "ghaunolot",
+    "gu": "ઘઉંનો લોટ"
+  },
+  {
+    "key": "ghav",
+    "original": "GHAV",
+    "gu": "ઘઉં"
+  },
+  {
+    "key": "ghav  no lot",
+    "original": "ghav  no lot",
+    "gu": null
+  },
+  {
+    "key": "ghav bajro",
+    "original": "GHAV BAJRO",
+    "gu": "ઘઉં બાજરો"
+  },
+  {
+    "key": "ghav lot",
+    "original": "GHAV LOT",
+    "gu": "ઘઉંનો લોટ"
+  },
+  {
+    "key": "ghav no lot",
+    "original": "ghav no lot",
+    "gu": "ઘઉંનો લોટ"
+  },
+  {
+    "key": "ghdi powder",
+    "original": "GHDI POWDER",
+    "gu": "ઘડી પાવડર"
+  },
+  {
+    "key": "ghee",
+    "original": "GHEE",
+    "gu": "ઘી"
+  },
+  {
+    "key": "ghee dabo",
+    "original": "GHEE DABO",
+    "gu": "ઘીનો ડબ્બો"
+  },
+  {
+    "key": "ghee no dabo",
+    "original": "GHEE NO DABO",
+    "gu": "ઘીનો ડબ્બો"
+  },
+  {
+    "key": "ghee no dbo",
+    "original": "GHEE NO DBO",
+    "gu": "ઘીનો ડબ્બો"
+  },
+  {
+    "key": "ghee nu pakat",
+    "original": "ghee nu pakat",
+    "gu": "ઘીનું પેકેટ"
+  },
+  {
+    "key": "ghee nu peket",
+    "original": "ghee nu peket",
+    "gu": "ઘીનું પેકેટ"
+  },
+  {
+    "key": "ghee570",
+    "original": "GHEE570",
+    "gu": null
+  },
+  {
+    "key": "ghu  lot",
+    "original": "ghu  lot",
+    "gu": null
+  },
+  {
+    "key": "ghungla",
+    "original": "GHUNGLA",
+    "gu": "ભૂંગળી"
+  },
+  {
+    "key": "ghunolot",
+    "original": "ghunolot",
+    "gu": "ઘઉંનો લોટ"
+  },
+  {
+    "key": "giru",
+    "original": "GIRU",
+    "gu": "ગેરુ"
+  },
+  {
+    "key": "gol",
+    "original": "GOL",
+    "gu": "ગોળ"
+  },
+  {
+    "key": "gol dabo",
+    "original": "GOL DABO",
+    "gu": "ગોળનો ડબ્બો"
+  },
+  {
+    "key": "gol lata 2peket",
+    "original": "GOL LATA 2PEKET",
+    "gu": "ગોળ લાટા ૨ પેકેટ"
+  },
+  {
+    "key": "gol peti",
+    "original": "GOL PETI",
+    "gu": "ગોળની પેટી"
+  },
+  {
+    "key": "golkeri no masalo",
+    "original": "GOLKERI NO MASALO",
+    "gu": "ગોળકેરીનો અથાણાં મસાલો"
+  },
+  {
+    "key": "golkerino aachar masalo",
+    "original": "golkerino aachar masalo",
+    "gu": "ગોળકેરીનો અથાણાં મસાલો"
+  },
+  {
+    "key": "golni peti",
+    "original": "golni peti",
+    "gu": "ગોળની પેટી"
+  },
+  {
+    "key": "gravi masalo",
+    "original": "GRAVI MASALO",
+    "gu": "ગ્રેવી મસાલો"
+  },
+  {
+    "key": "gundar",
+    "original": "GUNDAR",
+    "gu": "ગુંદર"
+  },
+  {
+    "key": "haldar",
+    "original": "HALDAR",
+    "gu": "હળદર"
+  },
+  {
+    "key": "hbvh",
+    "original": "hbvh",
+    "gu": null
+  },
+  {
+    "key": "heren  nu  bill",
+    "original": "HEREN  NU  BILL",
+    "gu": "હિરેનનું બિલ"
+  },
+  {
+    "key": "hghf",
+    "original": "hghf",
+    "gu": null
+  },
+  {
+    "key": "hing",
+    "original": "HING",
+    "gu": "હીંગ"
+  },
+  {
+    "key": "hing rk",
+    "original": "HING RK",
+    "gu": "હીંગ આર.કે."
+  },
+  {
+    "key": "hiren nu bill",
+    "original": "HIREN NU BILL",
+    "gu": "હિરેનનું બિલ"
+  },
+  {
+    "key": "hitesh  nu  bill",
+    "original": "HITESH  NU  BILL",
+    "gu": "હિતેશનું બિલ"
+  },
+  {
+    "key": "hitesh nu bill",
+    "original": "HITESH NU BILL",
+    "gu": "હિતેશનું બિલ"
+  },
+  {
+    "key": "hv",
+    "original": "hv",
+    "gu": null
+  },
+  {
+    "key": "hvbhvh",
+    "original": "hvbhvh",
+    "gu": null
+  },
+  {
+    "key": "hvh",
+    "original": "hvh",
+    "gu": null
+  },
+  {
+    "key": "ikjchgb",
+    "original": "ikjchgb",
+    "gu": null
+  },
+  {
+    "key": "indika",
+    "original": "INDIKA",
+    "gu": "ઇન્ડિકા હેર કલર"
+  },
+  {
+    "key": "jaifal",
+    "original": "JAIFAL",
+    "gu": "જાયફળ"
+  },
+  {
+    "key": "jaljira",
+    "original": "JALJIRA",
+    "gu": "જલજીરા"
+  },
+  {
+    "key": "jar",
+    "original": "JAR",
+    "gu": "જાર / બરણી"
+  },
+  {
+    "key": "jayfal",
+    "original": "JAYFAL",
+    "gu": "જાયફળ"
+  },
+  {
+    "key": "jbhfv",
+    "original": "jbhfv",
+    "gu": null
+  },
+  {
+    "key": "jbszv",
+    "original": "jbszv",
+    "gu": null
+  },
+  {
+    "key": "jbzv65",
+    "original": "jbzv65",
+    "gu": null
+  },
+  {
+    "key": "jeeru",
+    "original": "JEERU",
+    "gu": "જીરું"
+  },
+  {
+    "key": "jhv",
+    "original": "jhv",
+    "gu": null
+  },
+  {
+    "key": "jhvb",
+    "original": "jhvb",
+    "gu": null
+  },
+  {
+    "key": "jhvh",
+    "original": "jhvh",
+    "gu": null
+  },
+  {
+    "key": "jiru",
+    "original": "JIRU",
+    "gu": "જીરું"
+  },
+  {
+    "key": "jkjsjgrf",
+    "original": "jkjsjgrf",
+    "gu": null
+  },
+  {
+    "key": "jkv",
+    "original": "jkv",
+    "gu": null
+  },
+  {
+    "key": "jlbaef",
+    "original": "jlbaef",
+    "gu": null
+  },
+  {
+    "key": "jo sabu",
+    "original": "JO SABU",
+    "gu": "જો સાબુ"
+  },
+  {
+    "key": "jsbzf",
+    "original": "jsbzf",
+    "gu": null
+  },
+  {
+    "key": "juvar",
+    "original": "JUVAR",
+    "gu": "જુવાર"
+  },
+  {
+    "key": "juwar",
+    "original": "JUWAR",
+    "gu": "જુવાર"
+  },
+  {
+    "key": "kachi  puri",
+    "original": "KACHI  PURI",
+    "gu": "કાચી પૂરી"
+  },
+  {
+    "key": "kachi puri",
+    "original": "KACHI PURI",
+    "gu": "કાચી પૂરી"
+  },
+  {
+    "key": "kajal",
+    "original": "KAJAL",
+    "gu": "કાજળ"
+  },
+  {
+    "key": "kajkari masalo",
+    "original": "KAJKARI MASALO",
+    "gu": "કાજુ કરી મસાલો"
+  },
+  {
+    "key": "kaju",
+    "original": "kaju",
+    "gu": "કાજુ"
+  },
+  {
+    "key": "kaju  badam",
+    "original": "KAJU  BADAM",
+    "gu": "કાજુ બદામ"
+  },
+  {
+    "key": "kaju  badam  kismis",
+    "original": "KAJU  BADAM  KISMIS",
+    "gu": "કાજુ બદામ કિસમિસ"
+  },
+  {
+    "key": "kaju badam",
+    "original": "kaju badam",
+    "gu": "કાજુ બદામ"
+  },
+  {
+    "key": "kaju bdam",
+    "original": "KAJU BDAM",
+    "gu": "કાજુ બદામ"
+  },
+  {
+    "key": "kaju drax",
+    "original": "KAJU DRAX",
+    "gu": "કાજુ દ્રાક્ષ"
+  },
+  {
+    "key": "kajubadam",
+    "original": "Kajubadam",
+    "gu": "કાજુ બદામ"
+  },
+  {
+    "key": "kajukari masalo",
+    "original": "KAJUKARI MASALO",
+    "gu": "કાજુ કરી મસાલો"
+  },
+  {
+    "key": "kajukarino masalo",
+    "original": "KAJUKARINO MASALO",
+    "gu": null
+  },
+  {
+    "key": "kala tal",
+    "original": "KALA TAL",
+    "gu": "કાળા તલ"
+  },
+  {
+    "key": "kalar dabi 4",
+    "original": "kalar dabi 4",
+    "gu": "કુલર દાબડી ૪"
+  },
+  {
+    "key": "kali daraksh",
+    "original": "KALI DARAKSH",
+    "gu": "કાળી દ્રાક્ષ"
+  },
+  {
+    "key": "kali draksh",
+    "original": "KALI DRAKSH",
+    "gu": "કાળી દ્રાક્ષ"
+  },
+  {
+    "key": "kali drax",
+    "original": "KALI DRAX",
+    "gu": "કાળી દ્રાક્ષ"
+  },
+  {
+    "key": "kalidrax",
+    "original": "KALIDRAX",
+    "gu": "કાળી દ્રાક્ષ"
+  },
+  {
+    "key": "kalitep",
+    "original": "KALITEP",
+    "gu": "કાળી ટેપ"
+  },
+  {
+    "key": "kalthi",
+    "original": "KALTHI",
+    "gu": "કળથી"
+  },
+  {
+    "key": "kaour",
+    "original": "KAOUR",
+    "gu": "કપૂર"
+  },
+  {
+    "key": "kapur",
+    "original": "kapur",
+    "gu": "કપૂર"
+  },
+  {
+    "key": "karinal",
+    "original": "karinal",
+    "gu": "ક્રિનલ સાબુ"
+  },
+  {
+    "key": "karinal sabu",
+    "original": "KARINAL SABU",
+    "gu": null
+  },
+  {
+    "key": "kashmiri marsu",
+    "original": "kashmiri marsu",
+    "gu": "કાશ્મીરી મરચું"
+  },
+  {
+    "key": "kashmirmarchu",
+    "original": "KASHMIRMARCHU",
+    "gu": "કાશ્મીરી મરચું"
+  },
+  {
+    "key": "kasmiri",
+    "original": "KASMIRI",
+    "gu": "કાશ્મીરી મરચું"
+  },
+  {
+    "key": "kasmiri marsu",
+    "original": "KASMIRI MARSU",
+    "gu": "કાશ્મીરી મરચું"
+  },
+  {
+    "key": "kasture methi",
+    "original": "KASTURE METHI",
+    "gu": "કસુરી મેથી"
+  },
+  {
+    "key": "katbari",
+    "original": "KATBARI",
+    "gu": "કેડબરી"
+  },
+  {
+    "key": "katree",
+    "original": "KATREE",
+    "gu": "કાતરી"
+  },
+  {
+    "key": "kaveri",
+    "original": "KAVERI",
+    "gu": "કાવેરી ગોળ"
+  },
+  {
+    "key": "kaveri gol",
+    "original": "KAVERI GOL",
+    "gu": "કાવેરી ગોળ"
+  },
+  {
+    "key": "kaveri gol dabo",
+    "original": "KAVERI GOL DABO",
+    "gu": "કાવેરી ગોળનો ડબ્બો"
+  },
+  {
+    "key": "kdgzrg",
+    "original": "kdgzrg",
+    "gu": null
+  },
+  {
+    "key": "kek",
+    "original": "KEK",
+    "gu": "કેક"
+  },
+  {
+    "key": "kesri sabu peti",
+    "original": "KESRI SABU PETI",
+    "gu": "કેસરી સાબુ પેટી"
+  },
+  {
+    "key": "ketbari",
+    "original": "Ketbari",
+    "gu": "કેડબરી"
+  },
+  {
+    "key": "kfjsv",
+    "original": "kfjsv",
+    "gu": null
+  },
+  {
+    "key": "kh",
+    "original": "kh",
+    "gu": null
+  },
+  {
+    "key": "khajur",
+    "original": "khajur",
+    "gu": "ખજૂર"
+  },
+  {
+    "key": "khakhara",
+    "original": "KHAKHARA",
+    "gu": "ખાખરા"
+  },
+  {
+    "key": "khakhra",
+    "original": "KHAKHRA",
+    "gu": "ખાખરા"
+  },
+  {
+    "key": "khand",
+    "original": "khand",
+    "gu": "ખાંડ"
+  },
+  {
+    "key": "khand 50kg",
+    "original": "KHAND 50KG",
+    "gu": "૫૦ કિલો ખાંડ"
+  },
+  {
+    "key": "khand225",
+    "original": "   KHAND225",
+    "gu": "ખાંડ"
+  },
+  {
+    "key": "kharo",
+    "original": "kharo",
+    "gu": "પાપડ ખારો"
+  },
+  {
+    "key": "khas khas",
+    "original": "KHAS KHAS",
+    "gu": "ખસખસ"
+  },
+  {
+    "key": "khas khas  topru  drax",
+    "original": "khas khas  topru  drax",
+    "gu": "ખસખસ ટોપરું દ્રાક્ષ"
+  },
+  {
+    "key": "khaskhas",
+    "original": "KHASKHAS",
+    "gu": "ખસખસ"
+  },
+  {
+    "key": "khaskhs",
+    "original": "KHASKHS",
+    "gu": "ખસખસ"
+  },
+  {
+    "key": "khg",
+    "original": "khg",
+    "gu": null
+  },
+  {
+    "key": "khghzef",
+    "original": "khghzef",
+    "gu": null
+  },
+  {
+    "key": "khisdi",
+    "original": "KHISDI",
+    "gu": "ખીચડી"
+  },
+  {
+    "key": "khjur",
+    "original": "KHJUR",
+    "gu": "ખજૂર"
+  },
+  {
+    "key": "khnd",
+    "original": "KHND",
+    "gu": "ખાંડ"
+  },
+  {
+    "key": "khskhs",
+    "original": "KHSKHS",
+    "gu": "ખસખસ"
+  },
+  {
+    "key": "khzeg",
+    "original": "khzeg",
+    "gu": null
+  },
+  {
+    "key": "kisan sos",
+    "original": "KISAN SOS",
+    "gu": "કિસાન સોસ"
+  },
+  {
+    "key": "kismis",
+    "original": "KISMIS",
+    "gu": "કિસમિસ"
+  },
+  {
+    "key": "kismis  sakar  brash",
+    "original": "KISMIS  SAKAR  BRASH",
+    "gu": "કિસમિસ સાકર બ્રશ"
+  },
+  {
+    "key": "kjb",
+    "original": "kjb",
+    "gu": null
+  },
+  {
+    "key": "kjbc",
+    "original": "kjbc",
+    "gu": null
+  },
+  {
+    "key": "kjbdg",
+    "original": "kjbdg",
+    "gu": null
+  },
+  {
+    "key": "kjbdv",
+    "original": "kjbdv",
+    "gu": null
+  },
+  {
+    "key": "kjbg",
+    "original": "kjbg",
+    "gu": null
+  },
+  {
+    "key": "kjbhzef",
+    "original": "kjbhzef",
+    "gu": null
+  },
+  {
+    "key": "kjbn",
+    "original": "kjbn",
+    "gu": null
+  },
+  {
+    "key": "kjbsef",
+    "original": "kjbsef",
+    "gu": null
+  },
+  {
+    "key": "kjbsf",
+    "original": "kjbsf",
+    "gu": null
+  },
+  {
+    "key": "kjbsrg",
+    "original": "kjbsrg",
+    "gu": null
+  },
+  {
+    "key": "kjbxfg",
+    "original": "kjbxfg",
+    "gu": null
+  },
+  {
+    "key": "kjbxv",
+    "original": "kjbxv",
+    "gu": null
+  },
+  {
+    "key": "kjgu",
+    "original": "kjgu",
+    "gu": null
+  },
+  {
+    "key": "kjh",
+    "original": "kjh",
+    "gu": null
+  },
+  {
+    "key": "kjhvkg",
+    "original": "kjhvkg",
+    "gu": null
+  },
+  {
+    "key": "kjjg",
+    "original": "kjjg",
+    "gu": null
+  },
+  {
+    "key": "kjv",
+    "original": "kjv",
+    "gu": null
+  },
+  {
+    "key": "kkj",
+    "original": "kkj",
+    "gu": null
+  },
+  {
+    "key": "knkn",
+    "original": "knkn",
+    "gu": null
+  },
+  {
+    "key": "kolgate",
+    "original": "KOLGATE",
+    "gu": "કોલગેટ"
+  },
+  {
+    "key": "kolget",
+    "original": "KOLGET",
+    "gu": "કોલગેટ"
+  },
+  {
+    "key": "kon  jayfal magjtri",
+    "original": "KON  jayfal MAGJTRI",
+    "gu": "મહેંદી કોન જાયફળ મગજતરી"
+  },
+  {
+    "key": "kraci vefr",
+    "original": "kraci vefr",
+    "gu": "ક્રન્ચી વેફર"
+  },
+  {
+    "key": "krinal",
+    "original": "KRINAL",
+    "gu": "ક્રિનલ સાબુ"
+  },
+  {
+    "key": "krinal sabu",
+    "original": "KRINAL SABU",
+    "gu": "ક્રિનલ સાબુ"
+  },
+  {
+    "key": "krinal sabu125",
+    "original": "KRINAL SABU125",
+    "gu": null
+  },
+  {
+    "key": "ksghr",
+    "original": "ksghr",
+    "gu": null
+  },
+  {
+    "key": "kshrf",
+    "original": "kshrf",
+    "gu": null
+  },
+  {
+    "key": "kug",
+    "original": "kug",
+    "gu": null
+  },
+  {
+    "key": "kuku",
+    "original": "KUKU",
+    "gu": "કંકુ"
+  },
+  {
+    "key": "kul bill",
+    "original": "KUL BILL",
+    "gu": "કુલ બિલ"
+  },
+  {
+    "key": "kull bil",
+    "original": "KULL BIL",
+    "gu": "કુલ બિલ"
+  },
+  {
+    "key": "kur kuray",
+    "original": "KUR KURAY",
+    "gu": "કુરકુરે"
+  },
+  {
+    "key": "kur kurya",
+    "original": "KUR KURYA",
+    "gu": "કુરકુરે"
+  },
+  {
+    "key": "kurkuray",
+    "original": "KURKURAY",
+    "gu": "કુરકુરે"
+  },
+  {
+    "key": "kurkure",
+    "original": "KURKURE",
+    "gu": "કુરકુરે"
+  },
+  {
+    "key": "kvg",
+    "original": "kvg",
+    "gu": null
+  },
+  {
+    "key": "kzdjb",
+    "original": "kzdjb",
+    "gu": null
+  },
+  {
+    "key": "kzn",
+    "original": "kzn",
+    "gu": null
+  },
+  {
+    "key": "kznv",
+    "original": "kznv",
+    "gu": null
+  },
+  {
+    "key": "l;khxrh",
+    "original": "l;khxrh",
+    "gu": null
+  },
+  {
+    "key": "laajawab",
+    "original": "LAAJAWAB",
+    "gu": "લાજવાબ મસાલો"
+  },
+  {
+    "key": "laajwab",
+    "original": "LAAJWAB",
+    "gu": "લાજવાબ મસાલો"
+  },
+  {
+    "key": "laef boy sabu",
+    "original": "LAEF BOY SABU",
+    "gu": "લાઇફબોય સાબુ"
+  },
+  {
+    "key": "laefboy sabu",
+    "original": "LAEFBOY SABU",
+    "gu": "લાઇફબોય સાબુ"
+  },
+  {
+    "key": "laif boy sabu",
+    "original": "LAIF BOY SABU",
+    "gu": "લાઇફબોય સાબુ"
+  },
+  {
+    "key": "lamp",
+    "original": "LAMP",
+    "gu": "લેમ્પ / બલ્બ"
+  },
+  {
+    "key": "lasan pest",
+    "original": "LASAN PEST",
+    "gu": "લસણ પેસ્ટ"
+  },
+  {
+    "key": "laving",
+    "original": "LAVING",
+    "gu": "લવિંગ"
+  },
+  {
+    "key": "laving  teekha",
+    "original": "laving  teekha",
+    "gu": "તીખા લવિંગ"
+  },
+  {
+    "key": "laving badya",
+    "original": "LAVING BADYA",
+    "gu": null
+  },
+  {
+    "key": "lemp",
+    "original": "LEMP",
+    "gu": "લેમ્પ / બલ્બ"
+  },
+  {
+    "key": "likved",
+    "original": "LIKVED",
+    "gu": "લિક્વિડ"
+  },
+  {
+    "key": "likvid",
+    "original": "LIKVID",
+    "gu": "લિક્વિડ"
+  },
+  {
+    "key": "likvid 3peket",
+    "original": "LIKVID 3PEKET",
+    "gu": "લિક્વિડ ૩ પેકેટ"
+  },
+  {
+    "key": "limda sabu",
+    "original": "LIMDA SABU",
+    "gu": "લીમડા સાબુ"
+  },
+  {
+    "key": "ljlb",
+    "original": "ljlb",
+    "gu": null
+  },
+  {
+    "key": "ljnb",
+    "original": "ljnb",
+    "gu": null
+  },
+  {
+    "key": "lkb",
+    "original": "lkb",
+    "gu": null
+  },
+  {
+    "key": "lkbj",
+    "original": "lkbj",
+    "gu": null
+  },
+  {
+    "key": "lkbjb",
+    "original": "lkbjb",
+    "gu": null
+  },
+  {
+    "key": "lkh",
+    "original": "lkh",
+    "gu": null
+  },
+  {
+    "key": "lkhirh",
+    "original": "lkhirh",
+    "gu": null
+  },
+  {
+    "key": "lkhrg",
+    "original": "lkhrg",
+    "gu": null
+  },
+  {
+    "key": "lkhs",
+    "original": "lkhs",
+    "gu": null
+  },
+  {
+    "key": "lmlb",
+    "original": "lmlb",
+    "gu": null
+  },
+  {
+    "key": "lot",
+    "original": "LOT",
+    "gu": "લોટ"
+  },
+  {
+    "key": "lot  & telnuken",
+    "original": "LOT  & TELNUKEN",
+    "gu": "લોટ અને તેલનું કેન"
+  },
+  {
+    "key": "lzlx",
+    "original": "lzlx",
+    "gu": null
+  },
+  {
+    "key": "m",
+    "original": "m",
+    "gu": null
+  },
+  {
+    "key": "m mashala",
+    "original": "M MASHALA",
+    "gu": "મીટ મસાલો"
+  },
+  {
+    "key": "m r p sabu",
+    "original": "M R P SABU",
+    "gu": "એમ.આર.પી. સાબુ"
+  },
+  {
+    "key": "mag",
+    "original": "MAG",
+    "gu": "મગ"
+  },
+  {
+    "key": "mag chdi",
+    "original": "MAG CHDI",
+    "gu": "મગછડી દાળ"
+  },
+  {
+    "key": "mag dal",
+    "original": "mag dal",
+    "gu": "મગ દાળ"
+  },
+  {
+    "key": "magcadi dal",
+    "original": "MAGCADI DAL",
+    "gu": "મગછડી દાળ"
+  },
+  {
+    "key": "magcadidal",
+    "original": "MAGCADIDAL",
+    "gu": "મગછડી દાળ"
+  },
+  {
+    "key": "magchadi",
+    "original": "MAGCHADI",
+    "gu": "મગછડી દાળ"
+  },
+  {
+    "key": "magchdidal",
+    "original": "MAGCHDIDAL",
+    "gu": "મગછડી દાળ"
+  },
+  {
+    "key": "magdal",
+    "original": "magdal",
+    "gu": "મગ દાળ"
+  },
+  {
+    "key": "magdal 5peket",
+    "original": "magdal 5peket",
+    "gu": "મગદાળ ૫ પેકેટ"
+  },
+  {
+    "key": "magdal&canadal&biskit",
+    "original": "MAGDAL&CANADAL&BISKIT",
+    "gu": "મગદાળ ચણાદાળ અને બિસ્કિટ"
+  },
+  {
+    "key": "magdal&singbhajiya",
+    "original": "MAGDAL&SINGBHAJIYA",
+    "gu": "મગદાળ અને સીંગ ભજિયા"
+  },
+  {
+    "key": "magfada",
+    "original": "MAGFADA",
+    "gu": "મગફાડા દાળ"
+  },
+  {
+    "key": "magfada dal",
+    "original": "MAGFADA DAL",
+    "gu": "મગફાડા દાળ"
+  },
+  {
+    "key": "magi",
+    "original": "MAGI",
+    "gu": "મેગી"
+  },
+  {
+    "key": "magi masalo",
+    "original": "MAGI MASALO",
+    "gu": "મેગી મસાલો"
+  },
+  {
+    "key": "magsadi dal",
+    "original": "MAGSADI DAL",
+    "gu": "મગછડી દાળ"
+  },
+  {
+    "key": "mahe ghee",
+    "original": "MAHE GHEE",
+    "gu": "મહી ઘી"
+  },
+  {
+    "key": "mahi",
+    "original": "MAHI",
+    "gu": "મહી ઘી"
+  },
+  {
+    "key": "mahi ghee",
+    "original": "MAHI GHEE",
+    "gu": "મહી ઘી"
+  },
+  {
+    "key": "makae pauva",
+    "original": "MAKAE PAUVA",
+    "gu": null
+  },
+  {
+    "key": "makai",
+    "original": "MAKAI",
+    "gu": "મકાઈ"
+  },
+  {
+    "key": "makai & juvar",
+    "original": "MAKAI & juvar",
+    "gu": "મકાઈ અને જુવાર"
+  },
+  {
+    "key": "makai pahuva",
+    "original": "MAKAI PAHUVA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makai pahva",
+    "original": "MAKAI PAHVA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makai pauva",
+    "original": "MAKAI PAUVA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makai pava",
+    "original": "makai pava",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makai pavuva",
+    "original": "MAKAI PAVUVA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makai pawa",
+    "original": "MAKAI PAWA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makai phauva",
+    "original": "MAKAI PHAUVA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makai phuva",
+    "original": "MAKAI PHUVA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makaina mamra",
+    "original": "MAKAINA MAMRA",
+    "gu": "મકાઈના મમરા"
+  },
+  {
+    "key": "makaipava",
+    "original": "Makaipava",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "makayina pawa",
+    "original": "MAKAYINA PAWA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "mamar",
+    "original": "mamar",
+    "gu": "મમરા"
+  },
+  {
+    "key": "mamara",
+    "original": "MAMARA",
+    "gu": "મમરા"
+  },
+  {
+    "key": "mamra",
+    "original": "mamra",
+    "gu": "મમરા"
+  },
+  {
+    "key": "mando",
+    "original": "MANDO",
+    "gu": "મૈદો"
+  },
+  {
+    "key": "mang",
+    "original": "MANG",
+    "gu": "મગ"
+  },
+  {
+    "key": "mang dal",
+    "original": "MANG DAL",
+    "gu": "મગ દાળ"
+  },
+  {
+    "key": "mangi",
+    "original": "MANGI",
+    "gu": "મેગી"
+  },
+  {
+    "key": "mangi mangi masala",
+    "original": "MANGI MANGI MASALA",
+    "gu": "મેગી અને મેગી મસાલો"
+  },
+  {
+    "key": "marchu",
+    "original": "MARCHU",
+    "gu": "મરચું"
+  },
+  {
+    "key": "maree",
+    "original": "MAREE",
+    "gu": "મરી"
+  },
+  {
+    "key": "mari",
+    "original": "MARI",
+    "gu": "મરી"
+  },
+  {
+    "key": "marsano masalo",
+    "original": "MARSANO MASALO",
+    "gu": "મરચાંનો મસાલો"
+  },
+  {
+    "key": "marsu",
+    "original": "marsu",
+    "gu": "મરચું"
+  },
+  {
+    "key": "masala",
+    "original": "MASALA",
+    "gu": "મસાલો"
+  },
+  {
+    "key": "masalo",
+    "original": "MASALO",
+    "gu": "મસાલો"
+  },
+  {
+    "key": "masur dal",
+    "original": "MASUR DAL",
+    "gu": "મસૂર દાળ"
+  },
+  {
+    "key": "masurdal",
+    "original": "MASURDAL",
+    "gu": "મસૂર દાળ"
+  },
+  {
+    "key": "masurni dal",
+    "original": "MASURNI DAL",
+    "gu": "મસૂર દાળ"
+  },
+  {
+    "key": "math",
+    "original": "MATH",
+    "gu": "મઠ"
+  },
+  {
+    "key": "mava",
+    "original": "MAVA",
+    "gu": "માવો"
+  },
+  {
+    "key": "mavo",
+    "original": "MAVO",
+    "gu": "માવો"
+  },
+  {
+    "key": "mbjk",
+    "original": "mbjk",
+    "gu": null
+  },
+  {
+    "key": "mege masalo",
+    "original": "mege masalo",
+    "gu": "મેગી મસાલો"
+  },
+  {
+    "key": "meggi",
+    "original": "MEGGI",
+    "gu": "મેગી"
+  },
+  {
+    "key": "megi",
+    "original": "MEGI",
+    "gu": "મેગી"
+  },
+  {
+    "key": "megi masalo",
+    "original": "MEGI MASALO",
+    "gu": "મેગી મસાલો"
+  },
+  {
+    "key": "megi masalo and mangobox",
+    "original": "MEGI MASALO AND MANGOBOX",
+    "gu": "મેગી મસાલો અને મેંગો બોક્સ"
+  },
+  {
+    "key": "megino masalo",
+    "original": "MEGINO MASALO",
+    "gu": "મેગીનો મસાલો"
+  },
+  {
+    "key": "mehtasabu",
+    "original": "MEHTASABU",
+    "gu": "મહેતા સાબુ"
+  },
+  {
+    "key": "mende no kon",
+    "original": "mende no kon",
+    "gu": "મહેંદીનો કોન"
+  },
+  {
+    "key": "mendi",
+    "original": "MENDI",
+    "gu": "મહેંદી"
+  },
+  {
+    "key": "mendi nokon  fevikik",
+    "original": "MENDI NOKON  FEVIKIK",
+    "gu": "મહેંદી કોન અને ફેવીક્વિક"
+  },
+  {
+    "key": "mendo",
+    "original": "MENDO",
+    "gu": "મૈદો"
+  },
+  {
+    "key": "mengi",
+    "original": "mengi",
+    "gu": "મેગી"
+  },
+  {
+    "key": "methee kurya",
+    "original": "methee kurya",
+    "gu": "મેથીના કુરિયા"
+  },
+  {
+    "key": "methi",
+    "original": "METHI",
+    "gu": "મેથી"
+  },
+  {
+    "key": "methi  kuriya",
+    "original": "METHI  KURIYA",
+    "gu": "મેથીના કુરિયા"
+  },
+  {
+    "key": "methi kuriya",
+    "original": "METHI KURIYA",
+    "gu": "મેથીના કુરિયા"
+  },
+  {
+    "key": "methi kurya",
+    "original": "METHI KURYA",
+    "gu": "મેથીના કુરિયા"
+  },
+  {
+    "key": "methi na kuriya",
+    "original": "METHI NA KURIYA",
+    "gu": "મેથીના કુરિયા"
+  },
+  {
+    "key": "methikuriya",
+    "original": "METHIKURIYA",
+    "gu": "મેથીના કુરિયા"
+  },
+  {
+    "key": "methina kuriya",
+    "original": "METHINA KURIYA",
+    "gu": "મેથીના કુરિયા"
+  },
+  {
+    "key": "mevo",
+    "original": "MEVO",
+    "gu": "મેવો"
+  },
+  {
+    "key": "minbatinu peket",
+    "original": "MINBATINU PEKET",
+    "gu": "મીણબત્તીનું પેકેટ"
+  },
+  {
+    "key": "mithanitheli",
+    "original": "MITHANITHELI",
+    "gu": "મીઠાની થેલી"
+  },
+  {
+    "key": "mithi sev",
+    "original": "MITHI SEV",
+    "gu": "મીઠી સેવ"
+  },
+  {
+    "key": "mithu",
+    "original": "mithu",
+    "gu": "મીઠું"
+  },
+  {
+    "key": "mix vastu",
+    "original": "MIX VASTU",
+    "gu": "મિક્સ વસ્તુઓ"
+  },
+  {
+    "key": "mkae",
+    "original": "MKAE",
+    "gu": "મકાઈ"
+  },
+  {
+    "key": "mkae pauva",
+    "original": "MKAE PAUVA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "mkai",
+    "original": "MKAI",
+    "gu": "મકાઈ"
+  },
+  {
+    "key": "mkaipva",
+    "original": "MKAIPVA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "mmara",
+    "original": "MMARA",
+    "gu": "મમરા"
+  },
+  {
+    "key": "mmra",
+    "original": "MMRA",
+    "gu": "મમરા"
+  },
+  {
+    "key": "mree",
+    "original": "MREE",
+    "gu": "મરી"
+  },
+  {
+    "key": "mrp",
+    "original": "MRP",
+    "gu": "એમઆરપી"
+  },
+  {
+    "key": "mukhvas",
+    "original": "MUKHVAS",
+    "gu": "મુખવાસ"
+  },
+  {
+    "key": "naliyer",
+    "original": "NALIYER",
+    "gu": "નાળિયેર"
+  },
+  {
+    "key": "namak",
+    "original": "NAMAK",
+    "gu": "મીઠું"
+  },
+  {
+    "key": "namk",
+    "original": "namk",
+    "gu": "મીઠું"
+  },
+  {
+    "key": "nastani dis",
+    "original": "NASTANI DIS",
+    "gu": "નાસ્તાની ડિશ"
+  },
+  {
+    "key": "nava na sabu",
+    "original": "NAVA NA SABU",
+    "gu": "ન્હાવાના સાબુ"
+  },
+  {
+    "key": "nava no sabu",
+    "original": "NAVA NO SABU",
+    "gu": "ન્હાવાના સાબુ"
+  },
+  {
+    "key": "navana sabu",
+    "original": "NAVANA SABU",
+    "gu": "ન્હાવાના સાબુ"
+  },
+  {
+    "key": "navano sabu",
+    "original": "NAVANO SABU",
+    "gu": "ન્હાવાના સાબુ"
+  },
+  {
+    "key": "navna sabu",
+    "original": "navna sabu",
+    "gu": "ન્હાવાના સાબુ"
+  },
+  {
+    "key": "navu bil",
+    "original": "navu bil",
+    "gu": "નવું બિલ"
+  },
+  {
+    "key": "navu bill",
+    "original": "NAVU BILL",
+    "gu": "નવું બિલ"
+  },
+  {
+    "key": "navubil",
+    "original": "Navubil",
+    "gu": "નવું બિલ"
+  },
+  {
+    "key": "nikhar",
+    "original": "NIKHAR",
+    "gu": "નિખાર સાબુ"
+  },
+  {
+    "key": "nirma",
+    "original": "NIRMA",
+    "gu": "નિર્મા"
+  },
+  {
+    "key": "nirma namak",
+    "original": "NIRMA NAMAK",
+    "gu": "નિર્મા મીઠું"
+  },
+  {
+    "key": "nirma pavdar",
+    "original": "NIRMA PAVDAR",
+    "gu": "નિર્મા પાવડર"
+  },
+  {
+    "key": "nirma pavdar30",
+    "original": "NIRMA PAVDAR30",
+    "gu": null
+  },
+  {
+    "key": "nirma powder",
+    "original": "NIRMA POWDER",
+    "gu": "નિર્મા પાવડર"
+  },
+  {
+    "key": "nirma sabu",
+    "original": "NIRMA SABU",
+    "gu": "નિર્મા સાબુ"
+  },
+  {
+    "key": "nirma sabuni peti",
+    "original": "NIRMA SABUNI PETI",
+    "gu": null
+  },
+  {
+    "key": "njlb",
+    "original": "njlb",
+    "gu": null
+  },
+  {
+    "key": "njxg",
+    "original": "njxg",
+    "gu": null
+  },
+  {
+    "key": "nkcv",
+    "original": "nkcv",
+    "gu": null
+  },
+  {
+    "key": "nkzdv",
+    "original": "nkzdv",
+    "gu": null
+  },
+  {
+    "key": "nlkn",
+    "original": "nlkn",
+    "gu": null
+  },
+  {
+    "key": "nn",
+    "original": "nn",
+    "gu": null
+  },
+  {
+    "key": "noknh",
+    "original": "noknh",
+    "gu": null
+  },
+  {
+    "key": "nudal",
+    "original": "NUDAL",
+    "gu": "નૂડલ્સ"
+  },
+  {
+    "key": "nvu bil",
+    "original": "NVU BIL",
+    "gu": "નવું બિલ"
+  },
+  {
+    "key": "nvu bill",
+    "original": "NVU BILL",
+    "gu": "નવું બિલ"
+  },
+  {
+    "key": "pahuva",
+    "original": "PAHUVA",
+    "gu": "પૌંઆ"
+  },
+  {
+    "key": "papad",
+    "original": "PAPAD",
+    "gu": "પાપડ"
+  },
+  {
+    "key": "papad  choklet",
+    "original": "PAPAD  CHOKLET",
+    "gu": "પાપડ ચોકલેટ"
+  },
+  {
+    "key": "papd",
+    "original": "PAPD",
+    "gu": "પાપડ"
+  },
+  {
+    "key": "parlay",
+    "original": "PARLAY",
+    "gu": "પારલે બિસ્કિટ"
+  },
+  {
+    "key": "pasta",
+    "original": "PASTA",
+    "gu": "પાસ્તા"
+  },
+  {
+    "key": "pasta no masalo",
+    "original": "PASTA NO MASALO",
+    "gu": "પાસ્તા મસાલો"
+  },
+  {
+    "key": "patangli",
+    "original": "PATANGLI",
+    "gu": "પતંજલિ ઉત્પાદન"
+  },
+  {
+    "key": "patanjli",
+    "original": "PATANJLI",
+    "gu": "પતંજલિ ઉત્પાદન"
+  },
+  {
+    "key": "patanjli pest",
+    "original": "PATANJLI PEST",
+    "gu": "પતંજલિ પેસ્ટ"
+  },
+  {
+    "key": "patnjali",
+    "original": "PATNJALI",
+    "gu": "પતંજલિ ઉત્પાદન"
+  },
+  {
+    "key": "pauva",
+    "original": "PAUVA",
+    "gu": "પૌંઆ"
+  },
+  {
+    "key": "pauva chokha",
+    "original": "pauva chokha",
+    "gu": "પૌંઆ ચોખા"
+  },
+  {
+    "key": "pauva makaina",
+    "original": "PAUVA MAKAINA",
+    "gu": "મકાઈના પૌંઆ"
+  },
+  {
+    "key": "pava",
+    "original": "pava",
+    "gu": "પૌંઆ"
+  },
+  {
+    "key": "pavdar",
+    "original": "PAVDAR",
+    "gu": "પાવડર"
+  },
+  {
+    "key": "pawa",
+    "original": "PAWA",
+    "gu": "પૌંઆ"
+  },
+  {
+    "key": "pawdar",
+    "original": "pawdar",
+    "gu": "પાવડર"
+  },
+  {
+    "key": "pen",
+    "original": "PEN",
+    "gu": "પેન"
+  },
+  {
+    "key": "pest",
+    "original": "PEST",
+    "gu": "ટૂથપેસ્ટ"
+  },
+  {
+    "key": "piprimul",
+    "original": "PIPRIMUL",
+    "gu": "પીપરીમૂળ / ગંઠોડા"
+  },
+  {
+    "key": "pitamre",
+    "original": "PITAMRE",
+    "gu": "પીતાંબરી પાવડર"
+  },
+  {
+    "key": "pogram no saman",
+    "original": "POGRAM NO SAMAN",
+    "gu": "પ્રોગ્રામનો સામાન"
+  },
+  {
+    "key": "pons powder",
+    "original": "PONS POWDER",
+    "gu": "પોન્ડ્સ પાવડર"
+  },
+  {
+    "key": "popcon",
+    "original": "POPCON",
+    "gu": "પોપકોર્ન"
+  },
+  {
+    "key": "powder",
+    "original": "powder",
+    "gu": "પાવડર"
+  },
+  {
+    "key": "program",
+    "original": "PROGRAM",
+    "gu": "પ્રોગ્રામ સામાન"
+  },
+  {
+    "key": "puri",
+    "original": "PURI",
+    "gu": "પૂરી"
+  },
+  {
+    "key": "ra  lot",
+    "original": "RA  LOT",
+    "gu": "રાઈનો લોટ / કુરિયા"
+  },
+  {
+    "key": "raa  lot",
+    "original": "RAA  LOT",
+    "gu": "રાઈનો લોટ"
+  },
+  {
+    "key": "raajagra no lot",
+    "original": "RAAJAGRA NO LOT",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rai",
+    "original": "RAI",
+    "gu": "રાઈ"
+  },
+  {
+    "key": "rai geru",
+    "original": "Rai geru",
+    "gu": "રાઈ ગેરુ"
+  },
+  {
+    "key": "rai giru",
+    "original": "rai giru",
+    "gu": "રાઈ ગેરુ"
+  },
+  {
+    "key": "rai kuriya",
+    "original": "RAI KURIYA",
+    "gu": "રાઈના કુરિયા"
+  },
+  {
+    "key": "rai na kuriya",
+    "original": "RAI NA KURIYA",
+    "gu": "રાઈના કુરિયા"
+  },
+  {
+    "key": "raikuriya",
+    "original": "RAIKURIYA",
+    "gu": "રાઈના કુરિયા"
+  },
+  {
+    "key": "raina kuriya",
+    "original": "RAINA KURIYA",
+    "gu": null
+  },
+  {
+    "key": "raiykuriya",
+    "original": "raiykuriya",
+    "gu": "રાઈના કુરિયા"
+  },
+  {
+    "key": "rajagarano lot",
+    "original": "RAJAGARANO LOT",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rajagra lot",
+    "original": "RAJAGRA LOT",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rajagra no lot",
+    "original": "rajagra no lot",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rajagrano lot",
+    "original": "RAJAGRANO LOT",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rajagranolot",
+    "original": "RAJAGRANOLOT",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rajgra lot",
+    "original": "rajgra lot",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rajgralot",
+    "original": "RAJGRALOT",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rajgrano lot",
+    "original": "RAJGRANO LOT",
+    "gu": "રાજગરાનો લોટ"
+  },
+  {
+    "key": "rajvadi",
+    "original": "RAJVADI",
+    "gu": "રાજવાડી ચટણી"
+  },
+  {
+    "key": "rajvadi catni",
+    "original": "RAJVADI CATNI",
+    "gu": "રાજવાડી ચટણી"
+  },
+  {
+    "key": "rajvadi chtni",
+    "original": "RAJVADI CHTNI",
+    "gu": "રાજવાડી ચટણી"
+  },
+  {
+    "key": "rajvadi satni",
+    "original": "RAJVADI SATNI",
+    "gu": "રાજવાડી ચટણી"
+  },
+  {
+    "key": "ramakda bhngla",
+    "original": "ramakda bhngla",
+    "gu": "રમકડા ભૂંગળા"
+  },
+  {
+    "key": "rang",
+    "original": "RANG",
+    "gu": "રંગ"
+  },
+  {
+    "key": "rasna peket",
+    "original": "RASNA PEKET",
+    "gu": "રસના પેકેટ"
+  },
+  {
+    "key": "ravo",
+    "original": "ravo",
+    "gu": "રવો"
+  },
+  {
+    "key": "ray",
+    "original": "RAY",
+    "gu": "રાઈ"
+  },
+  {
+    "key": "ray kuriya",
+    "original": "RAY KURIYA",
+    "gu": "રાઈના કુરિયા"
+  },
+  {
+    "key": "red pest",
+    "original": "RED PEST",
+    "gu": "રેડ પેસ્ટ"
+  },
+  {
+    "key": "revdi  kaju",
+    "original": "REVDI  KAJU",
+    "gu": "રેવડી કાજુ"
+  },
+  {
+    "key": "ru",
+    "original": "RU",
+    "gu": "રૂ"
+  },
+  {
+    "key": "ruu",
+    "original": "RUU",
+    "gu": "રૂ"
+  },
+  {
+    "key": "rvo",
+    "original": "RVO",
+    "gu": "રવો"
+  },
+  {
+    "key": "s k  mashalo",
+    "original": "S K  MASHALO",
+    "gu": "એસ.કે. મસાલો"
+  },
+  {
+    "key": "sabu",
+    "original": "sabu",
+    "gu": "સાબુ"
+  },
+  {
+    "key": "sabu  champu",
+    "original": "SABU  CHAMPU",
+    "gu": "સાબુ શેમ્પૂ"
+  },
+  {
+    "key": "sabu 10nang",
+    "original": "SABU 10NANG",
+    "gu": "સાબુ ૧૦ નંગ"
+  },
+  {
+    "key": "sabu 1pk",
+    "original": "SABU 1PK",
+    "gu": "સાબુ ૧ પેકેટ"
+  },
+  {
+    "key": "sabu 20nang",
+    "original": "SABU 20NANG",
+    "gu": "સાબુ ૨૦ નંગ"
+  },
+  {
+    "key": "sabu 2peket",
+    "original": "SABU 2PEKET",
+    "gu": "સાબુ ૨ પેકેટ"
+  },
+  {
+    "key": "sabu dhova no",
+    "original": "SABU DHOVA NO",
+    "gu": "ધોવાનો સાબુ"
+  },
+  {
+    "key": "sabu ni peti",
+    "original": "Sabu ni peti",
+    "gu": "સાબુની પેટી"
+  },
+  {
+    "key": "sabu no bandho",
+    "original": "SABU NO BANDHO",
+    "gu": "સાબુનો બાંધો"
+  },
+  {
+    "key": "sabu no bantho",
+    "original": "SABU NO BANTHO",
+    "gu": "સાબુનો બાંધો"
+  },
+  {
+    "key": "sabu peti",
+    "original": "SABU PETI",
+    "gu": "સાબુની પેટી"
+  },
+  {
+    "key": "sabudana",
+    "original": "SABUDANA",
+    "gu": "સાબુદાણા"
+  },
+  {
+    "key": "sabudana puri",
+    "original": "SABUDANA PURI",
+    "gu": "સાબુદાણા પૂરી"
+  },
+  {
+    "key": "sabuni peti",
+    "original": "SABUNI PETI",
+    "gu": "સાબુની પેટી"
+  },
+  {
+    "key": "safed tal",
+    "original": "SAFED TAL",
+    "gu": "સફેદ તલ"
+  },
+  {
+    "key": "sajgyef",
+    "original": "sajgyef",
+    "gu": null
+  },
+  {
+    "key": "sakar",
+    "original": "sakar",
+    "gu": "સાકર"
+  },
+  {
+    "key": "sakariya",
+    "original": "SAKARIYA",
+    "gu": "સાકરિયા"
+  },
+  {
+    "key": "sakr",
+    "original": "SAKR",
+    "gu": "સાકર"
+  },
+  {
+    "key": "sakriya",
+    "original": "SAKRIYA",
+    "gu": "સાકરિયા"
+  },
+  {
+    "key": "sambhar masalo",
+    "original": "sambhar masalo",
+    "gu": "સાંભાર મસાલો"
+  },
+  {
+    "key": "sambo",
+    "original": "SAMBO",
+    "gu": "સામો"
+  },
+  {
+    "key": "san gold tel no dabo",
+    "original": "SAN GOLD TEL NO DABO",
+    "gu": "સનગોલ્ડ તેલનો ડબ્બો"
+  },
+  {
+    "key": "san gold telno dabo",
+    "original": "SAN GOLD TELNO DABO",
+    "gu": "સનગોલ્ડ તેલનો ડબ્બો"
+  },
+  {
+    "key": "sanadal",
+    "original": "Sanadal",
+    "gu": "સંદલ"
+  },
+  {
+    "key": "sanbo",
+    "original": "SANBO",
+    "gu": "સામો"
+  },
+  {
+    "key": "sanchal",
+    "original": "SANCHAL",
+    "gu": "સંચળ"
+  },
+  {
+    "key": "sansal",
+    "original": "SANSAL",
+    "gu": "સંચળ"
+  },
+  {
+    "key": "santar sabu",
+    "original": "santar sabu",
+    "gu": "સંતૂર સાબુ"
+  },
+  {
+    "key": "santoor",
+    "original": "SANTOOR",
+    "gu": "સંતૂર સાબુ"
+  },
+  {
+    "key": "santur sabu",
+    "original": "SANTUR SABU",
+    "gu": "સંતૂર સાબુ"
+  },
+  {
+    "key": "saras  likwid",
+    "original": "saras  likwid",
+    "gu": "સરસ લિક્વિડ"
+  },
+  {
+    "key": "saras powder",
+    "original": "saras powder",
+    "gu": "સારસ પાવડર"
+  },
+  {
+    "key": "sarbat",
+    "original": "SARBAT",
+    "gu": "શરબત"
+  },
+  {
+    "key": "sarbat  botal",
+    "original": "SARBAT  BOTAL",
+    "gu": "શરબત બોટલ"
+  },
+  {
+    "key": "sarbat botal",
+    "original": "SARBAT BOTAL",
+    "gu": "શરબત બોટલ"
+  },
+  {
+    "key": "sas masalo",
+    "original": "SAS MASALO",
+    "gu": "છાશનો મસાલો"
+  },
+  {
+    "key": "savanu",
+    "original": "SAVANU",
+    "gu": "ચવાણું"
+  },
+  {
+    "key": "savno",
+    "original": "savno",
+    "gu": "સાવરણી"
+  },
+  {
+    "key": "savrni",
+    "original": "savrni",
+    "gu": "સાવરણી"
+  },
+  {
+    "key": "sdfg",
+    "original": "sdfg",
+    "gu": null
+  },
+  {
+    "key": "sdhvf",
+    "original": "sdhvf",
+    "gu": null
+  },
+  {
+    "key": "sdkn",
+    "original": "sdkn",
+    "gu": null
+  },
+  {
+    "key": "sdvsf",
+    "original": "sdvsf",
+    "gu": null
+  },
+  {
+    "key": "sejvan masala",
+    "original": "SEJVAN MASALA",
+    "gu": "શેઝવાન મસાલો"
+  },
+  {
+    "key": "sejvan masalo",
+    "original": "SEJVAN MASALO",
+    "gu": "શેઝવાન મસાલો"
+  },
+  {
+    "key": "sel",
+    "original": "SEL",
+    "gu": "સેલ"
+  },
+  {
+    "key": "sempu",
+    "original": "SEMPU",
+    "gu": "શેમ્પૂ"
+  },
+  {
+    "key": "sev",
+    "original": "SEV",
+    "gu": "સેવ"
+  },
+  {
+    "key": "sev  shing",
+    "original": "SEV  SHING",
+    "gu": "સેવ સીંગ"
+  },
+  {
+    "key": "sev 2peket",
+    "original": "SEV 2PEKET",
+    "gu": "સેવ ૨ પેકેટ"
+  },
+  {
+    "key": "sev choklet",
+    "original": "sev choklet",
+    "gu": "સેવ ચોકલેટ"
+  },
+  {
+    "key": "sev peket 5",
+    "original": "SEV PEKET 5",
+    "gu": "સેવ ૫ પેકેટ"
+  },
+  {
+    "key": "sev1",
+    "original": "SEV1",
+    "gu": "સેવ ૧"
+  },
+  {
+    "key": "sfsgf",
+    "original": "sfsgf",
+    "gu": null
+  },
+  {
+    "key": "shambo",
+    "original": "SHAMBO",
+    "gu": "સામો"
+  },
+  {
+    "key": "shempu",
+    "original": "SHEMPU",
+    "gu": "શેમ્પૂ"
+  },
+  {
+    "key": "shigtel botal",
+    "original": "SHIGTEL BOTAL",
+    "gu": "સીંગતેલ બોટલ"
+  },
+  {
+    "key": "shindhav",
+    "original": "SHINDHAV",
+    "gu": "સિંધવ મીઠું"
+  },
+  {
+    "key": "shindhv namak",
+    "original": "SHINDHV NAMAK",
+    "gu": "સિંધવ મીઠું"
+  },
+  {
+    "key": "shing",
+    "original": "SHING",
+    "gu": "સીંગદાણા"
+  },
+  {
+    "key": "shing dalya",
+    "original": "SHING DALYA",
+    "gu": "સીંગ દાળિયા"
+  },
+  {
+    "key": "shing dana",
+    "original": "SHING DANA",
+    "gu": "સીંગદાણા"
+  },
+  {
+    "key": "shing tel",
+    "original": "SHING TEL",
+    "gu": "સીંગતેલ"
+  },
+  {
+    "key": "shing tel 1",
+    "original": "SHING TEL 1",
+    "gu": "સીંગતેલ ૧ બોટલ/કિલો"
+  },
+  {
+    "key": "shing tel 2bottal",
+    "original": "SHING TEL 2BOTTAL",
+    "gu": "સીંગતેલ ૨ બોટલ"
+  },
+  {
+    "key": "shing tel 2kg",
+    "original": "SHING TEL 2KG",
+    "gu": "સીંગતેલ ૨ કિલો"
+  },
+  {
+    "key": "shing tel botal",
+    "original": "SHING TEL BOTAL",
+    "gu": "સીંગતેલ બોટલ"
+  },
+  {
+    "key": "shingdana",
+    "original": "SHINGDANA",
+    "gu": "સીંગદાણા"
+  },
+  {
+    "key": "shingtel",
+    "original": "SHINGTEL",
+    "gu": "સીંગતેલ"
+  },
+  {
+    "key": "shingtel dabo",
+    "original": "SHINGTEL DABO",
+    "gu": "સીંગતેલ ડબ્બો"
+  },
+  {
+    "key": "shingtelni botal",
+    "original": "SHINGTELNI BOTAL",
+    "gu": "સીંગતેલની બોટલ"
+  },
+  {
+    "key": "shreefal",
+    "original": "shreefal",
+    "gu": "શ્રીફળ"
+  },
+  {
+    "key": "shrefal",
+    "original": "SHREFAL",
+    "gu": "શ્રીફળ"
+  },
+  {
+    "key": "sindo khaskhs",
+    "original": "SINDO KHASKHS",
+    "gu": "સિંદૂર ખસખસ"
+  },
+  {
+    "key": "sindur",
+    "original": "SINDUR",
+    "gu": "સિંદૂર"
+  },
+  {
+    "key": "sing",
+    "original": "SING",
+    "gu": "સીંગદાણા"
+  },
+  {
+    "key": "sing dana",
+    "original": "SING DANA",
+    "gu": "સીંગદાણા"
+  },
+  {
+    "key": "sing tel 5letar",
+    "original": "SING TEL 5LETAR",
+    "gu": "સીંગતેલ ૫ લિટર"
+  },
+  {
+    "key": "sing tel botal",
+    "original": "sing tel botal",
+    "gu": "સીંગતેલ બોટલ"
+  },
+  {
+    "key": "singdana",
+    "original": "SINGDANA",
+    "gu": "સીંગદાણા"
+  },
+  {
+    "key": "singtel",
+    "original": "SINGTEL",
+    "gu": "સીંગતેલ"
+  },
+  {
+    "key": "singtel botal",
+    "original": "SINGTEL BOTAL",
+    "gu": "સીંગતેલ બોટલ"
+  },
+  {
+    "key": "singtel dabo",
+    "original": "SINGTEL DABO",
+    "gu": "સીંગતેલ ડબ્બો"
+  },
+  {
+    "key": "singtel no dabo",
+    "original": "SINGTEL NO DABO",
+    "gu": "સીંગતેલનો ડબ્બો"
+  },
+  {
+    "key": "skjgfr",
+    "original": "skjgfr",
+    "gu": null
+  },
+  {
+    "key": "skjhrf",
+    "original": "skjhrf",
+    "gu": null
+  },
+  {
+    "key": "soda",
+    "original": "SODA",
+    "gu": "સોડા"
+  },
+  {
+    "key": "sokdi",
+    "original": "Sokdi",
+    "gu": "સુખડી"
+  },
+  {
+    "key": "sola",
+    "original": "sola",
+    "gu": "છોલે ચણા"
+  },
+  {
+    "key": "solesana",
+    "original": "Solesana",
+    "gu": "છોલે ચણા"
+  },
+  {
+    "key": "soli",
+    "original": "SOLI",
+    "gu": "ચોળી"
+  },
+  {
+    "key": "sopan ghee",
+    "original": "SOPAN GHEE",
+    "gu": "સોપાન ઘી"
+  },
+  {
+    "key": "sos",
+    "original": "SOS",
+    "gu": "સોસ"
+  },
+  {
+    "key": "soyabin",
+    "original": "SOYABIN",
+    "gu": "સોયાબીન તેલ"
+  },
+  {
+    "key": "soyabin dbo",
+    "original": "SOYABIN DBO",
+    "gu": "સોયાબીન તેલ ડબ્બો"
+  },
+  {
+    "key": "sqs",
+    "original": "sqs",
+    "gu": null
+  },
+  {
+    "key": "sreefal",
+    "original": "SREEFAL",
+    "gu": "શ્રીફળ"
+  },
+  {
+    "key": "srefal",
+    "original": "SREFAL",
+    "gu": "શ્રીફળ"
+  },
+  {
+    "key": "srefal  sakar  takmariya",
+    "original": "SREFAL  SAKAR  TAKMARIYA",
+    "gu": "શ્રીફળ સાકર તકમરિયા"
+  },
+  {
+    "key": "srg",
+    "original": "srg",
+    "gu": null
+  },
+  {
+    "key": "srifal60",
+    "original": "srifal60",
+    "gu": "શ્રીફળ"
+  },
+  {
+    "key": "steshnari",
+    "original": "STESHNARI",
+    "gu": "સ્ટેશનરી"
+  },
+  {
+    "key": "stik",
+    "original": "STIK",
+    "gu": "સ્ટિક"
+  },
+  {
+    "key": "sup",
+    "original": "SUP",
+    "gu": "સૂપ"
+  },
+  {
+    "key": "sutar dada",
+    "original": "sutar dada",
+    "gu": "સૂતરનો દડો"
+  },
+  {
+    "key": "sutar dado",
+    "original": "SUTAR DADO",
+    "gu": "સૂતરનો દડો"
+  },
+  {
+    "key": "sutarnodado",
+    "original": "SUTARNODADO",
+    "gu": "સૂતરનો દડો"
+  },
+  {
+    "key": "suth powder",
+    "original": "SUTH POWDER",
+    "gu": "સૂંઠ પાવડર"
+  },
+  {
+    "key": "szfd",
+    "original": "szfd",
+    "gu": null
+  },
+  {
+    "key": "taar",
+    "original": "taar",
+    "gu": "તાર"
+  },
+  {
+    "key": "taj badya tejpata",
+    "original": "TAJ BADYA TEJPATA",
+    "gu": "તજ બાદિયા તમાલપત્ર"
+  },
+  {
+    "key": "takmarya",
+    "original": "takmarya",
+    "gu": "તકમરિયા"
+  },
+  {
+    "key": "tal",
+    "original": "TAL",
+    "gu": "તલ"
+  },
+  {
+    "key": "tamalpatra",
+    "original": "TAMALPATRA",
+    "gu": "તમાલપત્ર"
+  },
+  {
+    "key": "tapkir",
+    "original": "TAPKIR",
+    "gu": "તપકીર"
+  },
+  {
+    "key": "tapkir no lot",
+    "original": "TAPKIR NO LOT",
+    "gu": "તપકીરનો લોટ"
+  },
+  {
+    "key": "tar",
+    "original": "TAR",
+    "gu": "તાર"
+  },
+  {
+    "key": "tata namak",
+    "original": "TATA NAMAK",
+    "gu": "ટાટા મીઠું"
+  },
+  {
+    "key": "tata soda",
+    "original": "TATA SODA",
+    "gu": "ટાટા સોડા"
+  },
+  {
+    "key": "taz",
+    "original": "TAZ",
+    "gu": "તજ"
+  },
+  {
+    "key": "tebal",
+    "original": "TEBAL",
+    "gu": "ટેબલ"
+  },
+  {
+    "key": "teel no dabo",
+    "original": "TEEL NO DABO",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "teelnu ken",
+    "original": "teelnu ken",
+    "gu": "તેલનું કેન"
+  },
+  {
+    "key": "tekha",
+    "original": "TEKHA",
+    "gu": "તીખા મરી"
+  },
+  {
+    "key": "tel",
+    "original": "TEL",
+    "gu": "તેલ"
+  },
+  {
+    "key": "tel  dabo",
+    "original": "TEL  DABO",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "tel  nodabo",
+    "original": "tel  nodabo",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "tel 1kg",
+    "original": "TEL 1KG",
+    "gu": "૧ કિલો તેલ"
+  },
+  {
+    "key": "tel 1litar",
+    "original": "TEL 1LITAR",
+    "gu": "૧ લિટર તેલ"
+  },
+  {
+    "key": "tel 5l",
+    "original": "TEL 5L",
+    "gu": "૫ લિટર તેલ"
+  },
+  {
+    "key": "tel 5liter",
+    "original": "TEL 5LITER",
+    "gu": "૫ લિટર તેલ"
+  },
+  {
+    "key": "tel babo",
+    "original": "TEL BABO",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "tel dabo",
+    "original": "TEL DABO",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "tel no dabo",
+    "original": "TEL NO DABO",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "tel no dbo",
+    "original": "TEL NO DBO",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "tel nu ken",
+    "original": "tel nu ken",
+    "gu": "તેલનું કેન"
+  },
+  {
+    "key": "telamla",
+    "original": "TELAMLA",
+    "gu": "આમળા તેલ"
+  },
+  {
+    "key": "telnibotal",
+    "original": "TELNIBOTAL",
+    "gu": "તેલની બોટલ"
+  },
+  {
+    "key": "telno  dabo",
+    "original": "telno  dabo",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "telno dabo",
+    "original": "TELNO DABO",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "telnodabo",
+    "original": "telnodabo",
+    "gu": "તેલનો ડબ્બો"
+  },
+  {
+    "key": "telnu ken",
+    "original": "TELNU KEN",
+    "gu": "તેલનું કેન"
+  },
+  {
+    "key": "teppati",
+    "original": "teppati",
+    "gu": "ચાની પત્તી"
+  },
+  {
+    "key": "test item",
+    "original": "Test Item",
+    "gu": null
+  },
+  {
+    "key": "tide powder",
+    "original": "TIDE POWDER",
+    "gu": "ટાઈડ પાવડર"
+  },
+  {
+    "key": "tikha  laving  variyali",
+    "original": "TIKHA  LAVING  VARIYALI",
+    "gu": "તીખા લવિંગ"
+  },
+  {
+    "key": "tikha lving",
+    "original": "TIKHA LVING",
+    "gu": "તીખા લવિંગ"
+  },
+  {
+    "key": "tkmriya",
+    "original": "TKMRIYA",
+    "gu": "તકમરિયા"
+  },
+  {
+    "key": "toparanu tel",
+    "original": "TOPARANU TEL",
+    "gu": "કોપરેલ તેલ"
+  },
+  {
+    "key": "toparatel botal",
+    "original": "TOPARATEL BOTAL",
+    "gu": "કોપરેલ તેલ બોટલ"
+  },
+  {
+    "key": "toparu",
+    "original": "TOPARU",
+    "gu": "ટોપરું"
+  },
+  {
+    "key": "topra",
+    "original": "TOPRA",
+    "gu": "ટોપરા"
+  },
+  {
+    "key": "topra bhare",
+    "original": "TOPRA BHARE",
+    "gu": "ટોપરા ભારે"
+  },
+  {
+    "key": "topra halka",
+    "original": "TOPRA HALKA",
+    "gu": "ટોપરા હલકા"
+  },
+  {
+    "key": "topra khaman",
+    "original": "TOPRA KHAMAN",
+    "gu": "ટોપરાનું છીણ"
+  },
+  {
+    "key": "topra tel",
+    "original": "TOPRA TEL",
+    "gu": "કોપરેલ તેલ"
+  },
+  {
+    "key": "topra tel botal",
+    "original": "TOPRA TEL BOTAL",
+    "gu": "કોપરેલ તેલ બોટલ"
+  },
+  {
+    "key": "topra tel ni botal",
+    "original": "TOPRA TEL NI BOTAL",
+    "gu": "કોપરેલ તેલ બોટલ"
+  },
+  {
+    "key": "topraa",
+    "original": "TOPRAA",
+    "gu": "ટોપરા"
+  },
+  {
+    "key": "topranu tel",
+    "original": "TOPRANU TEL",
+    "gu": "કોપરેલ તેલ"
+  },
+  {
+    "key": "topranutel botal",
+    "original": "TOPRANUTEL BOTAL",
+    "gu": "કોપરેલ તેલ બોટલ"
+  },
+  {
+    "key": "topratel botal",
+    "original": "TOPRATEL BOTAL",
+    "gu": "કોપરેલ તેલ બોટલ"
+  },
+  {
+    "key": "topru",
+    "original": "Topru",
+    "gu": "ટોપરું"
+  },
+  {
+    "key": "total  bill",
+    "original": "TOTAL  BILL",
+    "gu": "કુલ બિલ"
+  },
+  {
+    "key": "total bil",
+    "original": "TOTAL BIL",
+    "gu": "કુલ બિલ"
+  },
+  {
+    "key": "tulshi cha",
+    "original": "TULSHI CHA",
+    "gu": "તુલસી ચા"
+  },
+  {
+    "key": "tulsi chaa",
+    "original": "tulsi chaa",
+    "gu": "તુલસી ચા"
+  },
+  {
+    "key": "tuver dal",
+    "original": "TUVER DAL",
+    "gu": "તુવેર દાળ"
+  },
+  {
+    "key": "tuverdal",
+    "original": "TUVERDAL",
+    "gu": "તુવેર દાળ"
+  },
+  {
+    "key": "tuvrdal",
+    "original": "Tuvrdal",
+    "gu": "તુવેર દાળ"
+  },
+  {
+    "key": "tuvrni dal",
+    "original": "TUVRNI DAL",
+    "gu": "તુવેરની દાળ"
+  },
+  {
+    "key": "tuwer dal",
+    "original": "TUWER DAL",
+    "gu": "તુવેર દાળ"
+  },
+  {
+    "key": "tuwerdal",
+    "original": "TUWERDAL",
+    "gu": "તુવેર દાળ"
+  },
+  {
+    "key": "uchak baki",
+    "original": "UCHAK BAKI",
+    "gu": "ઉચક બાકી"
+  },
+  {
+    "key": "uhgs",
+    "original": "uhgs",
+    "gu": null
+  },
+  {
+    "key": "upad",
+    "original": "UPAD",
+    "gu": "ઉપાડ"
+  },
+  {
+    "key": "vadi",
+    "original": "vadi",
+    "gu": "વડી"
+  },
+  {
+    "key": "vadi and  sutardadi",
+    "original": "VADI AND  SUTARDADI",
+    "gu": "વડી અને સૂતરની દડી"
+  },
+  {
+    "key": "vaghr masalo",
+    "original": "VAGHR MASALO",
+    "gu": "વઘાર મસાલો"
+  },
+  {
+    "key": "varitali",
+    "original": "VARITALI",
+    "gu": "વરિયાળી"
+  },
+  {
+    "key": "variyali",
+    "original": "variyali",
+    "gu": "વરિયાળી"
+  },
+  {
+    "key": "varyali",
+    "original": "VARYALI",
+    "gu": "વરિયાળી"
+  },
+  {
+    "key": "varyali  dhanadal",
+    "original": "VARYALI  DHANADAL",
+    "gu": "વરિયાળી ધાણા દાળ"
+  },
+  {
+    "key": "vatana",
+    "original": "VATANA",
+    "gu": "વટાણા"
+  },
+  {
+    "key": "vatu",
+    "original": "VATU",
+    "gu": "વાટ"
+  },
+  {
+    "key": "vdi",
+    "original": "VDI",
+    "gu": "વડી"
+  },
+  {
+    "key": "vefar",
+    "original": "VEFAR",
+    "gu": "વેફર"
+  },
+  {
+    "key": "veg ghee",
+    "original": "VEG GHEE",
+    "gu": "વનસ્પતિ ઘી"
+  },
+  {
+    "key": "vinas navano sabu",
+    "original": "VINAS NAVANO SABU",
+    "gu": "વિનસ ન્હાવાનો સાબુ"
+  },
+  {
+    "key": "wefar",
+    "original": "wefar",
+    "gu": "વેફર"
+  },
+  {
+    "key": "wefar   kurkuray",
+    "original": "WEFAR   KURKURAY",
+    "gu": "વેફર કુરકુરે"
+  },
+  {
+    "key": "wefer",
+    "original": "WEFER",
+    "gu": "વેફર"
+  },
+  {
+    "key": "wefer  cake",
+    "original": "WEFER  CAKE",
+    "gu": "વેફર કેક"
+  },
+  {
+    "key": "weffa  mithu",
+    "original": "WEFFA  MITHU",
+    "gu": "વેફર મીઠું"
+  },
+  {
+    "key": "weffar",
+    "original": "weffar",
+    "gu": "વેફર"
+  },
+  {
+    "key": "well sabu",
+    "original": "WELL SABU",
+    "gu": "વ્હીલ સાબુ"
+  },
+  {
+    "key": "xfb",
+    "original": "xfb",
+    "gu": null
+  },
+  {
+    "key": "xfb85",
+    "original": "xfb85",
+    "gu": null
+  },
+  {
+    "key": "xfh",
+    "original": "xfh",
+    "gu": null
+  },
+  {
+    "key": "xfn",
+    "original": "xfn",
+    "gu": null
+  },
+  {
+    "key": "xnh54",
+    "original": "xnh54",
+    "gu": null
+  },
+  {
+    "key": "xxzvg",
+    "original": "xxzvg",
+    "gu": null
+  },
+  {
+    "key": "xzfgv4",
+    "original": "xzfgv4",
+    "gu": null
+  },
+  {
+    "key": "zdbjv",
+    "original": "zdbjv",
+    "gu": null
+  },
+  {
+    "key": "zdg",
+    "original": "zdg",
+    "gu": null
+  },
+  {
+    "key": "zdg45",
+    "original": "zdg45",
+    "gu": null
+  },
+  {
+    "key": "zdvg",
+    "original": "zdvg",
+    "gu": null
+  },
+  {
+    "key": "zkjbhd",
+    "original": "zkjbhd",
+    "gu": null
+  },
+  {
+    "key": "zv",
+    "original": "zv",
+    "gu": null
+  }
+]
