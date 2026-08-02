@@ -18264,7 +18264,149 @@
       "canonical_gu": "સીંગતેલનો ડબ્બો",
       "canonical_hi": "मूंगफली तेल का डिब्बा",
       "canonical_en": "peanut oil tin"
+    },
+    {
+  "entries": [
+    {
+      "key": "chok",
+      "canonical_gu": "ચોક",
+      "canonical_hi": "चौक",
+      "canonical_en": "chalk / square block"
+    },
+    {
+      "key": "choko",
+      "canonical_gu": "ચોકો",
+      "canonical_hi": "चोको",
+      "canonical_en": "choco / bar block"
+    },
+    {
+      "key": "saras powder",
+      "canonical_gu": "સારસ પાવડર",
+      "canonical_hi": "सारस पाउडर",
+      "canonical_en": "saras washing powder"
+    },
+    {
+      "key": "sanadal",
+      "canonical_gu": "ચણાદાળ",
+      "canonical_hi": "चना दाल",
+      "canonical_en": "chana dal / split bengal gram"
+    },
+    {
+      "key": "rai geru",
+      "canonical_gu": "રાય જીરું",
+      "canonical_hi": "राई जीरा",
+      "canonical_en": "mustard and cumin seeds"
+    },
+    {
+      "key": "raigiru",
+      "canonical_gu": "રાય જીરું",
+      "canonical_hi": "राई जीरा",
+      "canonical_en": "mustard and cumin seeds"
+    },
+    {
+      "key": "rai giru",
+      "canonical_gu": "રાય જીરું",
+      "canonical_hi": "राई जीरा",
+      "canonical_en": "mustard and cumin seeds"
+    },
+    {
+      "key": "mashala",
+      "canonical_gu": "મસાલા",
+      "canonical_hi": "मसाला",
+      "canonical_en": "spices"
+    },
+    {
+      "key": "shing",
+      "canonical_gu": "સિંગ",
+      "canonical_hi": "मूंगफली / सिंग",
+      "canonical_en": "peanuts"
+    },
+    {
+      "key": "ching",
+      "canonical_gu": "સિંગ",
+      "canonical_hi": "मूंगफली / सिंग",
+      "canonical_en": "peanuts"
+    },
+    {
+      "key": "sambo",
+      "canonical_gu": "સામ્બો",
+      "canonical_hi": "सांबो / समा",
+      "canonical_en": "samo / barnyard millet"
+    },
+    {
+      "key": "shambo",
+      "canonical_gu": "સામ્બો",
+      "canonical_hi": "सांबो / समा",
+      "canonical_en": "samo / barnyard millet"
+    },
+    {
+      "key": "sanbo",
+      "canonical_gu": "સામ્બો",
+      "canonical_hi": "सांबो / समा",
+      "canonical_en": "samo / barnyard millet"
+    },
+    {
+      "key": "dlae",
+      "canonical_gu": "દળાઈ",
+      "canonical_hi": "पिसाई / दलाई",
+      "canonical_en": "grinding charges / weight"
+    },
+    {
+      "key": "dlae 2780 kg",
+      "canonical_gu": "દળાઈ ૨૭૮૦ કિલો",
+      "canonical_hi": "पिसाई २७८० किलो",
+      "canonical_en": "grinding 2780 kg"
+    },
+    {
+      "key": "chehar",
+      "canonical_gu": "ચેહર",
+      "canonical_hi": "चेहर",
+      "canonical_en": "chehar"
+    },
+    {
+      "key": "giru",
+      "canonical_gu": "જીરુ",
+      "canonical_hi": "जीरा",
+      "canonical_en": "cumin seeds"
+    },
+    {
+      "key": "geru",
+      "canonical_gu": "જીરુ",
+      "canonical_hi": "जीरा",
+      "canonical_en": "cumin seeds"
+    },
+    {
+      "key": "gero",
+      "canonical_gu": "જીરુ",
+      "canonical_hi": "जीरा",
+      "canonical_en": "cumin seeds"
+    },
+    {
+      "key": "giro",
+      "canonical_gu": "જીરુ",
+      "canonical_hi": "जीरा",
+      "canonical_en": "cumin seeds"
+    },
+    {
+      "key": "mrp",
+      "canonical_gu": "એમઆરપી",
+      "canonical_hi": "एमआरपी",
+      "canonical_en": "mrp items"
+    },
+    {
+      "key": "m r p sabu",
+      "canonical_gu": "એમઆરપી સાબુ",
+      "canonical_hi": "एमआरपी साबुन",
+      "canonical_en": "mrp soap"
+    },
+    {
+      "key": "well sabu",
+      "canonical_gu": "વ્હીલ સાબુ",
+      "canonical_hi": "व्हील साबुन",
+      "canonical_en": "wheel soap bar"
     }
+  ]
+}
     
   ]
 }
