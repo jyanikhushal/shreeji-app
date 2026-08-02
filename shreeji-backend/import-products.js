@@ -1,27 +1,30 @@
-// One-time script to bulk-import curated product language data.
-// Run with: node import-products.js
-//
-// Before running: set API_URL below to your TEST backend URL
-// (never point this at production without testing first).
-
 const fs = require('fs');
 
-const API_URL = 'https://shreeji-backend-test.onrender.com'; // ⚠️ change if needed
+const API_URL = 'https://shreeji-backend-test.onrender.com'; // ⚠️ confirm this matches your test URL
+const BATCH_SIZE = 300;
 
 async function main() {
   const raw = fs.readFileSync('./curated-import.json', 'utf-8');
   const { entries } = JSON.parse(raw);
 
-  console.log(`Importing ${entries.length} entries...`);
+  console.log(`Importing ${entries.length} entries in batches of ${BATCH_SIZE}...`);
 
-  const res = await fetch(`${API_URL}/productLanguage/bulk`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ entries }),
-  });
+  let totalImported = 0;
 
-  const json = await res.json();
-  console.log('Result:', json);
+  for (let i = 0; i < entries.length; i += BATCH_SIZE) {
+    const batch = entries.slice(i, i + BATCH_SIZE);
+    const res = await fetch(`${API_URL}/productLanguage/bulk`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ entries: batch }),
+    });
+
+    const json = await res.json();
+    console.log(`Batch ${i / BATCH_SIZE + 1}: `, json);
+    if (json.imported) totalImported += json.imported;
+  }
+
+  console.log(`Done. Total imported: ${totalImported}`);
 }
 
 main().catch(err => console.error('Import failed:', err));

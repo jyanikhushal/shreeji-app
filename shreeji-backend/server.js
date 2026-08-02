@@ -30,7 +30,7 @@ const languageRoutes = require('./modules/language/languageRoutes');
 const productLanguageRoutes = require('./modules/productLanguage/productLanguageRoutes');
 console.log("IMPORT CHECK:",testImport);
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 app.use('/api/push', notificationRoutes);
 app.use('/language', languageRoutes);
