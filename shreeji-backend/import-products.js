@@ -4,10 +4,11 @@ const API_URL = 'https://shreeji-backend-test.onrender.com'; // ⚠️ confirm t
 const BATCH_SIZE = 400;
 
 async function main() {
-  const raw = fs.readFileSync('./curated-import.json', 'utf-8');
+  const filename = process.argv[2] || './curated-import.json';
+  const raw = fs.readFileSync(filename, 'utf-8');
   const { entries } = JSON.parse(raw);
 
-  console.log(`Importing ${entries.length} entries in batches of ${BATCH_SIZE}...`);
+  console.log(`Importing ${entries.length} entries from ${filename} in batches of ${BATCH_SIZE}...`);
 
   let totalImported = 0;
 
