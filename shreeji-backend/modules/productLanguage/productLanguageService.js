@@ -1,4 +1,4 @@
-const { db } = require('../../firebase'); // ⚠️ adjust path if your firebase.js sits elsewhere relative to this folder
+const { db } = require('../../firebase');
 
 const COLLECTION = 'productLanguage';
 
@@ -15,7 +15,7 @@ async function getAllEntries() {
   return map;
 }
 
-async function learnEntry(rawText, canonical_gu, canonical_hi, canonical_en) {
+async function learnEntry(rawText, canonical_gu, canonical_hi, canonical_en, source = 'learned') {
   const key = normalizeKey(rawText);
   if (!key) return { added: false, reason: 'empty key' };
 
@@ -23,14 +23,14 @@ async function learnEntry(rawText, canonical_gu, canonical_hi, canonical_en) {
   const existing = await ref.get();
 
   if (existing.exists) {
-    return { added: false, reason: 'already exists' }; // never overwrite — protects curated entries
+    return { added: false, reason: 'already exists' };
   }
 
   await ref.set({
     canonical_gu: canonical_gu || rawText,
     canonical_hi: canonical_hi || rawText,
     canonical_en: canonical_en || rawText,
-    source: 'learned',
+    source,
     createdAt: new Date(),
   });
 
@@ -50,12 +50,12 @@ async function bulkImportCurated(entries) {
       canonical_gu: entry.canonical_gu,
       canonical_hi: entry.canonical_hi,
       canonical_en: entry.canonical_en,
-      source: 'curated', // curated import always overwrites — intentional, this is the trusted source
+      source: 'curated',
       createdAt: new Date(),
     });
     count++;
 
-    if (count % 450 === 0) { // Firestore batch limit is 500 ops — commit and start a fresh batch
+    if (count % 450 === 0) {
       await batch.commit();
       batch = db.batch();
     }
@@ -65,4 +65,47 @@ async function bulkImportCurated(entries) {
   return { imported: count };
 }
 
-module.exports = { getAllEntries, learnEntry, bulkImportCurated, normalizeKey };
+function hasGujaratiScript(text) {
+  return /[\u0A80-\u0AFF]/.test(text || '');
+}
+
+function hasDevanagariScript(text) {
+  return /[\u0900-\u097F]/.test(text || '');
+}
+
+const { translateWithQwen } = require('./groqClient');
+
+async function enrichWithAI(rawText) {
+  const key = normalizeKey(rawText);
+  if (!key) return;
+
+  try {
+    const result = await translateWithQwen(rawText);
+
+    if (!hasGujaratiScript(result.gu) || !hasDevanagariScript(result.hi)) {
+      console.log(`AI enrichment rejected for "${rawText}" — invalid script in response`);
+      return;
+    }
+
+    const ref = db.collection(COLLECTION).doc(key);
+    const existing = await ref.get();
+
+    if (existing.exists && existing.data().source === 'curated') {
+      return;
+    }
+
+    await ref.set({
+      canonical_gu: result.gu,
+      canonical_hi: result.hi,
+      canonical_en: result.en || rawText,
+      source: 'ai',
+      createdAt: new Date(),
+    });
+
+    console.log(`AI-enriched "${rawText}" -> ${result.gu} / ${result.hi}`);
+  } catch (err) {
+    console.error(`AI enrichment failed for "${rawText}":`, err.message);
+  }
+}
+
+module.exports = { getAllEntries, learnEntry, bulkImportCurated, normalizeKey, enrichWithAI };

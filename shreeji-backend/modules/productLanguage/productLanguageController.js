@@ -1,4 +1,4 @@
-const { getAllEntries, learnEntry, bulkImportCurated } = require('./productLanguageService');
+const { getAllEntries, learnEntry, bulkImportCurated, enrichWithAI } = require('./productLanguageService');
 
 async function getProductLanguageMap(req, res) {
   try {
@@ -12,11 +12,14 @@ async function getProductLanguageMap(req, res) {
 
 async function learnProductLanguage(req, res) {
   try {
-    const { rawText, canonical_gu, canonical_hi, canonical_en } = req.body;
+    const { rawText, canonical_gu, canonical_hi, canonical_en, source } = req.body;
     if (!rawText) {
       return res.status(400).json({ success: false, message: 'Missing rawText' });
     }
-    const result = await learnEntry(rawText, canonical_gu, canonical_hi, canonical_en);
+    const result = await learnEntry(rawText, canonical_gu, canonical_hi, canonical_en, source);
+
+    enrichWithAI(rawText).catch(() => {});
+
     return res.status(200).json({ success: true, ...result });
   } catch (err) {
     console.error('Error learning product language entry:', err);
