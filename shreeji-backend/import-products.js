@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const API_URL = 'https://shreeji-backend-test.onrender.com'; // ⚠️ confirm this matches your test URL
-const BATCH_SIZE = 300;
+const BATCH_SIZE = 400;
 
 async function main() {
   const raw = fs.readFileSync('./curated-import.json', 'utf-8');
