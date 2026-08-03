@@ -1,53 +1,50 @@
-const {db}=require('./firebase');
+const { db } = require('./firebase');
+const { resolveTranslation } = require('./modules/productLanguage/productLanguageService');
 
-async function addPurchaseEntry(malikPhone,customerPhone,itemName,price,itemName_gu,itemName_hi) {
+async function addPurchaseEntry(malikPhone, customerPhone, itemName, price) {
+  if (price <= 0) {
+    throw new Error('Purchase should always be positive.');
+  }
 
-    if(price<=0){
-        throw new Error('Purchase should always be positive.');
-    }
+  const { gu: itemName_gu, hi: itemName_hi } = await resolveTranslation(itemName);
 
-    const khataRef=db.collection('maliks').doc(malikPhone).collection('customers').doc(customerPhone).collection('entries');
+  const khataRef = db.collection('maliks').doc(malikPhone).collection('customers').doc(customerPhone).collection('entries');
+  const lastSnap = await khataRef.orderBy('entryNo', 'desc').limit(1).get();
 
-    const lastSnap=await khataRef.orderBy('entryNo','desc').limit(1).get();
+  let nextEntryNo = 1;
+  let previousTotal = 0;
+  if (!lastSnap.empty) {
+    const last = lastSnap.docs[0].data();
+    nextEntryNo = last.entryNo + 1;
+    previousTotal = last.total;
+  }
 
-    let nextEntryNo=1;
-    let previousTotal=0;
+  const newTotal = previousTotal + price;
+  const entryDate = new Date();
 
-    if(!lastSnap.empty){
-        const last=lastSnap.docs[0].data();
-        nextEntryNo=last.entryNo+1;
-        previousTotal=last.total;
-    }
+  await khataRef.doc(String(nextEntryNo)).set({
+    entryNo: nextEntryNo,
+    date: entryDate,
+    type: 'purchase',
+    description: itemName,
+    description_gu: itemName_gu,
+    description_hi: itemName_hi,
+    amount: price,
+    total: newTotal,
+  });
 
-    const newTotal=previousTotal+price;
-    const entryDate = new Date();
-
-    await khataRef.doc(String(nextEntryNo)).set({
-        entryNo:nextEntryNo,
-        date:entryDate,
-        type:'purchase',
-        description:itemName,
-        description_gu: itemName_gu || itemName,
-        description_hi: itemName_hi || itemName,
-        amount:price,
-        total:newTotal,
-    });
-
-    await db.collection('maliks').doc(malikPhone)
-    .collection('customers').doc(customerPhone)
+  await db.collection('maliks').doc(malikPhone).collection('customers').doc(customerPhone)
     .update({ currentBalance: newTotal });
 
-    console.log('Purchase entry added');
-
-    return {
-        entryNo: nextEntryNo,
-        date: entryDate,
-        description: itemName,
-        description_gu: itemName_gu || itemName,
-        description_hi: itemName_hi || itemName,
-        amount: price,
-        total: newTotal,
-    };
+  return {
+    entryNo: nextEntryNo,
+    date: entryDate,
+    description: itemName,
+    description_gu: itemName_gu,
+    description_hi: itemName_hi,
+    amount: price,
+    total: newTotal,
+  };
 }
 
-module.exports={addPurchaseEntry};
+module.exports = { addPurchaseEntry };

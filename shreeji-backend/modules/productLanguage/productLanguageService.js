@@ -108,4 +108,35 @@ async function enrichWithAI(rawText) {
   }
 }
 
-module.exports = { getAllEntries, learnEntry, bulkImportCurated, normalizeKey, enrichWithAI };
+async function resolveTranslation(rawText) {
+  const key = normalizeKey(rawText);
+  if (!key) return { gu: rawText, hi: rawText, en: rawText };
+
+  const ref = db.collection(COLLECTION).doc(key);
+  const snap = await ref.get();
+
+  if (snap.exists) {
+    const data = snap.data();
+    return { gu: data.canonical_gu, hi: data.canonical_hi, en: data.canonical_en };
+  }
+
+  try {
+    const result = await translateWithQwen(rawText);
+    if (hasGujaratiScript(result.gu) && hasDevanagariScript(result.hi)) {
+      await ref.set({
+        canonical_gu: result.gu,
+        canonical_hi: result.hi,
+        canonical_en: result.en || rawText,
+        source: 'ai',
+        createdAt: new Date(),
+      });
+      return { gu: result.gu, hi: result.hi, en: result.en || rawText };
+    }
+    console.log(`AI returned invalid script for "${rawText}", using raw text`);
+  } catch (err) {
+    console.error(`AI resolve failed for "${rawText}":`, err.message);
+  }
+
+  return { gu: rawText, hi: rawText, en: rawText };
+}
+module.exports = { getAllEntries, learnEntry, bulkImportCurated, normalizeKey, enrichWithAI,resolveTranslation };
