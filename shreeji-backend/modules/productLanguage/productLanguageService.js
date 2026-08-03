@@ -73,7 +73,7 @@ function hasDevanagariScript(text) {
   return /[\u0900-\u097F]/.test(text || '');
 }
 
-const { translateWithQwen } = require('./groqClient');
+const { getEnsembleTranslation } = require('./groqClient');
 
 async function enrichWithAI(rawText) {
   const key = normalizeKey(rawText);
@@ -121,20 +121,20 @@ async function resolveTranslation(rawText) {
   }
 
   try {
-    const result = await translateWithQwen(rawText);
+    const result = await getEnsembleTranslation(rawText);
     if (hasGujaratiScript(result.gu) && hasDevanagariScript(result.hi)) {
       await ref.set({
         canonical_gu: result.gu,
         canonical_hi: result.hi,
         canonical_en: result.en || rawText,
-        source: 'ai',
+        source: 'ai-ensemble',
         createdAt: new Date(),
       });
       return { gu: result.gu, hi: result.hi, en: result.en || rawText };
     }
-    console.log(`AI returned invalid script for "${rawText}", using raw text`);
+    console.log(`Ensemble returned invalid script for "${rawText}", using raw text`);
   } catch (err) {
-    console.error(`AI resolve failed for "${rawText}":`, err.message);
+    console.error(`Ensemble resolve failed for "${rawText}":`, err.message);
   }
 
   return { gu: rawText, hi: rawText, en: rawText };
