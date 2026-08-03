@@ -17,21 +17,26 @@ Respond with ONLY valid JSON, no other text, in this exact format:
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.2,
       max_tokens: 200,
+      reasoning_effort: 'none',
     }),
   });
 
   if (!res.ok) {
-  const errorBody = await res.text().catch(() => '');
-  console.error(`Groq API error: ${res.status} — ${errorBody.slice(0, 300)}`);
-  throw new Error(`Groq API error: ${res.status}`);
-}
+    const errorBody = await res.text().catch(() => '');
+    console.error(`Groq API error: ${res.status} — ${errorBody.slice(0, 300)}`);
+    throw new Error(`Groq API error: ${res.status}`);
+  }
 
   const data = await res.json();
   const content = data.choices?.[0]?.message?.content?.trim();
   if (!content) throw new Error('Empty response from Groq');
 
-  // Qwen sometimes wraps JSON in markdown fences — strip if present
-  const cleaned = content.replace(/```json|```/g, '').trim();
+  // Strip markdown fences AND any <think>...</think> reasoning block, just in case
+  const cleaned = content
+    .replace(/<think>[\s\S]*?<\/think>/gi, '')
+    .replace(/```json|```/g, '')
+    .trim();
+
   return JSON.parse(cleaned);
 }
 
