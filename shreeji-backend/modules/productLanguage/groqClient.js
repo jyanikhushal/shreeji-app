@@ -13,7 +13,7 @@ Respond with ONLY valid JSON, no other text, in this exact format:
       'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
     },
     body: JSON.stringify({
-      model: 'qwen/qwen3-32b',
+      model: 'qwen/qwen3.6-27b',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.2,
       max_tokens: 200,
@@ -21,8 +21,10 @@ Respond with ONLY valid JSON, no other text, in this exact format:
   });
 
   if (!res.ok) {
-    throw new Error(`Groq API error: ${res.status}`);
-  }
+  const errorBody = await res.text().catch(() => '');
+  console.error(`Groq API error: ${res.status} — ${errorBody.slice(0, 300)}`);
+  throw new Error(`Groq API error: ${res.status}`);
+}
 
   const data = await res.json();
   const content = data.choices?.[0]?.message?.content?.trim();
