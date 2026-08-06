@@ -34,4 +34,15 @@ async function setGuestName(phone, name) {
   return { ...doc.data(), name };
 }
 
-module.exports = { getGuest, createGuestIfNotExists, setGuestName };
+
+async function grantNotificationPermission(phone) {
+  const ref = db.doc(`preorderGuests/${phone}`);
+  const doc = await ref.get();
+  if (!doc.exists) {
+    throw new Error('Guest not found');
+  }
+  await ref.update({ notificationPermission: 'granted' });
+  return { success: true };
+}
+
+module.exports = { getGuest, createGuestIfNotExists, setGuestName, grantNotificationPermission };
