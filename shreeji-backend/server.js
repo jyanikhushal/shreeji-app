@@ -28,14 +28,20 @@ const { messaging } = require("firebase-admin");
 const notificationRoutes = require('./modules/notifications/notificationRoutes');
 const languageRoutes = require('./modules/language/languageRoutes');
 const productLanguageRoutes = require('./modules/productLanguage/productLanguageRoutes');
+const preorderGuestRoutes = require('./modules/preorder/preorderGuestRoutes');
+const preorderRoutes = require('./modules/preorder/preorderRoutes');
 console.log("IMPORT CHECK:",testImport);
 const app = express();
+
+
+
 app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 app.use('/api/push', notificationRoutes);
 app.use('/language', languageRoutes);
 app.use('/productLanguage', productLanguageRoutes);
-
+app.use('/preorder/guest', preorderGuestRoutes);
+app.use('/preorder', preorderRoutes);
 app.use((req,res,next)=>{
   console.log("REQUEST:", req.method, req.url);
   next();
@@ -223,14 +229,14 @@ app.get("/grahak",validatePhone,async(req,res)=>{
 // API: add grahak
 app.post("/grahak/add",validatePhone,async(req,res)=>{
     try{
-       const {malikPhone,name,phone,name_gu,name_hi}=req.body;
+       const {malikPhone,name,phone}=req.body;
        console.log("REQ body: ",req.body);
        if (!malikPhone||!phone) {
             return res.status(400).json({success:false, message: "Missing malikPhone" });
         }
-       await addGrahak(malikPhone,name,phone,name_gu,name_hi);
+       await addGrahak(malikPhone,name,phone);
 
-       return res.status(200).json({success:true,message:"Customer added",data:{phone,name,name_gu,name_hi}});
+       return res.status(200).json({success:true,message:"Customer added",data:{phone,name}});
     }
     catch(err){
         console.error("Grahak addition error",err);

@@ -3,7 +3,7 @@ import { useToast } from "@/app/context/ToastContext";
 import { getData } from "@/app/utils/api";
 import { isvalidphone } from "@/lib/dashboard/validators";
 import { customer } from "@/types/dashboard";
-import { generateTranslations } from "@/lib/transliteration/transliterate";
+
 export function useAddCustomer(navigateto: (path: string) => void) {
   const { showMessage: showmessage } = useToast();
   const [showaddcustomer, setshowaddcustomer] = useState(false);
@@ -38,15 +38,14 @@ export function useAddCustomer(navigateto: (path: string) => void) {
 
     try {
       const malikphone = localStorage.getItem("malikPhone");
-      const nameTranslations = generateTranslations(name);
+      
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/grahak/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
                    malikPhone: malikphone,
                    name,
-                   name_gu: nameTranslations.gu,
-                   name_hi: nameTranslations.hi,
+                   
                    phone,
                  })
       });

@@ -22,6 +22,14 @@ const templateBuilders = {
     badge: DIGIKHATA_BADGE,
     data: { type: NOTIFICATION_TYPES.PAYMENT_REMINDER, ...payload },
   }),
+
+  [NOTIFICATION_TYPES.PREORDER_READY]: (malikName, payload) => ({
+    title: malikName,
+    body: `Your order is ready! Please come collect it.`,
+    icon: DIGIKHATA_ICON,
+    badge: DIGIKHATA_BADGE,
+    data: { type: NOTIFICATION_TYPES.PREORDER_READY, ...payload },
+  }),
 };
 
 function buildNotificationContent(type, malikName, payload) {

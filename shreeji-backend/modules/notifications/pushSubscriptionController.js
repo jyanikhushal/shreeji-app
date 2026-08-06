@@ -12,13 +12,24 @@ async function subscribeToPush(req, res) {
   try {
     const customerRef = db.doc(`maliks/${malikPhone}/customers/${customerPhone}`);
     const doc = await customerRef.get();
-    if (!doc.exists) return res.status(404).json({ error: 'Customer not found' });
 
-    const existing = doc.data().pushSubscriptions || [];
-    // Avoid duplicate subscriptions for the same endpoint (e.g. re-registering same device)
+    let targetRef = customerRef;
+    let existing;
+
+    if (doc.exists) {
+      existing = doc.data().pushSubscriptions || [];
+    } else {
+      // Not a khata customer — check/create preorder guest identity
+      const guestRef = db.doc(`preorderGuests/${customerPhone}`);
+      const guestDoc = await guestRef.get();
+      if (!guestDoc.exists) return res.status(404).json({ error: 'Customer not found' });
+      targetRef = guestRef;
+      existing = guestDoc.data().pushSubscriptions || [];
+    }
+
     const alreadyExists = existing.some((s) => s.endpoint === subscription.endpoint);
     if (!alreadyExists) {
-      await customerRef.update({
+      await targetRef.update({
         pushSubscriptions: [...existing, subscription],
       });
     }
@@ -34,18 +45,28 @@ async function unsubscribeFromPush(req, res) {
   try {
     const customerRef = db.doc(`maliks/${malikPhone}/customers/${customerPhone}`);
     const doc = await customerRef.get();
-    if (!doc.exists) return res.status(404).json({ error: 'Customer not found' });
 
-    const existing = doc.data().pushSubscriptions || [];
+    let targetRef = customerRef;
+    let existing;
+
+    if (doc.exists) {
+      existing = doc.data().pushSubscriptions || [];
+    } else {
+      const guestRef = db.doc(`preorderGuests/${customerPhone}`);
+      const guestDoc = await guestRef.get();
+      if (!guestDoc.exists) return res.status(404).json({ error: 'Customer not found' });
+      targetRef = guestRef;
+      existing = guestDoc.data().pushSubscriptions || [];
+    }
+
     const filtered = existing.filter((s) => s.endpoint !== endpoint);
-    await customerRef.update({ pushSubscriptions: filtered });
+    await targetRef.update({ pushSubscriptions: filtered });
     res.json({ success: true });
   } catch (err) {
     console.error('unsubscribeFromPush error:', err);
     res.status(500).json({ error: 'Failed to remove subscription' });
   }
 }
-
 async function initNotificationHistory(req, res) {
   const { malikPhone, customerPhone } = req.body;
   try {

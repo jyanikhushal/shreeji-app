@@ -1,6 +1,6 @@
 const {db}=require('./firebase');
 
-async function addGrahak(malikPhone, name, customerPhone, name_gu, name_hi){
+async function addGrahak(malikPhone, name, customerPhone){
     const malikSnap=await db.collection('maliks').doc(malikPhone).get();
 
     if(!malikSnap.exists){
@@ -16,8 +16,7 @@ async function addGrahak(malikPhone, name, customerPhone, name_gu, name_hi){
 
     await customerRef.set({
         name:name,
-        name_gu: name_gu || name,
-        name_hi: name_hi || name,
+        
         phone:customerPhone,
         addedAt:new Date(),
         currentBalance:0,

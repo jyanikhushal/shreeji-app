@@ -18,12 +18,24 @@ async function sendNotification(malikPhone, customerPhone, type, payload = {}) {
     const malikDoc = await db.doc(`maliks/${malikPhone}`).get();
     const malikName = malikDoc.exists ? (malikDoc.data().shopName || 'digiKhata') : 'digiKhata';
 
-    const customerRef = db.doc(`maliks/${malikPhone}/customers/${customerPhone}`);
+   const customerRef = db.doc(`maliks/${malikPhone}/customers/${customerPhone}`);
     const customerDoc = await customerRef.get();
-    if (!customerDoc.exists) return;
 
-    const subscriptions = customerDoc.data().pushSubscriptions || [];
-    if (subscriptions.length === 0) return;
+    let subscriptionHolderRef = customerRef;
+    let subscriptions = [];
+
+    if (customerDoc.exists) {
+      subscriptions = customerDoc.data().pushSubscriptions || [];
+    } else {
+      // Not a khata customer — check preorder guest identity instead
+      const guestRef = db.doc(`preorderGuests/${customerPhone}`);
+      const guestDoc = await guestRef.get();
+      if (!guestDoc.exists) return;
+      subscriptionHolderRef = guestRef;
+      subscriptions = guestDoc.data().pushSubscriptions || [];
+    }
+
+    if (subscriptions.length === 0) return; 
 
     const content = buildNotificationContent(type, malikName, payload);
     await writeHistoryEntry(malikPhone, customerPhone, type, content);
@@ -49,7 +61,7 @@ async function sendNotification(malikPhone, customerPhone, type, payload = {}) {
 
     if (deadIndexes.length > 0) {
       const cleaned = subscriptions.filter((_, idx) => !deadIndexes.includes(idx));
-      await customerRef.update({ pushSubscriptions: cleaned });
+      await subscriptionHolderRef.update({ pushSubscriptions: cleaned });
     }
   } catch (err) {
     console.error('sendNotification error:', err);
