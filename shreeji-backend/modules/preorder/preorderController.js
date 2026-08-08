@@ -6,6 +6,7 @@ const {
   finalizeSave,
   getGuestPreorderStatus,
   getGuestOrderHistory,
+  getAllOrders,
 } = require('./preorderService');
 const { sendNotification } = require('../notifications/notificationService');
 const { NOTIFICATION_TYPES } = require('../notifications/notificationTypes');
@@ -120,6 +121,12 @@ async function fetchAllOrders(req, res) {
 }
 
 module.exports = {
-  submitPreorder, fetchQueue, changeStatus, checkKhataMatch, saveDestination,
-  fetchGuestStatus, fetchGuestHistory, fetchAllOrders,
+  submitPreorder,
+  fetchQueue,
+  changeStatus,
+  checkKhataMatch,
+  saveDestination,
+  fetchGuestStatus,
+  fetchGuestHistory,
+  fetchAllOrders,
 };
