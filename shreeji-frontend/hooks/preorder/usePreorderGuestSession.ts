@@ -4,7 +4,7 @@ import { isSessionValid, clearSession, saveSession } from "@/app/utils/session";
 import { preorderGuestLogin, preorderGuestSetName, checkKhataMatch } from "@/app/utils/preorderApi";
 import { useToast } from "@/app/context/ToastContext";
 
-type ViewState = "choice" | "consent" | "name" | "order" | "khata";
+type ViewState = "choice" | "consent" | "name" | "dashboard" | "order" | "history";
 
 export function usePreorderGuestSession(malikPhone: string) {
   const router = useRouter();
@@ -22,7 +22,9 @@ export function usePreorderGuestSession(malikPhone: string) {
   const [savingName, setSavingName] = useState(false);
   const [checkingKhata, setCheckingKhata] = useState(false);
   const [showNoKhataPopup, setShowNoKhataPopup] = useState(false);
-
+  const goToOrder = () => setView("order");
+const goToHistory = () => setView("history");
+const backToDashboard = () => setView("dashboard");
   useEffect(() => {
     if (!isSessionValid("preorderGuest")) {
       router.replace("/preorder");
@@ -73,27 +75,27 @@ export function usePreorderGuestSession(malikPhone: string) {
   const closeNoKhataPopup = () => setShowNoKhataPopup(false);
 
   const proceedToName = (existingName: string | null) => {
-    if (existingName) {
-      setName(existingName);
-      setView("order");
-    } else {
-      setView("name");
-    }
-  };
+  if (existingName) {
+    setName(existingName);
+    setView("dashboard");
+  } else {
+    setView("name");
+  }
+};
 
   const submitName = async (typedName: string) => {
-    if (!phone || !typedName.trim()) return;
-    setSavingName(true);
-    try {
-      const guest = await preorderGuestSetName(phone, typedName.trim());
-      setName(guest.name);
-      setView("order");
-    } catch (err) {
-      showMessage("error", err instanceof Error ? err.message : "Failed to save name");
-    } finally {
-      setSavingName(false);
-    }
-  };
+  if (!phone || !typedName.trim()) return;
+  setSavingName(true);
+  try {
+    const guest = await preorderGuestSetName(phone, typedName.trim());
+    setName(guest.name);
+    setView("dashboard");
+  } catch (err) {
+    showMessage("error", err instanceof Error ? err.message : "Failed to save name");
+  } finally {
+    setSavingName(false);
+  }
+};
 
   const logout = () => {
     clearSession("preorderGuest");
@@ -101,7 +103,8 @@ export function usePreorderGuestSession(malikPhone: string) {
   };
 
   return {
-    phone, name, nameLoaded, authChecked, view, savingName, checkingKhata, showNoKhataPopup,
-    chooseOrder, chooseKhata, closeNoKhataPopup, proceedToName, submitName, logout,
-  };
+  phone, name, nameLoaded, authChecked, view, savingName, checkingKhata, showNoKhataPopup,
+  chooseOrder, chooseKhata, closeNoKhataPopup, proceedToName, submitName, logout,
+  goToOrder, goToHistory, backToDashboard,
+};
 }

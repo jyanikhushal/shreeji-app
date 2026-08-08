@@ -17,4 +17,5 @@ router.get('/:malikPhone/khata-match/:guestPhone', checkKhataMatch);
 router.patch('/:malikPhone/:preorderId/save', saveDestination);
 router.get('/:malikPhone/guest-status/:guestPhone', fetchGuestStatus);
 router.get('/:malikPhone/guest-history/:guestPhone', fetchGuestHistory);
+router.get('/:malikPhone/all-orders', fetchAllOrders);
 module.exports = router;

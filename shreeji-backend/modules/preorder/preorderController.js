@@ -108,12 +108,18 @@ async function fetchGuestHistory(req, res) {
   }
 }
 
+async function fetchAllOrders(req, res) {
+  try {
+    const { malikPhone } = req.params;
+    const orders = await getAllOrders(malikPhone);
+    return res.status(200).json({ success: true, message: 'Orders fetched', data: orders });
+  } catch (err) {
+    console.error('Error in fetchAllOrders:', err);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+}
+
 module.exports = {
-  submitPreorder,
-  fetchQueue,
-  changeStatus,
-  checkKhataMatch,
-  saveDestination,
-  fetchGuestStatus,
-  fetchGuestHistory,
+  submitPreorder, fetchQueue, changeStatus, checkKhataMatch, saveDestination,
+  fetchGuestStatus, fetchGuestHistory, fetchAllOrders,
 };

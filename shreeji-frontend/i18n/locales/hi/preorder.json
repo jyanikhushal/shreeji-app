@@ -49,5 +49,22 @@
 "close": "बंद करें",
 "noKhataTitle": "कोई खाता नहीं मिला",
 "noKhataBody": "इस दुकान में आपका अभी कोई खाता नहीं है। आप फिर भी प्रीऑर्डर दे सकते हैं!",
-"noPastOrders": "अभी तक कोई पुराना ऑर्डर नहीं है"
+"noPastOrders": "अभी तक कोई पुराना ऑर्डर नहीं है",
+"orderingAs": "{{name}} के रूप में ऑर्डर कर रहे हैं",
+"welcomeGreeting": "स्वागत है, {{name}}",
+"placeNewOrderCard": "नया ऑर्डर दें",
+"placeNewOrderCardSub": "अपनी सूची टाइप करें और अभी भेजें",
+"uploadPhotoCard": "फोटो अपलोड करें",
+"comingSoon": "जल्द आ रहा है",
+"viewPastOrdersCard": "पुराने ऑर्डर देखें",
+"viewPastOrdersCardSub": "आपने पहले क्या ऑर्डर किया था देखें",
+"pastOrdersTitle": "आपके पुराने ऑर्डर",
+"backToQueue": "सूची पर वापस जाएं",
+"allOrdersTitle": "सभी ऑर्डर",
+"sortNewest": "नवीनतम पहले",
+"sortOldest": "पुराना पहले",
+"groupNone": "कोई समूह नहीं",
+"groupByGuest": "ग्राहक अनुसार समूह करें",
+"viewAllOrders": "सभी ऑर्डर देखें",
+"savedAsLabel": "इस रूप में सेव किया: {{type}}"
 }

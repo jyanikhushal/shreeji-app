@@ -98,12 +98,15 @@ async function getGuestOrderHistory(malikPhone, guestPhone) {
   return snapshot.docs.map((doc) => doc.data());
 }
 
+async function getAllOrders(malikPhone) {
+  const snapshot = await db
+    .collection(`maliks/${malikPhone}/preorders`)
+    .orderBy('createdAt', 'desc')
+    .get();
+  return snapshot.docs.map((doc) => doc.data());
+}
+
 module.exports = {
-  createPreorder,
-  getQueue,
-  updateStatus,
-  findKhataMatch,
-  finalizeSave,
-  getGuestPreorderStatus,
-  getGuestOrderHistory,
+  createPreorder, getQueue, updateStatus, findKhataMatch, finalizeSave,
+  getGuestPreorderStatus, getGuestOrderHistory, getAllOrders,
 };

@@ -71,3 +71,8 @@ export async function fetchGuestOrderHistory(malikPhone: string, guestPhone: str
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/preorder/${malikPhone}/guest-history/${guestPhone}`);
   return getData<import("@/types/preorder").Preorder[]>(res, { expectArray: true });
 }
+
+export async function fetchAllMalikOrders(malikPhone: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/preorder/${malikPhone}/all-orders`);
+  return getData<import("@/types/preorder").Preorder[]>(res, { expectArray: true });
+}

@@ -50,5 +50,22 @@
 "noKhataTitle": "No Khata Found",
 "noKhataBody": "You don't have a khata at this shop yet. You can still place a preorder!",
 "close": "Close",
-"noPastOrders": "No past orders yet"
+"noPastOrders": "No past orders yet",
+"orderingAs": "Ordering as {{name}}",
+"welcomeGreeting": "Welcome, {{name}}",
+"placeNewOrderCard": "Place New Order",
+"placeNewOrderCardSub": "Type your list and send it now",
+"uploadPhotoCard": "Upload a Photo",
+"comingSoon": "Coming soon",
+"viewPastOrdersCard": "View Past Orders",
+"viewPastOrdersCardSub": "See everything you've ordered before",
+"pastOrdersTitle": "Your Past Orders",
+"backToQueue": "Back to Queue",
+"allOrdersTitle": "All Orders",
+"sortNewest": "Newest First",
+"sortOldest": "Oldest First",
+"groupNone": "No Grouping",
+"groupByGuest": "Group by Customer",
+"viewAllOrders": "View All Orders",
+"savedAsLabel": "Saved as: {{type}}"
 }
