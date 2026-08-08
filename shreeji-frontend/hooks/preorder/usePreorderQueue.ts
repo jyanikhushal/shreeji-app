@@ -68,19 +68,19 @@ export function usePreorderQueue(malikPhone: string | null) {
   };
 
   const markReady = async () => {
-    if (!malikPhone || !selectedPreorder) return;
-    setActionLoading(true);
-    try {
-      await updatePreorderStatus(malikPhone, selectedPreorder.id, "ready");
-      await loadQueue();
-      setSelectedPreorder(prev => prev ? { ...prev, status: "ready" } : prev);
-      showMessage("success", "Customer notified — order ready");
-    } catch (err) {
-      showMessage("error", err instanceof Error ? err.message : "Failed to update");
-    } finally {
-      setActionLoading(false);
-    }
-  };
+  if (!malikPhone || !selectedPreorder) return;
+  setActionLoading(true);
+  try {
+    await updatePreorderStatus(malikPhone, selectedPreorder.id, "ready");
+    await loadQueue();
+    closeDetail();
+    showMessage("success", "Customer notified — order ready");
+  } catch (err) {
+    showMessage("error", err instanceof Error ? err.message : "Failed to update");
+  } finally {
+    setActionLoading(false);
+  }
+};
 
   const saveDestination = async (savedAs: "normal" | "khata", customerTypedName: string) => {
     if (!malikPhone || !selectedPreorder) return;
