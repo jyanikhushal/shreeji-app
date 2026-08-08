@@ -17,6 +17,7 @@ export interface Preorder {
   malikId: string;
   guestPhone: string;
   guestName: string | null;
+  orderNumber?: number;
   items: { item: string; quantity: string }[];
   status: PreorderStatus;
   createdAt: string;

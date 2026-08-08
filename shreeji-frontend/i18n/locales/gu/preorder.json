@@ -66,5 +66,10 @@
 "groupNone": "કોઈ જૂથ નથી",
 "groupByGuest": "ગ્રાહક પ્રમાણે જૂથ કરો",
 "viewAllOrders": "બધા ઓર્ડર જુઓ",
-"savedAsLabel": "આ રીતે સેવ થયું: {{type}}"
+"savedAsLabel": "આ રીતે સેવ થયું: {{type}}",
+"reviewOrderTitle": "તમારો ઓર્ડર તપાસો",
+"editOrderButton": "ફેરફાર કરો",
+"confirmSendButton": "પુષ્ટિ કરો અને મોકલો",
+"orderNumberLabel": "ઓર્ડર #{{no}}",
+"readyIconLabel": "તૈયાર"
 }

@@ -66,5 +66,10 @@
 "groupNone": "कोई समूह नहीं",
 "groupByGuest": "ग्राहक अनुसार समूह करें",
 "viewAllOrders": "सभी ऑर्डर देखें",
-"savedAsLabel": "इस रूप में सेव किया: {{type}}"
+"savedAsLabel": "इस रूप में सेव किया: {{type}}",
+"reviewOrderTitle": "अपना ऑर्डर जांचें",
+"editOrderButton": "बदलें",
+"confirmSendButton": "पुष्टि करें और भेजें",
+"orderNumberLabel": "ऑर्डर #{{no}}",
+"readyIconLabel": "तैयार"
 }

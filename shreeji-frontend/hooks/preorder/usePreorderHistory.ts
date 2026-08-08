@@ -14,7 +14,7 @@ export function usePreorderHistory(malikPhone: string, guestPhone: string | null
     setLoading(true);
     try {
       const data = await fetchGuestOrderHistory(malikPhone, guestPhone);
-      setHistory(data);
+      setHistory(data.filter(o => o.status === 'collected' || o.status === 'cancelled'));
       setLoaded(true);
     } catch (err) {
       showMessage("error", err instanceof Error ? err.message : "Failed to load history");

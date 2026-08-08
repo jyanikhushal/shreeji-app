@@ -76,3 +76,13 @@ export async function fetchAllMalikOrders(malikPhone: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/preorder/${malikPhone}/all-orders`);
   return getData<import("@/types/preorder").Preorder[]>(res, { expectArray: true });
 }
+
+export async function fetchGuestActiveStatus(malikPhone: string, guestPhone: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/preorder/${malikPhone}/guest-status/${guestPhone}`);
+  return getData<import("@/types/preorder").Preorder | null>(res);
+}
+
+export async function fetchPreorderReadyList(malikPhone: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/preorder/${malikPhone}/ready`);
+  return getData<import("@/types/preorder").Preorder[]>(res, { expectArray: true });
+}

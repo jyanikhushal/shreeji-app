@@ -67,5 +67,10 @@
 "groupNone": "No Grouping",
 "groupByGuest": "Group by Customer",
 "viewAllOrders": "View All Orders",
-"savedAsLabel": "Saved as: {{type}}"
+"savedAsLabel": "Saved as: {{type}}",
+"reviewOrderTitle": "Review Your Order",
+"editOrderButton": "Edit",
+"confirmSendButton": "Confirm & Send",
+"orderNumberLabel": "Order #{{no}}",
+"readyIconLabel": "Ready"
 }

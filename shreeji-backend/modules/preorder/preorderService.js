@@ -4,6 +4,12 @@ async function createPreorder(malikPhone, guestPhone, items) {
   const guestDoc = await db.doc(`preorderGuests/${guestPhone}`).get();
   const guestName = guestDoc.exists ? guestDoc.data().name : null;
 
+  const countSnapshot = await db
+    .collection(`maliks/${malikPhone}/preorders`)
+    .where('guestPhone', '==', guestPhone)
+    .get();
+  const orderNumber = countSnapshot.size + 1;
+
   const ref = db.collection(`maliks/${malikPhone}/preorders`).doc();
   const now = new Date().toISOString();
   const preorderData = {
@@ -11,6 +17,7 @@ async function createPreorder(malikPhone, guestPhone, items) {
     malikId: malikPhone,
     guestPhone,
     guestName,
+    orderNumber,
     items,
     status: 'pending',
     createdAt: now,
@@ -22,6 +29,15 @@ async function createPreorder(malikPhone, guestPhone, items) {
   };
   await ref.set(preorderData);
   return preorderData;
+}
+
+async function getReadyOrders(malikPhone) {
+  const snapshot = await db
+    .collection(`maliks/${malikPhone}/preorders`)
+    .where('status', '==', 'ready')
+    .orderBy('readyAt', 'asc')
+    .get();
+  return snapshot.docs.map((doc) => doc.data());
 }
 
 async function getQueue(malikPhone) {
@@ -108,5 +124,5 @@ async function getAllOrders(malikPhone) {
 
 module.exports = {
   createPreorder, getQueue, updateStatus, findKhataMatch, finalizeSave,
-  getGuestPreorderStatus, getGuestOrderHistory, getAllOrders,
+  getGuestPreorderStatus, getGuestOrderHistory, getAllOrders, getReadyOrders,
 };

@@ -1,12 +1,6 @@
 const {
-  createPreorder,
-  getQueue,
-  updateStatus,
-  findKhataMatch,
-  finalizeSave,
-  getGuestPreorderStatus,
-  getGuestOrderHistory,
-  getAllOrders,
+  createPreorder, getQueue, updateStatus, findKhataMatch, finalizeSave,
+  getGuestPreorderStatus, getGuestOrderHistory, getAllOrders, getReadyOrders,
 } = require('./preorderService');
 const { sendNotification } = require('../notifications/notificationService');
 const { NOTIFICATION_TYPES } = require('../notifications/notificationTypes');
@@ -120,13 +114,18 @@ async function fetchAllOrders(req, res) {
   }
 }
 
+async function fetchReadyOrders(req, res) {
+  try {
+    const { malikPhone } = req.params;
+    const ready = await getReadyOrders(malikPhone);
+    return res.status(200).json({ success: true, message: 'Ready orders fetched', data: ready });
+  } catch (err) {
+    console.error('Error in fetchReadyOrders:', err);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+}
+
 module.exports = {
-  submitPreorder,
-  fetchQueue,
-  changeStatus,
-  checkKhataMatch,
-  saveDestination,
-  fetchGuestStatus,
-  fetchGuestHistory,
-  fetchAllOrders,
+  submitPreorder, fetchQueue, changeStatus, checkKhataMatch, saveDestination,
+  fetchGuestStatus, fetchGuestHistory, fetchAllOrders, fetchReadyOrders,
 };
