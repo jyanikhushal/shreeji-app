@@ -30,5 +30,6 @@
 "noDepositsYet": "no deposits yet",
 "today": "today",
 "oneDayAgo": "1 day ago",
-"daysAgo": "{{days}} days ago"
+"daysAgo": "{{days}} days ago",
+"preordersButton": "Preorders"
 }

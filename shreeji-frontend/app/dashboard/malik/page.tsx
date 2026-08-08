@@ -40,6 +40,7 @@ export default function MalikDashboardPage() {
           malikdata={d.malikdata}
           onLogout={() => { d.logout(); d.navigateto('/'); }}
           onAddCustomer={d.opendaddcustomer}
+          onOpenPreorders={() => d.navigateto('/dashboard/malik/preorders')}
         />
 
         <CustomerListCard

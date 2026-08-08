@@ -7,6 +7,7 @@ const {
   checkKhataMatch,
   saveDestination,
   fetchGuestStatus,
+  fetchGuestHistory,
 } = require('./preorderController');
 
 router.post('/', submitPreorder);
@@ -15,5 +16,5 @@ router.patch('/:malikPhone/:preorderId/status', changeStatus);
 router.get('/:malikPhone/khata-match/:guestPhone', checkKhataMatch);
 router.patch('/:malikPhone/:preorderId/save', saveDestination);
 router.get('/:malikPhone/guest-status/:guestPhone', fetchGuestStatus);
-
+router.get('/:malikPhone/guest-history/:guestPhone', fetchGuestHistory);
 module.exports = router;

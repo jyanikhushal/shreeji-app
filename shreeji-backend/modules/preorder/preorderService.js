@@ -1,12 +1,16 @@
 const { db } = require('../../firebase');
 
 async function createPreorder(malikPhone, guestPhone, items) {
+  const guestDoc = await db.doc(`preorderGuests/${guestPhone}`).get();
+  const guestName = guestDoc.exists ? guestDoc.data().name : null;
+
   const ref = db.collection(`maliks/${malikPhone}/preorders`).doc();
   const now = new Date().toISOString();
   const preorderData = {
     id: ref.id,
     malikId: malikPhone,
     guestPhone,
+    guestName,
     items,
     status: 'pending',
     createdAt: now,
@@ -85,6 +89,15 @@ async function getGuestPreorderStatus(malikPhone, guestPhone) {
   return snapshot.docs[0].data();
 }
 
+async function getGuestOrderHistory(malikPhone, guestPhone) {
+  const snapshot = await db
+    .collection(`maliks/${malikPhone}/preorders`)
+    .where('guestPhone', '==', guestPhone)
+    .orderBy('createdAt', 'desc')
+    .get();
+  return snapshot.docs.map((doc) => doc.data());
+}
+
 module.exports = {
   createPreorder,
   getQueue,
@@ -92,4 +105,5 @@ module.exports = {
   findKhataMatch,
   finalizeSave,
   getGuestPreorderStatus,
+  getGuestOrderHistory,
 };

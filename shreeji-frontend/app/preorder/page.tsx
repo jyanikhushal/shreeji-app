@@ -2,11 +2,9 @@
 export const dynamic = "force-dynamic";
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useToast } from "@/app/context/ToastContext";
 import { getData } from "@/app/utils/api";
-import { saveSession } from '@/app/utils/session';
 import { motion } from 'framer-motion';
 import KiranaBackground from "@/components/home/KiranaBackground";
 import LedgerField from "@/components/ui/LedgerField";
@@ -14,88 +12,77 @@ import StampButton from "@/components/ui/StampButton";
 import NavTransition from "@/components/NavTransition";
 import { useNavTransition } from "@/hooks/useNavTransition";
 import { useTranslation } from 'react-i18next';
+import { saveSession } from '@/app/utils/session';
 
-type grahak = {
-  _id: string;
-  name: string;
+// Shreeji is currently the only live shop on digiKhata
+const CURRENT_MALIK_PHONE = process.env.NEXT_PUBLIC_DEFAULT_MALIK_PHONE || "9276807790";
+
+type guestData = {
   phone: string;
+  name: string | null;
+  createdAt: string;
 };
 
-export default function GrahakLoginPage() {
-  const [phone, setphone] = useState('');
-  const { showMessage: showmessage } = useToast();
-  const router = useRouter();
-  const { navigateTo: navigateto, stamping } = useNavTransition();
-  const { t } = useTranslation('login');
-  const [loading, setloading] = useState(false);
+export default function PreorderGuestLoginPage() {
+  const [phone, setPhone] = useState('');
+  const { showMessage } = useToast();
+  const { navigateTo, stamping } = useNavTransition();
+  const { t } = useTranslation('preorder');
+  const [loading, setLoading] = useState(false);
 
-  const CURRENT_MALIK_PHONE = process.env.NEXT_PUBLIC_DEFAULT_MALIK_PHONE || "9276807790";
-
-const handlelogin = async () => {
-  if (!phone) {
-    showmessage("error", t('errors.enterPhone'));
-    return;
-  }
-
-  const isvalidphone = (p: string): boolean => {
-    const cleaned = p.trim();
-    const regex = /^[6-9]\d{9}$/;
-    return regex.test(cleaned);
-  };
-
-  if (!isvalidphone(phone)) {
-    showmessage("error", t('errors.invalidPhone'));
-    return;
-  }
-
-  setloading(true);
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/grahak`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone })
-    });
-
-    const grahakdata = await getData<grahak>(res);
-
-    if (!grahakdata) {
-      showmessage("error", t('errors.invalidResponse'));
-      setloading(false);
+  const handleLogin = async () => {
+    if (!phone) {
+      showMessage("error", t('errors.enterPhone'));
       return;
     }
 
-    // Establish existing grahak session (unchanged, kept for backward compatibility)
-    localStorage.setItem("grahak", JSON.stringify(grahakdata));
-    saveSession(phone, "grahak");
+    const isValidPhone = (p: string): boolean => {
+      const cleaned = p.trim();
+      const regex = /^[6-9]\d{9}$/;
+      return regex.test(cleaned);
+    };
 
-    // Also establish preorder guest identity, since login now lands on the choice screen
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/preorder/guest/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone })
-    });
-    localStorage.setItem("preorderGuestPhone", phone);
-    saveSession(phone, "preorderGuest");
-
-    showmessage("success", t('loginSuccess'));
-    navigateto(`/preorder/${CURRENT_MALIK_PHONE}`);
-
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      showmessage("error", err.message);
-    } else {
-      showmessage("error", "something went wrong");
+    if (!isValidPhone(phone)) {
+      showMessage("error", t('errors.invalidPhone'));
+      return;
     }
-  } finally {
-    setloading(false);
-  }
-};
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/preorder/guest/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone })
+      });
+
+      const guestData = await getData<guestData>(res);
+
+      if (!guestData) {
+        showMessage("error", t('errors.invalidResponse'));
+        setLoading(false);
+        return;
+      }
+
+      saveSession(phone, "preorderGuest");
+      showMessage("success", t('loginSuccess'));
+      navigateTo(`/preorder/${CURRENT_MALIK_PHONE}`);
+
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        showMessage("error", err.message);
+      } else {
+        showMessage("error", "something went wrong");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', 
-      padding: 'clamp(1rem, 5vw, 2rem)', // Fluid outer padding
+      alignItems: 'center', justifyContent: 'center',
+      padding: 'clamp(1rem, 5vw, 2rem)',
       background: 'linear-gradient(160deg, #E8DCC0 0%, #DED0AC 100%)',
       position: 'relative', overflow: 'hidden',
     }}>
@@ -132,21 +119,21 @@ const handlelogin = async () => {
             overflow: 'hidden',
             position: 'relative'
           }}>
-            <Image 
-              src="/digiKhata-logo.png" 
-              alt="digikhata logo" 
+            <Image
+              src="/digiKhata-logo.png"
+              alt="digikhata logo"
               fill
               style={{ objectFit: 'cover' }}
-              priority 
+              priority
             />
           </div>
 
           <div style={{ textAlign: 'center' }}>
             <h1 style={{ fontFamily: 'var(--font-rozha, serif)', fontSize: 'clamp(22px, 6vw, 26px)', color: 'var(--color-ink)', margin: 0, fontWeight: 400 }}>
-              {t('grahakTitle')}
+              {t('title')}
             </h1>
             <p style={{ fontSize: 'clamp(12px, 3.5vw, 14px)', color: 'var(--color-ink)', opacity: 0.7, margin: '6px 0 0', fontFamily: 'var(--font-noto-gujarati)' }}>
-              {t('grahakSubtitle')}
+              {t('subtitle')}
             </p>
           </div>
 
@@ -156,7 +143,7 @@ const handlelogin = async () => {
             <LedgerField
               label={t('phoneLabel')}
               value={phone}
-              onChange={setphone}
+              onChange={setPhone}
               placeholder={t('phonePlaceholder')}
               icon={
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -168,7 +155,7 @@ const handlelogin = async () => {
             <div style={{ marginTop: '4px' }}>
               <StampButton
                 tone="ink"
-                onClick={handlelogin}
+                onClick={handleLogin}
                 disabled={loading}
                 icon={
                   loading ? (
@@ -180,12 +167,12 @@ const handlelogin = async () => {
                   ) : undefined
                 }
               >
-                {loading ? t('loggingIn') : t('loginButton')}
+                {loading ? t('loggingIn') : t('continueButton')}
               </StampButton>
             </div>
 
             <button
-              onClick={() => navigateto('/')}
+              onClick={() => navigateTo('/')}
               style={{
                 width: '100%', padding: '12px',
                 background: 'transparent', color: 'var(--color-ink)', opacity: 0.6,

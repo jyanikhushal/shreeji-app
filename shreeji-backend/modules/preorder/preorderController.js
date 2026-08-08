@@ -5,6 +5,7 @@ const {
   findKhataMatch,
   finalizeSave,
   getGuestPreorderStatus,
+  getGuestOrderHistory,
 } = require('./preorderService');
 const { sendNotification } = require('../notifications/notificationService');
 const { NOTIFICATION_TYPES } = require('../notifications/notificationTypes');
@@ -96,6 +97,17 @@ async function fetchGuestStatus(req, res) {
   }
 }
 
+async function fetchGuestHistory(req, res) {
+  try {
+    const { malikPhone, guestPhone } = req.params;
+    const history = await getGuestOrderHistory(malikPhone, guestPhone);
+    return res.status(200).json({ success: true, message: 'History fetched', data: history });
+  } catch (err) {
+    console.error('Error in fetchGuestHistory:', err);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+}
+
 module.exports = {
   submitPreorder,
   fetchQueue,
@@ -103,4 +115,5 @@ module.exports = {
   checkKhataMatch,
   saveDestination,
   fetchGuestStatus,
+  fetchGuestHistory,
 };

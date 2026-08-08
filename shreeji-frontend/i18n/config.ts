@@ -22,14 +22,17 @@ import enGrahakKhata from './locales/en/grahakKhata.json';
 import guRunningKhata from './locales/gu/runningKhata.json';
 import hiRunningKhata from './locales/hi/runningKhata.json';
 import enRunningKhata from './locales/en/runningKhata.json';
+import guPreorder from './locales/gu/preorder.json';
+import hiPreorder from './locales/hi/preorder.json';
+import enPreorder from './locales/en/preorder.json';
 
 i18n
   .use(initReactI18next)
   .init({
     resources: {
-      gu: { common: guCommon, home: guHome, login: guLogin, dashboard: guDashboard, shops: guShops, grahakKhata: guGrahakKhata, runningKhata: guRunningKhata },
-      hi: { common: hiCommon, home: hiHome, login: hiLogin, dashboard: hiDashboard, shops: hiShops, grahakKhata: hiGrahakKhata, runningKhata: hiRunningKhata },
-      en: { common: enCommon, home: enHome, login: enLogin, dashboard: enDashboard, shops: enShops, grahakKhata: enGrahakKhata, runningKhata: enRunningKhata },
+      gu: { common: guCommon, home: guHome, login: guLogin, dashboard: guDashboard, shops: guShops, grahakKhata: guGrahakKhata, runningKhata: guRunningKhata, preorder: guPreorder },
+      hi: { common: hiCommon, home: hiHome, login: hiLogin, dashboard: hiDashboard, shops: hiShops, grahakKhata: hiGrahakKhata, runningKhata: hiRunningKhata, preorder: hiPreorder },
+      en: { common: enCommon, home: enHome, login: enLogin, dashboard: enDashboard, shops: enShops, grahakKhata: enGrahakKhata, runningKhata: enRunningKhata, preorder: enPreorder },
     },
     lng: 'gu',
     fallbackLng: 'gu',

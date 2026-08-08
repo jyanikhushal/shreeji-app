@@ -30,5 +30,6 @@
 "noDepositsYet": "હજુ સુધી કોઈ જમા નથી",
 "today": "આજે",
 "oneDayAgo": "1 દિવસ પહેલા",
-"daysAgo": "{{days}} દિવસ પહેલા"
+"daysAgo": "{{days}} દિવસ પહેલા",
+"preordersButton": "પ્રીઓર્ડર"
 }

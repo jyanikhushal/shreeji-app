@@ -4,13 +4,15 @@ import StampButton from "@/components/ui/StampButton";
 import { malik } from "@/types/dashboard";
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+
 interface DashboardHeaderProps {
   malikdata: malik;
   onLogout: () => void;
   onAddCustomer: () => void;
+  onOpenPreorders: () => void;
 }
 
-export default function DashboardHeader({ malikdata, onLogout, onAddCustomer }: DashboardHeaderProps) {
+export default function DashboardHeader({ malikdata, onLogout, onAddCustomer, onOpenPreorders }: DashboardHeaderProps) {
   const { t } = useTranslation('dashboard');
   return (
     <motion.div
@@ -71,6 +73,21 @@ export default function DashboardHeader({ malikdata, onLogout, onAddCustomer }: 
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, marginLeft: 'auto' }}>
         <LanguageSwitcher userType="malik" phone={malikdata?.phone} />
+        <button
+          onClick={onOpenPreorders}
+          style={{
+            padding: '8px 14px', background: 'transparent', color: 'var(--color-brass)',
+            border: '1.5px solid var(--color-brass)', borderRadius: '6px',
+            fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-brass)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+            <rect x="9" y="3" width="6" height="4" rx="1"/>
+          </svg>
+          {t('preordersButton')}
+        </button>
         <button
           onClick={onLogout}
           style={{

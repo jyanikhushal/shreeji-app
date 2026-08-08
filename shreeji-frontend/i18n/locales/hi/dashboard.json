@@ -30,5 +30,6 @@
 "noDepositsYet": "अभी तक कोई जमा नहीं",
 "today": "आज",
 "oneDayAgo": "1 दिन पहले",
-"daysAgo": "{{days}} दिन पहले"
+"daysAgo": "{{days}} दिन पहले",
+"preordersButton": "प्रीऑर्डर"
 }
